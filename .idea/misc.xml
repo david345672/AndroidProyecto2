@@ -4,6 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/fragment_configuracion.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/fragment_grafico_kpi.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/fragment_menu_principal.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/fragment_valoracion_alumno.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/fragment_valoracion_docente.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/fragment_ver_valoracion_de_alumno.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
