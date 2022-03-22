@@ -17,27 +17,25 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnHacerObservacion"
+            android:id="@+id/btnHacerObservacionPropia"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="25dp"
             android:layout_weight="1"
-            android:text="Hacer Observacion"
-            android:textStyle="bold"
-            android:gravity="center"
             android:backgroundTint="#FFC04C"
-            android:layout_margin="30dp"
-            />
+            android:gravity="center"
+            android:text="Hacer Observacion propia"
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnTVerObservacion"
+            android:id="@+id/btnTVerValoracionesPropias"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="25dp"
             android:layout_weight="1"
-            android:text="Ver Observacion"
-            android:textStyle="bold"
             android:backgroundTint="#00D802"
-            android:layout_margin="30dp"
-            />
+            android:text="Ver Valoraciones Propias"
+            android:textStyle="bold" />
 
 
 
