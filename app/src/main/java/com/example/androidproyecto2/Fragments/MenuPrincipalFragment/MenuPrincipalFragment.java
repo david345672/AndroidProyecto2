@@ -77,6 +77,7 @@ public class MenuPrincipalFragment extends Fragment {
     }
 
 
+
     public void irAInicio()
     {
         mgr = getChildFragmentManager();

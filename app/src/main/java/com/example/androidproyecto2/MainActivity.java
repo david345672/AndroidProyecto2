@@ -11,17 +11,19 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.androidproyecto2.Clases.Ventana;
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     View toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
 
@@ -34,27 +36,24 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-
-
-
         btnCerrarSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-                builder.setMessage("")
-                        .setTitle("¿Seguro que quieres cerrar la session?");
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-                 */
             }
         });
 
 
 
     }
+
+
+    public void ocultarBarrasDispositivo()
+    {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(Ventana.WINDOW_SETTINGS);
+    }
+
+
 
 }
