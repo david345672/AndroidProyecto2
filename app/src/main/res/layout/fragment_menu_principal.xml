@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.MenuPrincipalFragment.MenuPrincipalFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <FrameLayout
+        android:id="@+id/FrContentMenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:layout_weight="15">
 
-</FrameLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/black">
+
+            <RadioButton
+                android:id="@+id/btnInicio"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Inicio"
+                android:button="@null"
+                android:gravity="center"
+                android:background="@drawable/bg_radiobutton_menu"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/btnTutorial"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Tutorial"
+                android:button="@null"
+                android:gravity="center"
+                android:background="@drawable/bg_radiobutton_menu"
+                />
+
+            <RadioButton
+                android:id="@+id/btnPerfil"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Perfil"
+                android:button="@null"
+                android:gravity="center"
+                android:background="@drawable/bg_radiobutton_menu"
+                />
+
+            <RadioButton
+                android:id="@+id/btnConfiguracion"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Configuracion"
+                android:button="@null"
+                android:gravity="center"
+                android:background="@drawable/bg_radiobutton_menu"
+                />
+
+        </RadioGroup>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
