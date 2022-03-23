@@ -14,6 +14,9 @@ public class Usuari implements Serializable
     private String nomUsuari;
     private String imagen;
 
+    public Usuari() {
+    }
+
     public Usuari(int id, String nom, int rols_id, Boolean actiu, String correo, String contrasenya, String cognoms, String nomUsuari, String imagen) {
         this.id = id;
         this.nom = nom;

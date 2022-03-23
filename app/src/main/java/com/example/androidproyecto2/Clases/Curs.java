@@ -10,6 +10,9 @@ public class Curs implements Serializable
     private Boolean actiu;
     private String nom;
 
+    public Curs() {
+    }
+
     public Curs(int id, int curs_inici, int curs_fi, Boolean actiu, String nom) {
         this.id = id;
         this.curs_inici = curs_inici;

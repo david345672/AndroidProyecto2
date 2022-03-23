@@ -8,6 +8,9 @@ public class Grup implements Serializable
     private String nom;
     private Boolean actiu;
 
+    public Grup() {
+    }
+
     public Grup(int id, String nom, Boolean actiu) {
         this.id = id;
         this.nom = nom;

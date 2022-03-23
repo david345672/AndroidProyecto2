@@ -9,6 +9,9 @@ public class Kpi implements Serializable
     private int skills_id;
     private Boolean actiu;
 
+    public Kpi() {
+    }
+
     public Kpi(int id, String nom, int skills_id, Boolean actiu) {
         this.id = id;
         this.nom = nom;

@@ -11,6 +11,9 @@ public class Skill implements Serializable
     private int colorFondo;
     private int colorTexto;
 
+    public Skill() {
+    }
+
     public Skill(int id, String nom, int llistes_skills_id, Boolean actiu, int colorFondo, int colorTexto) {
         this.id = id;
         this.nom = nom;

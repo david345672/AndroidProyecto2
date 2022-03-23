@@ -8,6 +8,9 @@ public class LlistaSkills implements Serializable
     private String nom;
     private Boolean actiu;
 
+    public LlistaSkills() {
+    }
+
     public LlistaSkills(int id, String nom, Boolean actiu) {
         this.id = id;
         this.nom = nom;

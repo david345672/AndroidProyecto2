@@ -14,6 +14,9 @@ public class Rol implements Serializable
     private Boolean GestionarPerfiles;
     private Boolean GestionarGrupos;
 
+    public Rol() {
+    }
+
     public Rol(int id, String nom, Boolean actiu, Boolean gestionarKPIs, Boolean gestionarListaSkills, Boolean gestionarSkills, Boolean gestionarUsuarios, Boolean gestionarPerfiles, Boolean gestionarGrupos) {
         this.id = id;
         this.nom = nom;

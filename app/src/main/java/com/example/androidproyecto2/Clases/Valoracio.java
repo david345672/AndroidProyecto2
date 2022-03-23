@@ -11,6 +11,9 @@ public class Valoracio implements Serializable
     private Date data;
     private int nota;
 
+    public Valoracio() {
+    }
+
     public Valoracio(int kpis_id, int usuari_valorat_id, int usuari_pp_id, Date data, int nota) {
         this.kpis_id = kpis_id;
         this.usuari_valorat_id = usuari_valorat_id;
