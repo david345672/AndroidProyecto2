@@ -1,0 +1,74 @@
+package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class GrupsAdapterViewPager extends PagerAdapter
+{
+    Context context;
+    //List<Grup> grups;
+    ArrayList<Grup> grups;
+
+//    public GrupsAdapterViewPager(Context context, List grups)
+//    {
+//        this.context = context;
+//        this.grups = grups;
+//    }
+
+    public GrupsAdapterViewPager(Context context, ArrayList grups)
+    {
+        this.context = context;
+        this.grups = grups;
+    }
+
+    @Override
+    public int getCount() {
+        return grups.size();
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position)
+    {
+        View view = LayoutInflater.from(context).inflate(R.layout.grupo_item,container,false);
+
+        TextView lblNombreGrupo = view.findViewById(R.id.lblNombreGrupo);
+        Button btnHacerObservaciones = view.findViewById(R.id.btnHacerObservaciones);
+        Button btnHacerValoraciones = view.findViewById(R.id.btnVerValoraciones);
+
+        Grup grup = grups.get(position);
+        String nombre = grup.getNom();
+
+        lblNombreGrupo.setText(nombre);
+
+        container.addView(view);
+
+        return view;
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view.equals(object);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup collection, int position, Object view) {
+        collection.removeView((View) view);
+    }
+
+
+}

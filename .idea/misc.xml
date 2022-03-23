@@ -5,12 +5,14 @@
       <map>
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/drawable/bg_radioButtonMenu.xml" value="0.1765" />
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/drawable/bg_radiobutton_menu.xml" value="0.1765" />
+        <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout-Large-Land/fragment_inicio.xml" value="0.16331994645247658" />
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/fragment_inicio.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/fragment_inicio.xml" value="0.2" />
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/fragment_menu_configuracion.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/fragment_menu_principal.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/fragment_perfil.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/fragment_tutorial.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/grupo_item.xml" value="0.264" />
         <entry key="..\:/Users/david/Desktop/AndroidProyecto2/app/src/main/res/layout/toolbar.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/david/Desktop/proyecto2/AndroidProyecto2/app/src/main/res/layout/fragment_configuracion.xml" value="0.22826086956521738" />
