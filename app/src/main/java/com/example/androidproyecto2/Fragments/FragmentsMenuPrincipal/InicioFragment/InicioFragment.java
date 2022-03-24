@@ -1,26 +1,39 @@
 package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Clases.ViewPagerListener;
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.TutorialFragment.TutorialFragment;
+import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
+import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InicioFragment extends Fragment {
-
+public class InicioFragment extends Fragment
+{
     List<Grup> grups;
     ArrayList<Grup> Grups;
+    FragmentManager mg;
+    FragmentTransaction fragmentTransaction;
+    Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +49,7 @@ public class InicioFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Grups = llenarGrupos();
-
+        mg = getActivity().getSupportFragmentManager();
         ViewPager VpGrups = view.findViewById(R.id.VpGrups);
         VpGrups.setClipToPadding(false);
         VpGrups.setPadding(100, 0, 100, 0);
@@ -45,9 +58,33 @@ public class InicioFragment extends Fragment {
         GrupsAdapterViewPager grupsAdapterViewPager = new GrupsAdapterViewPager(getContext(),Grups);
         VpGrups.setAdapter(grupsAdapterViewPager);
 
+        Button btnHacerObservacionPropia = view.findViewById(R.id.btnHacerObservacionPropia);
+        Button btnVerValoracionesPropias = view.findViewById(R.id.btnVerValoracionesPropias);
+
+
+        btnHacerObservacionPropia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(getContext(),"dfsd",Toast.LENGTH_LONG).show();
+                IrAMenuLS();
+
+            }
+        });
+
+
+
+
+
 
     }
 
+    private void IrAMenuLS() {
+
+        fragmentTransaction = mg.beginTransaction();
+        MenuListasSkillsFragment menuListasSkillsFragment = new MenuListasSkillsFragment();
+        fragmentTransaction.replace(R.id.FrContent,menuListasSkillsFragment);
+        fragmentTransaction.commit();
+    }
 
 
 

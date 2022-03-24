@@ -13,6 +13,8 @@ import android.widget.Toolbar;
 
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Ventana;
+import com.example.androidproyecto2.Fragments.LoginFragment.LoginFragment;
+import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
@@ -26,8 +28,11 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    View toolbar;
+    public View toolbar;
     List<Grup> grups;
+    public String layout = "Login";
+    FragmentManager mgr;
+    FragmentTransaction fragmentTransaction;
 
 
     @Override
@@ -36,14 +41,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
+        Button btnAtras = toolbar.findViewById(R.id.btnAtras);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
 
 
-
-
-
-        FragmentManager mgr = getSupportFragmentManager();
-        final FragmentTransaction fragmentTransaction = mgr.beginTransaction();
+        mgr = getSupportFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
 
         MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
 
@@ -51,14 +54,55 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-        btnCerrarSession.setOnClickListener(new View.OnClickListener() {
+        btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
+                if (layout.equals("MenuListaSkills"))
+                {
+                    VolverAMenu();
+                    btnAtras.setVisibility(View.INVISIBLE);
+
+                }
 
             }
         });
 
 
+        btnCerrarSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irALogin();
+                btnAtras.setVisibility(View.INVISIBLE);
+                btnCerrarSession.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+
+    }
+
+    public void irALogin()
+    {
+        mgr = getSupportFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+
+        LoginFragment loginFragment = new LoginFragment();
+
+        fragmentTransaction.replace(R.id.FrContent, loginFragment);
+        fragmentTransaction.commit();
+    }
+
+
+    public void VolverAMenu()
+    {
+        mgr = getSupportFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+
+        MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
+
+        fragmentTransaction.replace(R.id.FrContent, menuPrincipalFragment);
+        fragmentTransaction.commit();
 
     }
 

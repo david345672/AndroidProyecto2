@@ -37,7 +37,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnTVerValoracionesPropias"
+            android:id="@+id/btnVerValoracionesPropias"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="25dp"

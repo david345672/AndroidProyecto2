@@ -18,10 +18,12 @@ import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragm
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.MenuConfiguracionFragment.MenuConfiguracionFragment;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.PerfilFragment.PerfilFragment;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.TutorialFragment.TutorialFragment;
+import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 public class MenuPrincipalFragment extends Fragment {
 
+    MainActivity activity;
     private FragmentManager mgr;
     private FragmentTransaction fragmentTransaction;
 
@@ -37,6 +39,8 @@ public class MenuPrincipalFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        activity = (MainActivity) getActivity();
+        activity.layout = "MenuPrincipal";
         irAInicio();
 
         RadioButton btnInicio = view.findViewById(R.id.btnInicio);
@@ -90,7 +94,7 @@ public class MenuPrincipalFragment extends Fragment {
 
     }
 
-    public  void irATutorial()
+    public void irATutorial()
     {
         mgr = getChildFragmentManager();
 

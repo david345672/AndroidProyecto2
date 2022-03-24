@@ -8,11 +8,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Clases.ViewPagerListener;
+import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
+import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.util.ArrayList;
@@ -23,6 +29,9 @@ public class GrupsAdapterViewPager extends PagerAdapter
     Context context;
     //List<Grup> grups;
     ArrayList<Grup> grups;
+    FragmentManager mg;
+    FragmentTransaction fragmentTransaction;
+
 
 //    public GrupsAdapterViewPager(Context context, List grups)
 //    {
@@ -48,12 +57,33 @@ public class GrupsAdapterViewPager extends PagerAdapter
 
         TextView lblNombreGrupo = view.findViewById(R.id.lblNombreGrupo);
         Button btnHacerObservaciones = view.findViewById(R.id.btnHacerObservaciones);
-        Button btnHacerValoraciones = view.findViewById(R.id.btnVerValoraciones);
+        Button btnVerValoraciones = view.findViewById(R.id.btnVerValoraciones);
 
         Grup grup = grups.get(position);
         String nombre = grup.getNom();
 
         lblNombreGrupo.setText(nombre);
+
+        btnHacerObservaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irAMenuSkills();
+            }
+        });
+
+
+        btnVerValoraciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+
+
+            }
+        });
+
+
 
         container.addView(view);
 
@@ -68,6 +98,19 @@ public class GrupsAdapterViewPager extends PagerAdapter
     @Override
     public void destroyItem(ViewGroup collection, int position, Object view) {
         collection.removeView((View) view);
+    }
+
+    private void irAMenuSkills()
+    {
+
+        MainActivity activity = (MainActivity) context;
+        //activity.layout = "MenuListaSkills";
+        mg = activity.getSupportFragmentManager();
+        fragmentTransaction = mg.beginTransaction();
+        MenuListasSkillsFragment menuListasSkillsFragment = new MenuListasSkillsFragment();
+        fragmentTransaction.replace(R.id.FrContent,menuListasSkillsFragment);
+        fragmentTransaction.commit();
+
     }
 
 
