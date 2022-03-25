@@ -27,23 +27,23 @@ import java.util.List;
 public class GrupsAdapterViewPager extends PagerAdapter
 {
     Context context;
-    //List<Grup> grups;
-    ArrayList<Grup> grups;
+    List<Grup> grups;
+    //ArrayList<Grup> grups;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
 
-//    public GrupsAdapterViewPager(Context context, List grups)
-//    {
-//        this.context = context;
-//        this.grups = grups;
-//    }
-
-    public GrupsAdapterViewPager(Context context, ArrayList grups)
+    public GrupsAdapterViewPager(Context context, List grups)
     {
         this.context = context;
         this.grups = grups;
     }
+
+//    public GrupsAdapterViewPager(Context context, ArrayList grups)
+//    {
+//        this.context = context;
+//        this.grups = grups;
+//    }
 
     @Override
     public int getCount() {

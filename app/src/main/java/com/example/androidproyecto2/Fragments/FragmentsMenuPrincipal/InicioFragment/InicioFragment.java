@@ -30,10 +30,10 @@ import java.util.List;
 public class InicioFragment extends Fragment
 {
     List<Grup> grups;
-    ArrayList<Grup> Grups;
+    //ArrayList<Grup> Grups;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
-    Activity activity;
+    MainActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,14 +48,14 @@ public class InicioFragment extends Fragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Grups = llenarGrupos();
+        activity = (MainActivity) getActivity();
         mg = getActivity().getSupportFragmentManager();
         ViewPager VpGrups = view.findViewById(R.id.VpGrups);
         VpGrups.setClipToPadding(false);
         VpGrups.setPadding(100, 0, 100, 0);
         VpGrups.setPageMargin(100);
 
-        GrupsAdapterViewPager grupsAdapterViewPager = new GrupsAdapterViewPager(getContext(),Grups);
+        GrupsAdapterViewPager grupsAdapterViewPager = new GrupsAdapterViewPager(getContext(),activity.grups);
         VpGrups.setAdapter(grupsAdapterViewPager);
 
         Button btnHacerObservacionPropia = view.findViewById(R.id.btnHacerObservacionPropia);

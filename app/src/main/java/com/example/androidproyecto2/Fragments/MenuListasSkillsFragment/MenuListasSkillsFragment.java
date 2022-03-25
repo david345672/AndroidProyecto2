@@ -38,6 +38,7 @@ public class MenuListasSkillsFragment extends Fragment {
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
 
+
         TextView td = view.findViewById(R.id.layoutStatus);
         td.setText(activity.layout);
 

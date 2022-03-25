@@ -1,6 +1,7 @@
 package com.example.androidproyecto2.Clases;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Grup implements Serializable
 {
@@ -16,6 +17,7 @@ public class Grup implements Serializable
         this.nom = nom;
         this.actiu = actiu;
     }
+
 
     public int getId() {
         return id;
@@ -40,6 +42,5 @@ public class Grup implements Serializable
     public void setActiu(Boolean actiu) {
         this.actiu = actiu;
     }
-
 
 }

@@ -1,12 +1,14 @@
 package com.example.androidproyecto2.Clases;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class LlistaSkills implements Serializable
 {
     private int id;
     private String nom;
     private Boolean actiu;
+    private ArrayList<Skill> skills;
 
     public LlistaSkills() {
     }
@@ -15,6 +17,13 @@ public class LlistaSkills implements Serializable
         this.id = id;
         this.nom = nom;
         this.actiu = actiu;
+    }
+
+    public LlistaSkills(int id, String nom, Boolean actiu, ArrayList<Skill> skills) {
+        this.id = id;
+        this.nom = nom;
+        this.actiu = actiu;
+        this.skills = skills;
     }
 
     public int getId() {
@@ -41,5 +50,11 @@ public class LlistaSkills implements Serializable
         this.actiu = actiu;
     }
 
+    public ArrayList<Skill> getSkills() {
+        return skills;
+    }
 
+    public void setSkills(ArrayList<Skill> skills) {
+        this.skills = skills;
+    }
 }
