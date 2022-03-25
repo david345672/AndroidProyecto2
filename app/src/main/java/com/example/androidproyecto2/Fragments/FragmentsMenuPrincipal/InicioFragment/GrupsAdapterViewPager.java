@@ -77,9 +77,6 @@ public class GrupsAdapterViewPager extends PagerAdapter
             public void onClick(View view) {
 
 
-
-
-
             }
         });
 

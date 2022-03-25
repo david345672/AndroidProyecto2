@@ -1,6 +1,5 @@
 package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,9 +22,14 @@ import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuLista
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
+import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.GrupService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class InicioFragment extends Fragment
 {
@@ -106,7 +110,7 @@ public class InicioFragment extends Fragment
 
 //        GrupService grupService = Api.getApi().create(GrupService.class);
 //        Call<List<Grup>> listCall = grupService.GetGrups();
-//
+
 //        listCall.enqueue(new Callback<List<Grup>>() {
 //            @Override
 //            public void onResponse(Call<List<Grup>> call, Response<List<Grup>> response) {
