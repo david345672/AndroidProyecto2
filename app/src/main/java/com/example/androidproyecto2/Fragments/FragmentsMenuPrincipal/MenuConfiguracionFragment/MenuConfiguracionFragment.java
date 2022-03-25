@@ -2,65 +2,109 @@ package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.MenuConfig
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.GraficosFragment.GraficosFragment;
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.IdiomasFragment.IdiomasFragment;
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.NotificacionesFragment.NotificacionesFragment;
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.TemasFragment.TemasFragment;
+import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MenuConfiguracionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+
 public class MenuConfiguracionFragment extends Fragment {
+    MainActivity activity;
+    private FragmentManager mgr;
+    FragmentTransaction fragmentTransaction;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MenuConfiguracionFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MenuConfiguracionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MenuConfiguracionFragment newInstance(String param1, String param2) {
-        MenuConfiguracionFragment fragment = new MenuConfiguracionFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_menu_configuracion, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        irAnotificaciones();
+        RadioButton RdbNotificacion = view.findViewById(R.id.RdbNotificacion);
+        RadioButton RdbTemas = view.findViewById(R.id.RdbTemas);
+        RadioButton RdbGraficos = view.findViewById(R.id.RdbGraficos);
+        RadioButton RdbIdioma = view.findViewById(R.id.RdbIdioma);
+
+        RdbNotificacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irAnotificaciones();
+            }
+        });
+        RdbTemas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irAtemas();
+            }
+        });
+
+        RdbGraficos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irAgraficos();
+            }
+        });
+
+        RdbIdioma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irAidioma();
+            }
+        });
+
+
+
+
+
+
+    }
+
+    public void irAnotificaciones(){
+        mgr = getChildFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+        NotificacionesFragment notificacionesFragment = new NotificacionesFragment();
+        fragmentTransaction.replace(R.id.FrContentMenuConfig, notificacionesFragment);
+        fragmentTransaction.commit();
+    }
+    public void irAtemas(){
+        mgr = getChildFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+        TemasFragment temasFragment = new TemasFragment();
+        fragmentTransaction.replace(R.id.FrContentMenuConfig, temasFragment);
+        fragmentTransaction.commit();
+    }
+    public void irAgraficos(){
+        mgr = getChildFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+        GraficosFragment graficosFragment = new GraficosFragment();
+        fragmentTransaction.replace(R.id.FrContentMenuConfig, graficosFragment);
+        fragmentTransaction.commit();
+    }
+    public void irAidioma(){
+        mgr = getChildFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+        IdiomasFragment idiomasFragment = new IdiomasFragment();
+        fragmentTransaction.replace(R.id.FrContentMenuConfig, idiomasFragment);
+        fragmentTransaction.commit();
     }
 }
