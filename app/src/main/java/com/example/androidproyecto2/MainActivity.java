@@ -1,6 +1,5 @@
 package com.example.androidproyecto2;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,22 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.androidproyecto2.Clases.Grup;
-import com.example.androidproyecto2.Clases.LlistaSkills;
-import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.Ventana;
 import com.example.androidproyecto2.Fragments.LoginFragment.LoginFragment;
-import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public String layout = "Login";
     FragmentManager mgr;
     FragmentTransaction fragmentTransaction;
+    public int idGrupo = -1;
 
 
     @Override
@@ -47,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         Button btnAtras = toolbar.findViewById(R.id.btnAtras);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
-        llenarGrupos();
-
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
 
@@ -154,27 +145,28 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        GrupService grupService = Api.getApi().create(GrupService.class);
-        Call<List<Grup>> listCall = grupService.GetGrups();
-
-        listCall.enqueue(new Callback<List<Grup>>() {
-            @Override
-            public void onResponse(Call<List<Grup>> call, Response<List<Grup>> response) {
-                switch (response.code())
-                {
-                    case 200:
-                        grups = response.body();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Grup>> call, Throwable t) {
-                Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
+//        GrupService grupService = Api.getApi().create(GrupService.class);
+//        Call<List<Grup>> listCall = grupService.GetGrups();
+//
+//        listCall.enqueue(new Callback<List<Grup>>() {
+//            @Override
+//            public void onResponse(Call<List<Grup>> call, Response<List<Grup>> response) {
+//                switch (response.code())
+//                {
+//                    case 200:
+//                        grups = response.body();
+//
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Grup>> call, Throwable t) {
+//                Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
+//            }
+//        });
 
     }
 

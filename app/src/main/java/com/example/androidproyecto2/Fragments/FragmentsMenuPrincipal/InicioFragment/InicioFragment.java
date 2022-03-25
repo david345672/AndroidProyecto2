@@ -11,15 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.Grup;
-import com.example.androidproyecto2.Clases.ViewPagerListener;
-import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.TutorialFragment.TutorialFragment;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
-import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
@@ -30,6 +25,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InicioFragment extends Fragment
 {
@@ -38,12 +34,14 @@ public class InicioFragment extends Fragment
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
     MainActivity activity;
+    ViewPager VpGrups;
+    View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_inicio, container, false);
+        view = inflater.inflate(R.layout.fragment_inicio, container, false);
         return view;
     }
 
@@ -54,13 +52,7 @@ public class InicioFragment extends Fragment
 
         activity = (MainActivity) getActivity();
         mg = getActivity().getSupportFragmentManager();
-        ViewPager VpGrups = view.findViewById(R.id.VpGrups);
-        VpGrups.setClipToPadding(false);
-        VpGrups.setPadding(100, 0, 100, 0);
-        VpGrups.setPageMargin(100);
-
-        GrupsAdapterViewPager grupsAdapterViewPager = new GrupsAdapterViewPager(getContext(),activity.grups);
-        VpGrups.setAdapter(grupsAdapterViewPager);
+        llenarGrupos();
 
         Button btnHacerObservacionPropia = view.findViewById(R.id.btnHacerObservacionPropia);
         Button btnVerValoracionesPropias = view.findViewById(R.id.btnVerValoracionesPropias);
@@ -71,7 +63,7 @@ public class InicioFragment extends Fragment
             public void onClick(View view) {
                 //Toast.makeText(getContext(),"dfsd",Toast.LENGTH_LONG).show();
                 IrAMenuLS();
-
+                activity.idGrupo = -1;
             }
         });
 
@@ -92,44 +84,38 @@ public class InicioFragment extends Fragment
 
 
 
-    public ArrayList<Grup> llenarGrupos()
+    public void llenarGrupos()
     {
-        ArrayList<Grup> grups1 = new ArrayList<Grup>();
+        GrupService grupService = Api.getApi().create(GrupService.class);
+        Call<List<Grup>> listCall = grupService.GetGrups();
 
-        Grup grup1 = new Grup(1,"Grupo 1",true);
-        Grup grup2 = new Grup(2,"Grupo 2",true);
-        Grup grup3 = new Grup(3,"Grupo 3",true);
-        Grup grup4 = new Grup(4,"Grupo 4",true);
+        listCall.enqueue(new Callback<List<Grup>>() {
+            @Override
+            public void onResponse(Call<List<Grup>> call, Response<List<Grup>> response) {
+                switch (response.code())
+                {
+                    case 200:
+                        grups = response.body();
 
-        grups1.add(grup1);
-        grups1.add(grup2);
-        grups1.add(grup3);
-        grups1.add(grup4);
+                        VpGrups = view.findViewById(R.id.VpGrups);
+                        VpGrups.setClipToPadding(false);
+                        VpGrups.setPadding(100, 0, 100, 0);
+                        VpGrups.setPageMargin(100);
 
-        return grups1;
+                        GrupsAdapterViewPager grupsAdapterViewPager = new GrupsAdapterViewPager(getContext(),grups);
+                        VpGrups.setAdapter(grupsAdapterViewPager);
 
-//        GrupService grupService = Api.getApi().create(GrupService.class);
-//        Call<List<Grup>> listCall = grupService.GetGrups();
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-//        listCall.enqueue(new Callback<List<Grup>>() {
-//            @Override
-//            public void onResponse(Call<List<Grup>> call, Response<List<Grup>> response) {
-//                switch (response.code())
-//                {
-//                    case 200:
-//                        grups = response.body();
-//                        Toast.makeText(MainActivity.this,grups.get(0).getNom(),Toast.LENGTH_LONG).show();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Grup>> call, Throwable t) {
-//
-//            }
-//        });
+            @Override
+            public void onFailure(Call<List<Grup>> call, Throwable t) {
+                Toast.makeText(activity,t.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

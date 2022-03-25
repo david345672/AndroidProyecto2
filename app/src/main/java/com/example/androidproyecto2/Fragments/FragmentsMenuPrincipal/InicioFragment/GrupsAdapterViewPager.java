@@ -5,23 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.Grup;
-import com.example.androidproyecto2.Clases.ViewPagerListener;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GrupsAdapterViewPager extends PagerAdapter
@@ -68,6 +62,8 @@ public class GrupsAdapterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
                 irAMenuSkills();
+                MainActivity activity = (MainActivity) context;
+                activity.idGrupo = grup.getId();
             }
         });
 
