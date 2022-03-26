@@ -7,7 +7,7 @@
     android:layout_height="70dp">
 
     <RadioButton
-        android:id="@+id/btnUsuari"
+        android:id="@+id/rdbUsuari"
         android:layout_width="104dp"
         android:layout_height="48dp"
         android:background="@drawable/bg_radiobutton_usuaris"

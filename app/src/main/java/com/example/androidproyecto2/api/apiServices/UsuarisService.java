@@ -1,15 +1,17 @@
 package com.example.androidproyecto2.api.apiServices;
 
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
+import com.example.androidproyecto2.Clases.Usuari;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
-public interface GrupsHasAlumnesService {
-    @GET("api/grups_has_alumnes")
-    Call<List<Grups_has_alumnes>> Getgrups_has_alumnes();
+public interface UsuarisService {
 
+    @GET("api/usuaris/")
+    Call<List<Usuari>> Getusuaris();
 
 }
