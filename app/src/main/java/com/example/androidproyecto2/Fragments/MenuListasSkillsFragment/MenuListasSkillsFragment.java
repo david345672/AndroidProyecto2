@@ -83,56 +83,6 @@ public class MenuListasSkillsFragment extends Fragment {
                         UsuarisService usuarisService = Api.getApi().create(UsuarisService.class);
                         Call<List<Usuari>> listCall = usuarisService.Getusuaris();
 
-                        listCall.enqueue(new Callback<List<Usuari>>() {
-                            @Override
-                            public void onResponse(Call<List<Usuari>> call, Response<List<Usuari>> response) {
-                                switch (response.code())
-                                {
-                                    case 200:
-                                        usuarisApi = response.body();
-                                        //Toast.makeText(activity, Integer.toString(grupsHasAlumnes.get(0).getUsuaris_id()), Toast.LENGTH_LONG).show();
-
-                                        for (Grups_has_alumnes grupsAl: grupsHasAlumnes) {
-                                            for (Usuari user: usuarisApi) {
-                                                if (grupsAl.getUsuaris_id() == user.getId())
-                                                {
-                                                    //Usuaris.add(user);
-                                                }
-                                            }
-                                        }
-
-
-
-
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<List<Usuari>> call, Throwable t) {
-                                Toast.makeText(activity, t.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-
-
-
-
-
-//                        for (Grups_has_alumnes GrpAlu: grupsHasAlumnes) {
-//
-//                            for (Usuari usersApi: usuarisApi) {
-//                                if (GrpAlu.getUsuaris_id() == usersApi.getId())
-//                                {
-//                                    Usuaris.add(usersApi);
-//                                }
-//                            }
-//                        }
-
-                        //ListUsuarisGrup = findViewById(R.id.ListUsuarisGrup);
-
-
 
 
                         break;
