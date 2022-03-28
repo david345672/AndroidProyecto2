@@ -8,7 +8,7 @@ public class LlistaSkills implements Serializable
     private int id;
     private String nom;
     private Boolean actiu;
-    private ArrayList<Skill> skills;
+    private Skill[] skills;
 
     public LlistaSkills() {
     }
@@ -19,7 +19,7 @@ public class LlistaSkills implements Serializable
         this.actiu = actiu;
     }
 
-    public LlistaSkills(int id, String nom, Boolean actiu, ArrayList<Skill> skills) {
+    public LlistaSkills(int id, String nom, Boolean actiu, Skill[] skills) {
         this.id = id;
         this.nom = nom;
         this.actiu = actiu;
@@ -50,11 +50,12 @@ public class LlistaSkills implements Serializable
         this.actiu = actiu;
     }
 
-    public ArrayList<Skill> getSkills() {
+    public Skill[] getSkills() {
         return skills;
     }
 
-    public void setSkills(ArrayList<Skill> skills) {
+    public void setSkills(Skill[] skills) {
         this.skills = skills;
     }
+
 }
