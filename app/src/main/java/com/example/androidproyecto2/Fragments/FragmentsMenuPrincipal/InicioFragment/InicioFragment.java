@@ -52,6 +52,9 @@ public class InicioFragment extends Fragment
 
         activity = (MainActivity) getActivity();
         mg = getActivity().getSupportFragmentManager();
+        //Toast.makeText(activity, "activity.usuariLogin.getNom()", Toast.LENGTH_SHORT).show();
+
+
         llenarGrupos();
 
         Button btnHacerObservacionPropia = view.findViewById(R.id.btnHacerObservacionPropia);
@@ -113,7 +116,7 @@ public class InicioFragment extends Fragment
 
             @Override
             public void onFailure(Call<List<Grup>> call, Throwable t) {
-                Toast.makeText(activity,t.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(activity,"error: "+ t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 

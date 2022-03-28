@@ -12,6 +12,9 @@ import retrofit2.http.Path;
 public interface UsuarisService {
 
     @GET("api/usuaris/")
-    Call<List<Usuari>> Getusuaris();
+    Call<List<Usuari>> Getusuaris(String nomUsuari, String s);
+
+    @GET("api/usuaris/nom/{nom}")
+    Call<Usuari> Getusuaris(@Path("nom") String nom);
 
 }

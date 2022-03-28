@@ -4,17 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Clases.MissatgeError;
+import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Ventana;
 import com.example.androidproyecto2.Fragments.LoginFragment.LoginFragment;
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
+import com.example.androidproyecto2.api.apiServices.UsuarisService;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager mgr;
     FragmentTransaction fragmentTransaction;
     public int idGrupo = -1;
+    public Usuari usuariLogin;
 
 
     @Override
@@ -38,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
+
+        //CargarUsuarioLogin();
+
         Button btnAtras = toolbar.findViewById(R.id.btnAtras);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
         mgr = getSupportFragmentManager();
@@ -109,66 +118,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void llenarGrupos()
-    {
-
-//        ArrayList<Skill> skills = new ArrayList<>();
-//        Skill s1 = new Skill();
-//        Skill s2 = new Skill();
-//        Skill s3 = new Skill();
-//        Skill s4 = new Skill();
-//        Skill s5 = new Skill();
+//    public void CargarUsuarioLogin()
+//    {
+//        UsuarisService usuarisService = Api.getApi().create(UsuarisService.class);
+//        Call<Usuari> usuariCall = usuarisService.Getusuaris("user2");
 //
-//
-//        ArrayList<LlistaSkills> llistesSkills = new ArrayList<>();
-//        LlistaSkills ll1 = new LlistaSkills();
-//        LlistaSkills ll2 = new LlistaSkills();
-//        LlistaSkills ll3 = new LlistaSkills();
-//        LlistaSkills ll4 = new LlistaSkills();
-//
-//        llistesSkills.add(ll1);
-//        llistesSkills.add(ll2);
-//        llistesSkills.add(ll3);
-//        llistesSkills.add(ll4);
-//
-//
-//
-//        Grup grup1 = new Grup(1,"Alumnat",true,llistesSkills);
-//        Grup grup2 = new Grup(2,"Docent",true);
-//        Grup grup3 = new Grup(3,"DAW",true);
-//        Grup grup4 = new Grup(4,"DAM",true);
-//
-//        grups.add(grup1);
-//        grups.add(grup2);
-//        grups.add(grup3);
-//        grups.add(grup4);
-
-
-
-//        GrupService grupService = Api.getApi().create(GrupService.class);
-//        Call<List<Grup>> listCall = grupService.GetGrups();
-//
-//        listCall.enqueue(new Callback<List<Grup>>() {
+//        usuariCall.enqueue(new Callback<Usuari>() {
 //            @Override
-//            public void onResponse(Call<List<Grup>> call, Response<List<Grup>> response) {
+//            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
 //                switch (response.code())
 //                {
-//                    case 200:
-//                        grups = response.body();
+//                    case 204:
+//                        usuariLogin = response.body();
+//                        break;
+//                    case 400:
+//                        Gson gson = new Gson();
+//                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+//                        Toast.makeText(getApplicationContext(), missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+//                        break;
+//                    case 404:
+//                        Toast.makeText(getApplicationContext(),"Registre no trobat", Toast.LENGTH_LONG).show();
+//                        break;
 //
-//                        break;
-//                    default:
-//                        break;
 //                }
 //            }
 //
 //            @Override
-//            public void onFailure(Call<List<Grup>> call, Throwable t) {
-//                Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
+//            public void onFailure(Call<Usuari> call, Throwable t) {
+//                Toast.makeText(getApplicationContext(),t.toString(), Toast.LENGTH_LONG).show();
 //            }
 //        });
-
-    }
+//
+//
+//
+//    }
 
 
 }

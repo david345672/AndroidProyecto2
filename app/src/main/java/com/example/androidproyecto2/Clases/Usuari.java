@@ -1,9 +1,14 @@
 package com.example.androidproyecto2.Clases;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Usuari implements Serializable
 {
+    private List<Grups_has_alumnes> grups_has_alumnes;
+    private List<Grups_has_docents> grups_has_docents;
+    private List<Valoracio> valoracions;
+    private List<Valoracio> valoracions1;
     private int id;
     private String nom;
     private int rols_id;
@@ -17,7 +22,11 @@ public class Usuari implements Serializable
     public Usuari() {
     }
 
-    public Usuari(int id, String nom, int rols_id, Boolean actiu, String correo, String contrasenya, String cognoms, String nomUsuari, String imagen) {
+    public Usuari(List<Grups_has_alumnes> grups_has_alumnes, List<Grups_has_docents> grups_has_docents, List<Valoracio> valoracions, List<Valoracio> valoracions1, int id, String nom, int rols_id, Boolean actiu, String correo, String contrasenya, String cognoms, String nomUsuari, String imagen) {
+        this.grups_has_alumnes = grups_has_alumnes;
+        this.grups_has_docents = grups_has_docents;
+        this.valoracions = valoracions;
+        this.valoracions1 = valoracions1;
         this.id = id;
         this.nom = nom;
         this.rols_id = rols_id;
@@ -29,6 +38,38 @@ public class Usuari implements Serializable
         this.imagen = imagen;
     }
 
+
+    public List<Grups_has_alumnes> getGrups_has_alumnes() {
+        return grups_has_alumnes;
+    }
+
+    public void setGrups_has_alumnes(List<Grups_has_alumnes> grups_has_alumnes) {
+        this.grups_has_alumnes = grups_has_alumnes;
+    }
+
+    public List<Grups_has_docents> getGrups_has_docents() {
+        return grups_has_docents;
+    }
+
+    public void setGrups_has_docents(List<Grups_has_docents> grups_has_docents) {
+        this.grups_has_docents = grups_has_docents;
+    }
+
+    public List<Valoracio> getValoracions() {
+        return valoracions;
+    }
+
+    public void setValoracions(List<Valoracio> valoracions) {
+        this.valoracions = valoracions;
+    }
+
+    public List<Valoracio> getValoracions1() {
+        return valoracions1;
+    }
+
+    public void setValoracions1(List<Valoracio> valoracions1) {
+        this.valoracions1 = valoracions1;
+    }
 
     public int getId() {
         return id;
@@ -101,9 +142,4 @@ public class Usuari implements Serializable
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
-
-
-
-
-
 }
