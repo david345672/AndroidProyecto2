@@ -17,10 +17,12 @@ import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
+import com.example.androidproyecto2.Clases.Grups_has_llistes_skills;
 import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.globales;
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment.GrupsAdapterViewPager;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
@@ -41,13 +43,16 @@ public class MenuListasSkillsFragment extends Fragment{
 
     public globales gb;
     MainActivity activity;
+
     List<Grups_has_alumnes> grupsHasAlumnes = new ArrayList<>();
+    List<Grups_has_llistes_skills> grupsHasLlistesSkills = new ArrayList<>();
     List<Usuari> usuarisApi;
     List<Usuari> usuaris = new ArrayList<>();
     List<LlistaSkills> llistaSkills = new ArrayList<>();
 
     Grup DadesGrup;
     private RecyclerView ListUsuarisGrup;
+    private View vpLlistes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +73,7 @@ public class MenuListasSkillsFragment extends Fragment{
         //Grups_has_alumnes test = new Grups_has_alumnes();
         //cargarUsuarios(gb);
         ListUsuarisGrup = view.findViewById(R.id.ListUsuarisGrup);
+        vpLlistes = view.findViewById(R.id.VpLlistesSkills);
         cargarUsuariosListasSills();
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
@@ -118,8 +124,20 @@ public class MenuListasSkillsFragment extends Fragment{
 
                         ListUsuarisGrup.setAdapter(usuarisAdapter);
 
+                        grupsHasLlistesSkills = DadesGrup.getGrups_has_llistes_skills();
+
+                        for (Grups_has_llistes_skills gHLlistes: grupsHasLlistesSkills) {
+                            llistaSkills.add(gHLlistes.getLlistes_skills());
+                        }
+
+                        vpLlistes = activity.findViewById(R.id.VpGrups);
+                        //vpLlistes.setClipToPadding(false);
+                        vpLlistes.setPadding(100, 0, 100, 0);
+                        //vpLlistes.setPageMargin(100);
 
 
+                        //GrupsAdapterViewPager grupsAdapterViewPager = new GrupsAdapterViewPager(getContext(),grups);
+                        //vpLlistes.setAdapter(grupsAdapterViewPager);
 
 
 
