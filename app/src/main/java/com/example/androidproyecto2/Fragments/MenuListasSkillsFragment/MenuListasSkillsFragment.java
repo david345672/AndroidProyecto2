@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
+import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.globales;
@@ -40,9 +41,10 @@ public class MenuListasSkillsFragment extends Fragment{
 
     public globales gb;
     MainActivity activity;
-    public static List<Grups_has_alumnes> grupsHasAlumnes;
+    List<Grups_has_alumnes> grupsHasAlumnes = new ArrayList<>();
     List<Usuari> usuarisApi;
-    List<Usuari> Usuaris;
+    List<Usuari> usuaris = new ArrayList<>();
+    List<LlistaSkills> llistaSkills = new ArrayList<>();
 
     Grup DadesGrup;
     private RecyclerView ListUsuarisGrup;
@@ -66,7 +68,7 @@ public class MenuListasSkillsFragment extends Fragment{
         //Grups_has_alumnes test = new Grups_has_alumnes();
         //cargarUsuarios(gb);
         ListUsuarisGrup = view.findViewById(R.id.ListUsuarisGrup);
-        //cargarUsuariosListasSills();
+        cargarUsuariosListasSills();
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
 
@@ -92,44 +94,54 @@ public class MenuListasSkillsFragment extends Fragment{
 
     public void cargarUsuariosListasSills()
     {
-//        GrupService grupService = Api.getApi().create(GrupService.class);
-//        Call<Grup> grupCall = grupService.Getgrups(2);
-//
-//        grupCall.enqueue(new Callback<Grup>() {
-//            @Override
-//            public void onResponse(Call<Grup> call, Response<Grup> response) {
-//                switch (response.code())
-//                {
-//                    case 204:
-//                        DadesGrup = response.body();
-//
-//                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter((List<Usuari>) DadesGrup.getGrups_has_alumnes().get(1).getUsuaris());
-//                        ListUsuarisGrup.setHasFixedSize(true);
-//                        ListUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
-//                                LinearLayoutManager.HORIZONTAL,
-//                                false));
-//
-//                        ListUsuarisGrup.setAdapter(usuarisAdapter);
-//
-//
-//                        break;
-//                    case 400:
-//                        Gson gson = new Gson();
-//                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
-//                        Toast.makeText(activity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-//                        break;
-//                    case 404:
-//                        Toast.makeText(activity,"Registre no trobat", Toast.LENGTH_LONG).show();
-//                        break;
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Grup> call, Throwable t) {
-//
-//            }
-//        });
+        GrupService grupService = Api.getApi().create(GrupService.class);
+        Call<Grup> grupCall = grupService.GetgrupsById(2);
+
+        grupCall.enqueue(new Callback<Grup>() {
+            @Override
+            public void onResponse(Call<Grup> call, Response<Grup> response) {
+                switch (response.code())
+                {
+                    case 200:
+                        DadesGrup = response.body();
+                        grupsHasAlumnes = DadesGrup.getGrups_has_alumnes();
+
+                        for (Grups_has_alumnes gH: grupsHasAlumnes) {
+                            usuaris.add(gH.getUsuaris());
+                        }
+
+                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(usuaris);
+                        ListUsuarisGrup.setHasFixedSize(true);
+                        ListUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
+                                LinearLayoutManager.HORIZONTAL,
+                                false));
+
+                        ListUsuarisGrup.setAdapter(usuarisAdapter);
+
+
+
+
+
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(activity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(activity,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Grup> call, Throwable t) {
+                Toast.makeText(activity,"error: "+ t.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
