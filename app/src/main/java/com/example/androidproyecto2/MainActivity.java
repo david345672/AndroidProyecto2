@@ -126,28 +126,6 @@ public class MainActivity extends AppCompatActivity {
         grups.add(grup3);
         grups.add(grup4);
 
-//        GrupService grupService = Api.getApi().create(GrupService.class);
-//        Call<List<Grup>> listCall = grupService.GetGrups();
-//
-//        listCall.enqueue(new Callback<List<Grup>>() {
-//            @Override
-//            public void onResponse(Call<List<Grup>> call, Response<List<Grup>> response) {
-//                switch (response.code())
-//                {
-//                    case 200:
-//                        grups = response.body();
-//                        Toast.makeText(MainActivity.this,grups.get(0).getNom(),Toast.LENGTH_LONG).show();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Grup>> call, Throwable t) {
-//
-//            }
-//        });
 
     }
 
