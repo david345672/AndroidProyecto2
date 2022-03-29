@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,13 +53,14 @@ public class MenuListasSkillsFragment extends Fragment{
 
     Grup DadesGrup;
     private RecyclerView ListUsuarisGrup;
-    private View vpLlistes;
+    View view;
+    ViewPager vpLlistes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_menu_listas_skills, container, false);
+        view = inflater.inflate(R.layout.fragment_menu_listas_skills, container, false);
         return view;
     }
 
@@ -73,8 +75,9 @@ public class MenuListasSkillsFragment extends Fragment{
         //Grups_has_alumnes test = new Grups_has_alumnes();
         //cargarUsuarios(gb);
         ListUsuarisGrup = view.findViewById(R.id.ListUsuarisGrup);
-        vpLlistes = view.findViewById(R.id.VpLlistesSkills);
+
         cargarUsuariosListasSills();
+
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
 
@@ -129,15 +132,14 @@ public class MenuListasSkillsFragment extends Fragment{
                         for (Grups_has_llistes_skills gHLlistes: grupsHasLlistesSkills) {
                             llistaSkills.add(gHLlistes.getLlistes_skills());
                         }
-
-                        vpLlistes = activity.findViewById(R.id.VpGrups);
-                        //vpLlistes.setClipToPadding(false);
+                        vpLlistes = view.findViewById(R.id.VpLlistesSkills);
+                        vpLlistes.setClipToPadding(false);
                         vpLlistes.setPadding(100, 0, 100, 0);
-                        //vpLlistes.setPageMargin(100);
+                        vpLlistes.setPageMargin(100);
 
+                        LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills);
 
-                        //GrupsAdapterViewPager grupsAdapterViewPager = new GrupsAdapterViewPager(getContext(),grups);
-                        //vpLlistes.setAdapter(grupsAdapterViewPager);
+                        vpLlistes.setAdapter(llistasSkillsGrupAdapterViewPager);
 
 
 

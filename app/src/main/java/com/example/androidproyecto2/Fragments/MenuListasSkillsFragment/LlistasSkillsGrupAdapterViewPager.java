@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -41,7 +42,7 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
         Button btnLlistaSkill = view.findViewById(R.id.btnLlistaSkill);
         LlistaSkills LS = llistaSkills.get(position);
         btnLlistaSkill.setText(LS.getNom());
-
+        Toast.makeText(context, "id_Llista: " + LS.getId(), Toast.LENGTH_SHORT).show();
         container.addView(view);
         return view;
     }
