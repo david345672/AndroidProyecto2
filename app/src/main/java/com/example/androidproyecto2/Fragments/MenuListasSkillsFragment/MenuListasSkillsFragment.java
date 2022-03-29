@@ -141,6 +141,14 @@ public class MenuListasSkillsFragment extends Fragment{
 
                         vpLlistes.setAdapter(llistasSkillsGrupAdapterViewPager);
 
+                        vpLlistes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                            public void onPageScrollStateChanged(int state) {}
+                            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+                            public void onPageSelected(int position) {
+                                Toast.makeText(activity, "id_LlistaSelect: " + llistaSkills.get(position).getId(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
 
 

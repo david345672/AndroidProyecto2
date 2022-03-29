@@ -42,10 +42,12 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
         Button btnLlistaSkill = view.findViewById(R.id.btnLlistaSkill);
         LlistaSkills LS = llistaSkills.get(position);
         btnLlistaSkill.setText(LS.getNom());
-        Toast.makeText(context, "id_Llista: " + LS.getId(), Toast.LENGTH_SHORT).show();
         container.addView(view);
+
+
         return view;
     }
+
 
 
     @Override
