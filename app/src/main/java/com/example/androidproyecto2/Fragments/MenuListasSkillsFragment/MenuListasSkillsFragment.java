@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.example.androidproyecto2.Clases.Grups_has_alumnes;
 import com.example.androidproyecto2.Clases.Grups_has_llistes_skills;
 import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
+import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.globales;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment.GrupsAdapterViewPager;
@@ -50,11 +52,14 @@ public class MenuListasSkillsFragment extends Fragment{
     List<Usuari> usuarisApi;
     List<Usuari> usuaris = new ArrayList<>();
     List<LlistaSkills> llistaSkills = new ArrayList<>();
+    List<Skill> Skills = new ArrayList<>();
 
     Grup DadesGrup;
     private RecyclerView ListUsuarisGrup;
     View view;
     ViewPager vpLlistes;
+    ViewPager vpSkills;
+    RadioGroup rdgUsuaris;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +79,7 @@ public class MenuListasSkillsFragment extends Fragment{
         //gb = new globales();
         //Grups_has_alumnes test = new Grups_has_alumnes();
         //cargarUsuarios(gb);
+
         ListUsuarisGrup = view.findViewById(R.id.ListUsuarisGrup);
 
         cargarUsuariosListasSills();
@@ -141,12 +147,23 @@ public class MenuListasSkillsFragment extends Fragment{
 
                         vpLlistes.setAdapter(llistasSkillsGrupAdapterViewPager);
 
+
                         vpLlistes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                             public void onPageScrollStateChanged(int state) {}
                             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
                             public void onPageSelected(int position) {
-                                Toast.makeText(activity, "id_LlistaSelect: " + llistaSkills.get(position).getId(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(activity, "id_LlistaSelect: " + llistaSkills.get(position).getId(), Toast.LENGTH_SHORT).show();
+                                Skills = llistaSkills.get(position).getSkills();
+
+                                vpSkills = view.findViewById(R.id.VpSkills);
+                                vpSkills.setClipToPadding(false);
+                                vpSkills.setPadding(300, 0, 300, 0);
+                                vpSkills.setPageMargin(300);
+
+                                SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),Skills);
+                                vpSkills.setAdapter(skillsListsSkillAdpterViewPager);
+
                             }
                         });
 

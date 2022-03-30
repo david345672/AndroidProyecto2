@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,8 @@ import java.util.List;
 public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHolder>
 {
     private List<Usuari> usuaris;
+    private  Boolean isRadioButtonCheched = false;
+    private  int lasCheckedPosition = -1;
 
     public UsuarisAdapter(List<Usuari> usuaris) {
         this.usuaris = usuaris;
@@ -49,6 +52,21 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindUsuari(usuaris.get(position));
+//        Usuari usuari = usuaris.get(position);
+//
+//        if(isRadioButtonCheched)
+//        {
+//            holder.rdbUsuari.setChecked(false);
+//        }
+//        else
+//        {
+//            if (holder.getAdapterPosition() == 0)
+//            {
+//                holder.rdbUsuari.setChecked(true);
+//                lasCheckedPosition = 0;
+//            }
+//        }
+
     }
 
     public int getItemCount()
