@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public View toolbar;
     public List<Grup> grups;
     public String layout = "Login";
+    public Boolean esDocent = true;
     FragmentManager mgr;
     FragmentTransaction fragmentTransaction;
     public int idGrupo = -1;

@@ -24,12 +24,14 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
 {
     Context context;
     List<Skill> skills;
+    Boolean esDocent;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills) {
+    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent) {
         this.context = context;
         this.skills = skills;
+        this.esDocent = esDocent;
     }
 
     @Override
@@ -46,7 +48,15 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
         btnSkill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                irAValoracionProfesor();
+                if (esDocent)
+                {
+                    irAValoracionTipoProfesor();
+                }
+                else
+                {
+                    irAValoracionTipoAlumno();
+                }
+                
             }
         });
 
@@ -77,7 +87,7 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
         collection.removeView((View) view);
     }
 
-    private void irAValoracionProfesor()
+    private void irAValoracionTipoProfesor()
     {
 
         MainActivity activity = (MainActivity) context;
@@ -90,7 +100,7 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     }
 
 
-    private void irAValoracionAlumno()
+    private void irAValoracionTipoAlumno()
     {
         MainActivity activity = (MainActivity) context;
         mg = activity.getSupportFragmentManager();
