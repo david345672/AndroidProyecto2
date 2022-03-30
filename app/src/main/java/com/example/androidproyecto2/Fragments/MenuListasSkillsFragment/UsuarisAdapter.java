@@ -3,6 +3,7 @@ package com.example.androidproyecto2.Fragments.MenuListasSkillsFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -18,7 +19,8 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
 {
     private List<Usuari> usuaris;
     private  Boolean isRadioButtonCheched = false;
-    private  int lasCheckedPosition = -1;
+    private  int SelectedPosition = -1;
+
 
     public UsuarisAdapter(List<Usuari> usuaris) {
         this.usuaris = usuaris;
@@ -31,12 +33,22 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             rdbUsuari = itemView.findViewById(R.id.rdbUsuari);
+
+            rdbUsuari.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SelectedPosition = getAdapterPosition();
+                    notifyDataSetChanged();
+                }
+            });
+
+
         }
 
-        void bindUsuari(Usuari usuari)
-        {
-            rdbUsuari.setText(usuari.getNom());
-        }
+//        void bindUsuari(Usuari usuari)
+//        {
+//            rdbUsuari.setText(usuari.getNom());
+//        }
 
     }
 
@@ -51,21 +63,19 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bindUsuari(usuaris.get(position));
-//        Usuari usuari = usuaris.get(position);
-//
-//        if(isRadioButtonCheched)
-//        {
-//            holder.rdbUsuari.setChecked(false);
-//        }
-//        else
-//        {
-//            if (holder.getAdapterPosition() == 0)
-//            {
-//                holder.rdbUsuari.setChecked(true);
-//                lasCheckedPosition = 0;
-//            }
-//        }
+        holder.rdbUsuari.setText(usuaris.get(position).getNomUsuari());
+
+        holder.rdbUsuari.setChecked(position == SelectedPosition);
+
+        holder.rdbUsuari.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b)
+                {
+                    SelectedPosition = holder.getAdapterPosition();
+                }
+            }
+        });
 
     }
 
