@@ -110,7 +110,7 @@ public class MenuListasSkillsFragment extends Fragment{
                             usuaris.add(gH.getUsuaris());
                         }
 
-                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(usuaris,activity);
+                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(getContext(),usuaris,activity.usuariValorat);
                         ListUsuarisGrup.setHasFixedSize(true);
                         ListUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.HORIZONTAL,
@@ -138,9 +138,9 @@ public class MenuListasSkillsFragment extends Fragment{
                             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
                             public void onPageSelected(int position) {
-
+                                //Toast.makeText(activity, activity.usuariValorat.getNom(), Toast.LENGTH_SHORT).show();
                                 idListaSelcted = llistaSkills.get(position).getId();
-                                CargarSkills(position);
+                                //CargarSkills(position);
                             }
                         });
 

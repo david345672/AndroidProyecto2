@@ -1,11 +1,13 @@
 package com.example.androidproyecto2.Fragments.MenuListasSkillsFragment;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,15 +20,17 @@ import java.util.List;
 
 public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHolder>
 {
-    MainActivity activity;
+    private Usuari usuari;
+    private Context context;
     private List<Usuari> usuaris;
     private  Boolean isRadioButtonCheched = false;
     private  int SelectedPosition = -1;
 
 
-    public UsuarisAdapter(List<Usuari> usuaris, MainActivity activity) {
+    public UsuarisAdapter(Context context, List<Usuari> usuaris, Usuari usuari) {
+        this.context = context;
         this.usuaris = usuaris;
-        this.activity = activity;
+        this.usuari = usuari;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -41,8 +45,9 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     SelectedPosition = getAdapterPosition();
-                    activity.usuariValorat = usuaris.get(SelectedPosition);
                     notifyDataSetChanged();
+                    usuari = usuaris.get(SelectedPosition);
+
                 }
             });
 
