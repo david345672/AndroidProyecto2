@@ -7,8 +7,20 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/titlekpi"
+        android:layout_gravity="center"
+        android:
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Valoracio tipus Alumne" />
+        android:text="NOMBRE KPI" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:id="@+id/kpisRecycler"
+        android:layout_marginTop="100px"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

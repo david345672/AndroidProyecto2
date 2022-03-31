@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public String layout = "Login";
-    public Boolean esDocent = true;
+    public Boolean esDocent = false;
     FragmentManager mgr;
     FragmentTransaction fragmentTransaction;
     public int idGrupo = -1;

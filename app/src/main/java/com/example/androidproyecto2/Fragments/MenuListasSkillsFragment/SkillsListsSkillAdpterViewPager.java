@@ -57,8 +57,8 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                if (usuariValorat != null)
-                {
+                //if (usuariValorat != null)
+                //{
                     activity.idListaSelected = idListaSelcted;
                     activity.skillSelected = S;
 
@@ -70,11 +70,11 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
                     {
                         irAValoracionTipoAlumno();
                     }
-                }
-                else
-                {
-                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
-                }
+                //}
+                //else
+                //{
+                    //Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
+                //}
 
                 
             }
