@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.LlistaSkills;
+import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Fragments.FragmentsAlumno.ValoracionAlumnoFragment.ValoracionAlumnoFragment;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocenteFragment.ValoracionDocenteFragment;
 import com.example.androidproyecto2.MainActivity;
@@ -25,14 +26,16 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
     Context context;
     List<LlistaSkills> llistaSkills;
     Boolean esDocent;
+    Usuari usuariValorat;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public LlistasSkillsGrupAdapterViewPager(Context context, List<LlistaSkills> llistaSkills, Boolean esDocent, MainActivity activity) {
+    public LlistasSkillsGrupAdapterViewPager(Context context, List<LlistaSkills> llistaSkills, Boolean esDocent, MainActivity activity, Usuari usuariValorat) {
         this.activity = activity;
         this.context = context;
         this.llistaSkills = llistaSkills;
         this.esDocent = esDocent;
+        this.usuariValorat = usuariValorat;
     }
 
 
@@ -58,16 +61,25 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                activity.listaSkillsSelected = llistaSkills;
-
-                if (esDocent)
+                if (usuariValorat != null)
                 {
-                    irAValoracionTipoProfesor();
+                    activity.listaSkillsSelected = llistaSkills;
+
+                    if (esDocent)
+                    {
+                        irAValoracionTipoProfesor();
+                    }
+                    else
+                    {
+                        irAValoracionTipoAlumno();
+                    }
                 }
                 else
                 {
-                    irAValoracionTipoAlumno();
+                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
                 }
+
+
             }
         });
 

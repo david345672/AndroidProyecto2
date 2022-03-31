@@ -76,7 +76,7 @@ public class MenuListasSkillsFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         activity = (MainActivity) getActivity();
-
+        activity.layout = "MenuListaSkills";
 
 
 
@@ -127,7 +127,7 @@ public class MenuListasSkillsFragment extends Fragment{
                         vpLlistes.setClipToPadding(false);
                         vpLlistes.setPadding(100, 0, 100, 0);
                         vpLlistes.setPageMargin(100);
-                        LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills,activity.esDocent,activity);
+                        LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills,activity.esDocent,activity,activity.usuariValorat);
                         vpLlistes.setAdapter(llistasSkillsGrupAdapterViewPager);
 
                         idListaSelcted = llistaSkills.get(0).getId();
@@ -175,7 +175,7 @@ public class MenuListasSkillsFragment extends Fragment{
         vpSkills.setPadding(300, 0, 300, 0);
         vpSkills.setPageMargin(300);
 
-        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity,idListaSelcted);
+        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity,idListaSelcted,activity.usuariValorat);
         vpSkills.setAdapter(skillsListsSkillAdpterViewPager);
     }
 

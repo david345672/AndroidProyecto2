@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -13,6 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.Skill;
+import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Fragments.FragmentsAlumno.ValoracionAlumnoFragment.ValoracionAlumnoFragment;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocenteFragment.ValoracionDocenteFragment;
 import com.example.androidproyecto2.MainActivity;
@@ -27,15 +29,17 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     List<Skill> skills;
     Boolean esDocent;
     int idListaSelcted;
+    Usuari usuariValorat;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted) {
+    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted,Usuari usuariValorat) {
         this.activity = activity;
         this.context = context;
         this.skills = skills;
         this.esDocent = esDocent;
         this.idListaSelcted = idListaSelcted;
+        this.usuariValorat = usuariValorat;
     }
 
     @Override
@@ -53,17 +57,25 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                activity.idListaSelected = idListaSelcted;
-                activity.skillSelected = S;
-
-                if (esDocent)
+                if (usuariValorat != null)
                 {
-                    irAValoracionTipoProfesor();
+                    activity.idListaSelected = idListaSelcted;
+                    activity.skillSelected = S;
+
+                    if (esDocent)
+                    {
+                        irAValoracionTipoProfesor();
+                    }
+                    else
+                    {
+                        irAValoracionTipoAlumno();
+                    }
                 }
                 else
                 {
-                    irAValoracionTipoAlumno();
+                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
                 }
+
                 
             }
         });
