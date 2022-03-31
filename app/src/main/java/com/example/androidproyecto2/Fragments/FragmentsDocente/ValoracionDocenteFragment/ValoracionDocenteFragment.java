@@ -37,13 +37,13 @@ public class ValoracionDocenteFragment extends Fragment {
 
         if (activity.skillSelected != null)
         {
-            Toast.makeText(activity, "IdLista: " + activity.idListaSelected + ", SkillSelecionada: " + activity.skillSelected.getNom() + ", UsuarioAValorar: " + activity.usuariValorat.getNom(), Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "IdLista: " + activity.idListaSelected + ", SkillSelecionada: " + activity.skillSelected.getNom() + ", IdUsuario: " + activity.idUsuariSelected, Toast.LENGTH_LONG).show();
         }
 
-        if (activity.listaSkillsSelected != null)
-        {
-            Toast.makeText(activity, "", Toast.LENGTH_LONG).show();
-        }
+//        if (activity.listaSkillsSelected != null)
+//        {
+//            Toast.makeText(activity, "", Toast.LENGTH_LONG).show();
+//        }
 
 
 

@@ -29,17 +29,17 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     List<Skill> skills;
     Boolean esDocent;
     int idListaSelcted;
-    Usuari usuariValorat;
+    int idUsuariSelected;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted,Usuari usuariValorat) {
+    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted, int idUsuariSelected) {
         this.activity = activity;
         this.context = context;
         this.skills = skills;
         this.esDocent = esDocent;
         this.idListaSelcted = idListaSelcted;
-        this.usuariValorat = usuariValorat;
+        this.idUsuariSelected = idUsuariSelected;
     }
 
     @Override
@@ -57,11 +57,12 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(context, usuariValorat.getNomUsuari(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "id: " + idUsuariSelected, Toast.LENGTH_LONG).show();
 //                if (usuariValorat != null)
 //                {
-//                    activity.idListaSelected = idListaSelcted;
-//                    activity.skillSelected = S;
+                    activity.idListaSelected = idListaSelcted;
+                    Toast.makeText(context, "id: " + activity.idListaSelected + ", usuariSeleccionat: " + activity.usuariValorat.getNomUsuari(), Toast.LENGTH_LONG).show();
+                    activity.skillSelected = S;
 //
 //                    if (esDocent)
 //                    {

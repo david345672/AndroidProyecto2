@@ -20,17 +20,18 @@ import java.util.List;
 
 public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHolder>
 {
-    private Usuari usuari;
+    private MainActivity activity;
+    private int idUsuariSelected;
     private Context context;
     private List<Usuari> usuaris;
     private  Boolean isRadioButtonCheched = false;
     private  int SelectedPosition = -1;
 
 
-    public UsuarisAdapter(Context context, List<Usuari> usuaris, Usuari usuari) {
+    public UsuarisAdapter(Context context, List<Usuari> usuaris,MainActivity activity) {
         this.context = context;
         this.usuaris = usuaris;
-        this.usuari = usuari;
+        this.activity = activity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -46,7 +47,7 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
                 public void onClick(View view) {
                     SelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
-                    usuari = usuaris.get(SelectedPosition);
+                    activity.usuariValorat = usuaris.get(SelectedPosition);
 
                 }
             });

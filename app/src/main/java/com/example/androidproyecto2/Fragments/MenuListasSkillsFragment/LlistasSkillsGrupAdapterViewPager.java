@@ -30,12 +30,11 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public LlistasSkillsGrupAdapterViewPager(Context context, List<LlistaSkills> llistaSkills, Boolean esDocent, MainActivity activity, Usuari usuariValorat) {
-        this.activity = activity;
+    public LlistasSkillsGrupAdapterViewPager(Context context, List<LlistaSkills> llistaSkills, Boolean esDocent, MainActivity activity) {
         this.context = context;
         this.llistaSkills = llistaSkills;
         this.esDocent = esDocent;
-        this.usuariValorat = usuariValorat;
+        this.activity = activity;
     }
 
 
@@ -61,23 +60,25 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                if (usuariValorat != null)
-                {
+//                if (usuariValorat != null)
+//                {
                     activity.listaSkillsSelected = llistaSkills;
+                    activity.llistaSkillSelected = LS;
+                    Toast.makeText(context, "idListaSeleccionada: " + activity.llistaSkillSelected.getNom() + ", Usuari: " + activity.usuariValorat.getNomUsuari(), Toast.LENGTH_SHORT).show();
 
-                    if (esDocent)
-                    {
-                        irAValoracionTipoProfesor();
-                    }
-                    else
-                    {
-                        irAValoracionTipoAlumno();
-                    }
-                }
-                else
-                {
-                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
-                }
+//                    if (esDocent)
+//                    {
+//                        irAValoracionTipoProfesor();
+//                    }
+//                    else
+//                    {
+//                        irAValoracionTipoAlumno();
+//                    }
+//                }
+//                else
+//                {
+//                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
+//                }
 
 
             }

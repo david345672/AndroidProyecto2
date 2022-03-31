@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public List<Grup> grups;
     public Skill skillSelected;
     public int idListaSelected;
+    public int idUsuariSelected;
+    public LlistaSkills llistaSkillSelected;
     public List<LlistaSkills> listaSkillsSelected;
     public Usuari usuariLogin;
     public Usuari usuariValorat;
