@@ -22,13 +22,15 @@ import java.util.List;
 
 public class SkillsListsSkillAdpterViewPager extends PagerAdapter
 {
+    MainActivity activity;
     Context context;
     List<Skill> skills;
     Boolean esDocent;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent) {
+    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity) {
+        this.activity = activity;
         this.context = context;
         this.skills = skills;
         this.esDocent = esDocent;
@@ -48,6 +50,9 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
         btnSkill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                activity.skillsSelected = skills;
+
                 if (esDocent)
                 {
                     irAValoracionTipoProfesor();

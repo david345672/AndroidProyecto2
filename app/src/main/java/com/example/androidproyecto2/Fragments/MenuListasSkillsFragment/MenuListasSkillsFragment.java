@@ -74,11 +74,9 @@ public class MenuListasSkillsFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         activity = (MainActivity) getActivity();
-        activity.layout = "MenuListaSkills";
 
-        //gb = new globales();
-        //Grups_has_alumnes test = new Grups_has_alumnes();
-        //cargarUsuarios(gb);
+
+
 
         ListUsuarisGrup = view.findViewById(R.id.ListUsuarisGrup);
 
@@ -87,21 +85,6 @@ public class MenuListasSkillsFragment extends Fragment{
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
 
-
-
-
-
-
-        //Toast.makeText(activity, gb.grupsHasAlumnes.toString(), Toast.LENGTH_SHORT).show();
-
-//        if (gb.grupsHasAlumnes != null)
-//        {
-//            Toast.makeText(activity, "id: " + gb.grupsHasAlumnes.get(0).getUsuaris_id(), Toast.LENGTH_LONG).show();
-//        }
-//        else
-//        {
-//            Toast.makeText(activity, "Error: ", Toast.LENGTH_LONG).show();
-//        }
 
 
     }
@@ -142,7 +125,7 @@ public class MenuListasSkillsFragment extends Fragment{
                         vpLlistes.setClipToPadding(false);
                         vpLlistes.setPadding(100, 0, 100, 0);
                         vpLlistes.setPageMargin(100);
-                        LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills);
+                        LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills,activity.esDocent,activity);
                         vpLlistes.setAdapter(llistasSkillsGrupAdapterViewPager);
 
                         CargarSkills(0);
@@ -187,7 +170,7 @@ public class MenuListasSkillsFragment extends Fragment{
         vpSkills.setPadding(300, 0, 300, 0);
         vpSkills.setPageMargin(300);
 
-        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent);
+        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity);
         vpSkills.setAdapter(skillsListsSkillAdpterViewPager);
     }
 

@@ -11,10 +11,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
+import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Ventana;
 import com.example.androidproyecto2.Fragments.LoginFragment.LoginFragment;
+import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
@@ -30,13 +33,20 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     public View toolbar;
+
+    //Variables de seleccio
     public List<Grup> grups;
+    public List<Skill> skillsSelected;
+    public List<LlistaSkills> listaSkillsSelected;
+    public Usuari usuariLogin;
+    public Usuari usuariValorat;
+
+
     public String layout = "Login";
     public Boolean esDocent = true;
     FragmentManager mgr;
     FragmentTransaction fragmentTransaction;
     public int idGrupo = -1;
-    public Usuari usuariLogin;
 
 
     @Override
@@ -68,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
                     VolverAMenu();
                     btnAtras.setVisibility(View.INVISIBLE);
 
+                }
+                else if(layout.equals("HacerValoracion"))
+                {
+                    VolverAMenuListasSkills();
                 }
 
             }
@@ -110,6 +124,19 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
     }
+
+
+    public void VolverAMenuListasSkills()
+    {
+        mgr = getSupportFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+
+        MenuListasSkillsFragment menuListasSkillsFragment = new MenuListasSkillsFragment();
+
+        fragmentTransaction.replace(R.id.FrContent, menuListasSkillsFragment);
+        fragmentTransaction.commit();
+    }
+
 
 
     public void ocultarBarrasDispositivo()
