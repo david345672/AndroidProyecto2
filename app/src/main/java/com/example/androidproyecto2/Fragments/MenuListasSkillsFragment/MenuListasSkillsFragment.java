@@ -54,6 +54,8 @@ public class MenuListasSkillsFragment extends Fragment{
     List<LlistaSkills> llistaSkills = new ArrayList<>();
     List<Skill> Skills = new ArrayList<>();
 
+    int idListaSelcted;
+
     Grup DadesGrup;
     private RecyclerView ListUsuarisGrup;
     View view;
@@ -108,7 +110,7 @@ public class MenuListasSkillsFragment extends Fragment{
                             usuaris.add(gH.getUsuaris());
                         }
 
-                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(usuaris);
+                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(usuaris,activity);
                         ListUsuarisGrup.setHasFixedSize(true);
                         ListUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.HORIZONTAL,
@@ -128,6 +130,7 @@ public class MenuListasSkillsFragment extends Fragment{
                         LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills,activity.esDocent,activity);
                         vpLlistes.setAdapter(llistasSkillsGrupAdapterViewPager);
 
+                        idListaSelcted = llistaSkills.get(0).getId();
                         CargarSkills(0);
 
                         vpLlistes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -135,6 +138,8 @@ public class MenuListasSkillsFragment extends Fragment{
                             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
                             public void onPageSelected(int position) {
+
+                                idListaSelcted = llistaSkills.get(position).getId();
                                 CargarSkills(position);
                             }
                         });
@@ -170,7 +175,7 @@ public class MenuListasSkillsFragment extends Fragment{
         vpSkills.setPadding(300, 0, 300, 0);
         vpSkills.setPageMargin(300);
 
-        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity);
+        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity,idListaSelcted);
         vpSkills.setAdapter(skillsListsSkillAdpterViewPager);
     }
 

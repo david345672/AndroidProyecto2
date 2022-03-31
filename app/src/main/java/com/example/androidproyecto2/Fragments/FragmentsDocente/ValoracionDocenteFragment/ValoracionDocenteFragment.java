@@ -35,6 +35,11 @@ public class ValoracionDocenteFragment extends Fragment {
         activity = (MainActivity) getActivity();
         activity.layout = "HacerValoracion";
 
+        if (activity.skillSelected != null)
+        {
+            Toast.makeText(activity, "IdLista: " + activity.idListaSelected + ", SkillSelecionada: " + activity.skillSelected.getNom() + ", UsuarioAValorar: " + activity.usuariValorat.getNom(), Toast.LENGTH_LONG).show();
+        }
+
 
 
 

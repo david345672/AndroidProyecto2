@@ -11,19 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproyecto2.Clases.Usuari;
+import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.util.List;
 
 public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHolder>
 {
+    MainActivity activity;
     private List<Usuari> usuaris;
     private  Boolean isRadioButtonCheched = false;
     private  int SelectedPosition = -1;
 
 
-    public UsuarisAdapter(List<Usuari> usuaris) {
+    public UsuarisAdapter(List<Usuari> usuaris, MainActivity activity) {
         this.usuaris = usuaris;
+        this.activity = activity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -38,6 +41,7 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     SelectedPosition = getAdapterPosition();
+                    activity.usuariValorat = usuaris.get(SelectedPosition);
                     notifyDataSetChanged();
                 }
             });
@@ -73,6 +77,7 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
                 if(b)
                 {
                     SelectedPosition = holder.getAdapterPosition();
+
                 }
             }
         });

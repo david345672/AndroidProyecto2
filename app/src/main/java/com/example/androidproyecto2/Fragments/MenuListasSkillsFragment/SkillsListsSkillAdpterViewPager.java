@@ -26,14 +26,16 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     Context context;
     List<Skill> skills;
     Boolean esDocent;
+    int idListaSelcted;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity) {
+    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted) {
         this.activity = activity;
         this.context = context;
         this.skills = skills;
         this.esDocent = esDocent;
+        this.idListaSelcted = idListaSelcted;
     }
 
     @Override
@@ -51,7 +53,8 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                activity.skillsSelected = skills;
+                activity.idListaSelected = idListaSelcted;
+                activity.skillSelected = S;
 
                 if (esDocent)
                 {
