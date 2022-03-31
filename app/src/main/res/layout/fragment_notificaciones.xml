@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="<-"
+            android:text="Hola"
             android:textColor="@color/black"
             android:background="@null"
             android:textStyle="bold"
@@ -38,10 +38,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="->"
+            android:text="Hola"
             android:textColor="@color/black"
             android:background="@null"
             android:textStyle="bold"
+            android:onClick="nextMonthAction"
             android:textSize="20sp"/>
 
     </LinearLayout>
