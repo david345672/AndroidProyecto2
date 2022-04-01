@@ -45,13 +45,15 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         View view = LayoutInflater.from(context).inflate(R.layout.skill_valoracion_docente_viewpager_item,container,false);
 
         TableLayout tableSkill = view.findViewById(R.id.tableSkill);
+        TextView nomSkill = view.findViewById(R.id.nomSkill);
+        nomSkill.setText(skills.get(position).getNom());
 
-        for (int i = 0; i < skills.get(position).getKpis().size(); i++)
-        {
-            TableRow row = new TableRow(activity);
-            TextView SubSkill = new TextView(activity);
-            SubSkill.setText(skills.get(position).getKpis().get(i).getNom());
-            row.addView(SubSkill);
+//        for (int i = 0; i < skills.get(position).getKpis().size(); i++)
+//        {
+//            TableRow row = new TableRow(context);
+//            TextView SubSkill = new TextView(context);
+//            SubSkill.setText(skills.get(position).getKpis().get(i).getNom());
+//            row.addView(SubSkill);
 
 //            RadioGroup radioGroup = new RadioGroup(context);
 //            RadioButton rdb1 = new RadioButton(context);
@@ -68,9 +70,9 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
 //            row.addView(rdb3);
 //            row.addView(rdb4);
 
-            tableSkill.addView(row);
+            //tableSkill.addView(row);
 
-        }
+//        }
 
 
 
