@@ -48,8 +48,8 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
 
         for (int i = 0; i < skills.get(position).getKpis().size(); i++)
         {
-            TableRow row = new TableRow(context);
-            TextView SubSkill = new TextView(context);
+            TableRow row = new TableRow(activity);
+            TextView SubSkill = new TextView(activity);
             SubSkill.setText(skills.get(position).getKpis().get(i).getNom());
             row.addView(SubSkill);
 
