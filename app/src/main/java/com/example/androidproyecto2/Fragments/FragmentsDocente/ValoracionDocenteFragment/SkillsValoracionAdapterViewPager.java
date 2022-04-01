@@ -47,7 +47,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         TableLayout tableSkill = view.findViewById(R.id.tableSkill);
         TextView nomSkill = view.findViewById(R.id.nomSkill);
         nomSkill.setText(skills.get(position).getNom());
-
+        //Toast.makeText(activity, skills.get(position).getKpis().get(0).getNom(), Toast.LENGTH_SHORT).show();
 //        for (int i = 0; i < skills.get(position).getKpis().size(); i++)
 //        {
 //            TableRow row = new TableRow(context);
