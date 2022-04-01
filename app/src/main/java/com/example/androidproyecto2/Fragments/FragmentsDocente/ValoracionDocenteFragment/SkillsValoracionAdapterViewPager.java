@@ -1,11 +1,13 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocenteFragment;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
@@ -47,32 +49,50 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         TableLayout tableSkill = view.findViewById(R.id.tableSkill);
         TextView nomSkill = view.findViewById(R.id.nomSkill);
         nomSkill.setText(skills.get(position).getNom());
-        //Toast.makeText(activity, skills.get(position).getKpis().get(0).getNom(), Toast.LENGTH_SHORT).show();
-//        for (int i = 0; i < skills.get(position).getKpis().size(); i++)
-//        {
-//            TableRow row = new TableRow(context);
-//            TextView SubSkill = new TextView(context);
-//            SubSkill.setText(skills.get(position).getKpis().get(i).getNom());
-//            row.addView(SubSkill);
 
+        for (int i = 0; i < skills.get(position).getKpis().size(); i++)
+        {
+            TableRow row = new TableRow(context);
+            row.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            TextView SubSkill = new TextView(context);
+            SubSkill.setText(skills.get(position).getKpis().get(i).getNom());
+            SubSkill.setGravity(Gravity.CENTER_VERTICAL);
+            SubSkill.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+//            SubSkill.setLayoutParams(new TableLayout.LayoutParams
+//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 3));
+
+            row.addView(SubSkill);
+
+            RadioButton rdb1 = new RadioButton(context);
+            RadioButton rdb2 = new RadioButton(context);
+            RadioButton rdb3 = new RadioButton(context);
+            RadioButton rdb4 = new RadioButton(context);
 //            RadioGroup radioGroup = new RadioGroup(context);
-//            RadioButton rdb1 = new RadioButton(context);
-//            RadioButton rdb2 = new RadioButton(context);
-//            RadioButton rdb3 = new RadioButton(context);
-//            RadioButton rdb4 = new RadioButton(context);
+
+//            rdb1.setLayoutParams(new TableLayout.LayoutParams
+//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
+
+//            rdb2.setLayoutParams(new TableLayout.LayoutParams
+//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
+
+//            rdb3.setLayoutParams(new TableLayout.LayoutParams
+//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
+
+//            rdb4.setLayoutParams(new TableLayout.LayoutParams
+//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
 //            radioGroup.addView(rdb1);
 //            radioGroup.addView(rdb2);
 //            radioGroup.addView(rdb3);
 //            radioGroup.addView(rdb4);
-//
-//            row.addView(rdb1);
-//            row.addView(rdb2);
-//            row.addView(rdb3);
-//            row.addView(rdb4);
 
-            //tableSkill.addView(row);
+            row.addView(rdb1);
+            row.addView(rdb2);
+            row.addView(rdb3);
+            row.addView(rdb4);
 
-//        }
+            tableSkill.addView(row);
+
+        }
 
 
 
