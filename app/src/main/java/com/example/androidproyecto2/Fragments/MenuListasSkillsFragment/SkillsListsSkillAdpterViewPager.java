@@ -57,26 +57,28 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
+//                skills.add(S);
+//                activity.SkillsSelected = skills;
                 //Toast.makeText(context, "id: " + idUsuariSelected, Toast.LENGTH_LONG).show();
-//                if (usuariValorat != null)
-//                {
-                    activity.idListaSelected = idListaSelcted;
-                    Toast.makeText(context, "id: " + activity.idListaSelected + ", usuariSeleccionat: " + activity.usuariValorat.getNomUsuari(), Toast.LENGTH_LONG).show();
+                if (activity.usuariValorat != null)
+                {
+                    //activity.idListaSelected = idListaSelcted;
                     activity.skillSelected = S;
-//
-//                    if (esDocent)
-//                    {
-//                        irAValoracionTipoProfesor();
-//                    }
-//                    else
-//                    {
-//                        irAValoracionTipoAlumno();
-//                    }
-//                }
-//                else
-//                {
-//                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
-//                }
+                    //Toast.makeText(context, "NomLlistaSelect: " + activity.llistaSkillSelected.getNom() + ", usuariSeleccionat: " + activity.usuariValorat.getNomUsuari() + ", Skill: " + activity.skillSelected.getNom(), Toast.LENGTH_LONG).show();
+
+                    if (esDocent)
+                    {
+                        irAValoracionTipoProfesor();
+                    }
+                    else
+                    {
+                        irAValoracionTipoAlumno();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
+                }
 
                 
             }
