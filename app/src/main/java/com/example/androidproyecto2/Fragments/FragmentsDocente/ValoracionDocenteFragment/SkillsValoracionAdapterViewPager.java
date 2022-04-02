@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.LlistaSkills;
@@ -50,49 +52,61 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         TextView nomSkill = view.findViewById(R.id.nomSkill);
         nomSkill.setText(skills.get(position).getNom());
 
-        for (int i = 0; i < skills.get(position).getKpis().size(); i++)
-        {
-            TableRow row = new TableRow(context);
-            row.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-            TextView SubSkill = new TextView(context);
-            SubSkill.setText(skills.get(position).getKpis().get(i).getNom());
-            SubSkill.setGravity(Gravity.CENTER_VERTICAL);
-            SubSkill.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-//            SubSkill.setLayoutParams(new TableLayout.LayoutParams
-//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 3));
+        RecyclerView ListKpiSkill = view.findViewById(R.id.ListKpiSkill);
+        KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis());
+        ListKpiSkill.setHasFixedSize(true);
+        ListKpiSkill.setLayoutManager(new LinearLayoutManager(context,
+                LinearLayoutManager.VERTICAL,
+                false));
 
-            row.addView(SubSkill);
+        ListKpiSkill.setAdapter(kpiAdapterValoracion);
 
-            RadioButton rdb1 = new RadioButton(context);
-            RadioButton rdb2 = new RadioButton(context);
-            RadioButton rdb3 = new RadioButton(context);
-            RadioButton rdb4 = new RadioButton(context);
-//            RadioGroup radioGroup = new RadioGroup(context);
 
-//            rdb1.setLayoutParams(new TableLayout.LayoutParams
-//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
 
-//            rdb2.setLayoutParams(new TableLayout.LayoutParams
-//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
 
-//            rdb3.setLayoutParams(new TableLayout.LayoutParams
-//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
-
-//            rdb4.setLayoutParams(new TableLayout.LayoutParams
-//                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
-//            radioGroup.addView(rdb1);
-//            radioGroup.addView(rdb2);
-//            radioGroup.addView(rdb3);
-//            radioGroup.addView(rdb4);
-
-            row.addView(rdb1);
-            row.addView(rdb2);
-            row.addView(rdb3);
-            row.addView(rdb4);
-
-            tableSkill.addView(row);
-
-        }
+//        for (int i = 0; i < skills.get(position).getKpis().size(); i++)
+//        {
+//            TableRow row = new TableRow(context);
+//            row.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+//            TextView SubSkill = new TextView(context);
+//            SubSkill.setText(skills.get(position).getKpis().get(i).getNom());
+//            SubSkill.setGravity(Gravity.CENTER_VERTICAL);
+//            SubSkill.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+////            SubSkill.setLayoutParams(new TableLayout.LayoutParams
+////                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 3));
+//
+//            row.addView(SubSkill);
+//
+//            RadioButton rdb1 = new RadioButton(context);
+//            RadioButton rdb2 = new RadioButton(context);
+//            RadioButton rdb3 = new RadioButton(context);
+//            RadioButton rdb4 = new RadioButton(context);
+////            RadioGroup radioGroup = new RadioGroup(context);
+//
+////            rdb1.setLayoutParams(new TableLayout.LayoutParams
+////                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
+//
+////            rdb2.setLayoutParams(new TableLayout.LayoutParams
+////                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
+//
+////            rdb3.setLayoutParams(new TableLayout.LayoutParams
+////                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
+//
+////            rdb4.setLayoutParams(new TableLayout.LayoutParams
+////                    (0, TableLayout.LayoutParams.WRAP_CONTENT, 1));
+////            radioGroup.addView(rdb1);
+////            radioGroup.addView(rdb2);
+////            radioGroup.addView(rdb3);
+////            radioGroup.addView(rdb4);
+//
+//            row.addView(rdb1);
+//            row.addView(rdb2);
+//            row.addView(rdb3);
+//            row.addView(rdb4);
+//
+//            tableSkill.addView(row);
+//
+//        }
 
 
 
