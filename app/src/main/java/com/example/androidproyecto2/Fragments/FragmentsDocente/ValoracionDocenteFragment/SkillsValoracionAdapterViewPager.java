@@ -48,12 +48,11 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
     {
         View view = LayoutInflater.from(context).inflate(R.layout.skill_valoracion_docente_viewpager_item,container,false);
 
-        TableLayout tableSkill = view.findViewById(R.id.tableSkill);
         TextView nomSkill = view.findViewById(R.id.nomSkill);
         nomSkill.setText(skills.get(position).getNom());
 
         RecyclerView ListKpiSkill = view.findViewById(R.id.ListKpiSkill);
-        KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis());
+        KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis(),activity, skills.get(position));
         ListKpiSkill.setHasFixedSize(true);
         ListKpiSkill.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL,
