@@ -52,13 +52,14 @@
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_notificaciones.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_perfil.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_temas.xml" value="0.3491847826086957" />
-        <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_valoracion_alumno.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_valoracion_alumno.xml" value="0.22" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_valoracion_docente.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_ver_valoracion_alumno.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_ver_valoracion_de_alumno.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/fragment_ver_valoraciones_docente.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/grupo_item.xml" value="0.3491847826086957" />
         <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/layout_valoracion_alumno_single.xml" value="0.3491847826086957" />
+        <entry key="..\:/Users/lavvo/Documents/GitHub/AndroidProyecto2/app/src/main/res/layout/llistaskill_vpager_item.xml" value="0.13854166666666667" />
       </map>
     </option>
   </component>

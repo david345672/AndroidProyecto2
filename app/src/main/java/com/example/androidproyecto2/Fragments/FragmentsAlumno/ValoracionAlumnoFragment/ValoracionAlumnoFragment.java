@@ -24,15 +24,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.androidproyecto2.Clases.Kpi;
+import com.example.androidproyecto2.Clases.Skill;
+import com.example.androidproyecto2.Clases.Usuari;
+import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class ValoracionAlumnoFragment extends Fragment {
 
     MainActivity activity;
+    int sizeKpis;
+
+    public ValoracionAlumnoFragment(Skill s) {
+        this.sizeKpis = 0;
+        // this.data = (ArrayList<Kpi>) s.getKpis();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +59,18 @@ public class ValoracionAlumnoFragment extends Fragment {
     }
 
 
+    class Valorar{
+        Kpi kpiAValorar;
+        Usuari valorador;
+        Usuari valorat;
 
+        private void valorarUsuari()//crear valoracio i enviar a api
+        {
+
+        }
+
+
+    }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -52,15 +78,22 @@ public class ValoracionAlumnoFragment extends Fragment {
         activity = (MainActivity) getActivity();
         activity.layout = "HacerValoracion";
         TextView tx = activity.findViewById(R.id.titlekpi);
-        tx.setText("EJEMPLO");
+        tx.setText("FLEXIBILITAT");
 
-        String[] prova = {"hola","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka","suka"};
+        String[] prova = {"Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar"};
         LinearLayout layout = activity.findViewById(R.id.layout);
 
-
+        //NECESSITO KPI, USUARI A VALORAR, USUARI VALORAT EN UN OBJECTE
         RecyclerView rv = activity.findViewById(R.id.kpisRecycler);
-        String[] provaS = prova;
-        AdapterValoracions adapter = new AdapterValoracions(provaS);
+        /*
+        String[] dades = new String[this.sizeKpis];
+        int contador = 0;
+        for(Kpi k : this.data){
+            dades[contador] = k.getNom();
+            contador++;
+        }*/
+
+        AdapterValoracions adapter = new AdapterValoracions(prova);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
@@ -71,6 +104,7 @@ public class ValoracionAlumnoFragment extends Fragment {
 
                 TextView LabelName = activity.findViewById(R.id.texto);
                 LabelName.setText(prova[(rv.getChildAdapterPosition(view))]);
+                Toast.makeText(activity, "prova", Toast.LENGTH_SHORT).show();
 
             }
         });
