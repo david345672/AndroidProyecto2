@@ -132,14 +132,8 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 }
             });
 
-
-
         }
 
-        void bindValoracio(Valoracio valoracio)
-        {
-
-        }
     }
 
 
