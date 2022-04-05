@@ -38,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
     public List<Grup> grups;
     public Skill skillSelected;
     public int idListaSelected;
+    public int idUsuariSelected;
+    public LlistaSkills llistaSkillSelected;
     public List<LlistaSkills> listaSkillsSelected;
-    public Usuari usuariLogin;
+    public List<Skill> SkillsSelected;
+    public Usuari usuariLogin = new Usuari();
     public Usuari usuariValorat;
 
 
@@ -57,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
 
+
         //CargarUsuarioLogin();
+        usuariLogin.setNomUsuari("userLogin");
+        usuariLogin.setId(1);
 
         Button btnAtras = toolbar.findViewById(R.id.btnAtras);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);

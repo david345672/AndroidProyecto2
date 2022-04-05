@@ -30,12 +30,11 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public LlistasSkillsGrupAdapterViewPager(Context context, List<LlistaSkills> llistaSkills, Boolean esDocent, MainActivity activity, Usuari usuariValorat) {
-        this.activity = activity;
+    public LlistasSkillsGrupAdapterViewPager(Context context, List<LlistaSkills> llistaSkills, Boolean esDocent, MainActivity activity) {
         this.context = context;
         this.llistaSkills = llistaSkills;
         this.esDocent = esDocent;
-        this.usuariValorat = usuariValorat;
+        this.activity = activity;
     }
 
 
@@ -61,9 +60,11 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                if (usuariValorat != null)
+                if (activity.usuariValorat != null)
                 {
-                    activity.listaSkillsSelected = llistaSkills;
+                    //activity.listaSkillsSelected = llistaSkills;
+                    activity.llistaSkillSelected = LS;
+                    //Toast.makeText(context, "idListaSeleccionada: " + activity.llistaSkillSelected.getId() + ", Usuari: " + activity.usuariValorat.getNomUsuari(), Toast.LENGTH_SHORT).show();
 
                     if (esDocent)
                     {

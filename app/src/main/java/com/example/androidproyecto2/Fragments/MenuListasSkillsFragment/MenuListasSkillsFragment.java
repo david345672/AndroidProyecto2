@@ -77,7 +77,9 @@ public class MenuListasSkillsFragment extends Fragment{
 
         activity = (MainActivity) getActivity();
         activity.layout = "MenuListaSkills";
-
+        activity.usuariValorat = null;
+        activity.skillSelected = null;
+        activity.llistaSkillSelected = null;
 
 
         ListUsuarisGrup = view.findViewById(R.id.ListUsuarisGrup);
@@ -110,7 +112,7 @@ public class MenuListasSkillsFragment extends Fragment{
                             usuaris.add(gH.getUsuaris());
                         }
 
-                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(usuaris,activity);
+                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(getContext(),usuaris,activity);
                         ListUsuarisGrup.setHasFixedSize(true);
                         ListUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.HORIZONTAL,
@@ -127,10 +129,11 @@ public class MenuListasSkillsFragment extends Fragment{
                         vpLlistes.setClipToPadding(false);
                         vpLlistes.setPadding(100, 0, 100, 0);
                         vpLlistes.setPageMargin(100);
-                        LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills,activity.esDocent,activity,activity.usuariValorat);
+                        LlistasSkillsGrupAdapterViewPager llistasSkillsGrupAdapterViewPager = new LlistasSkillsGrupAdapterViewPager(getContext(),llistaSkills,activity.esDocent,activity);
                         vpLlistes.setAdapter(llistasSkillsGrupAdapterViewPager);
 
-                        idListaSelcted = llistaSkills.get(0).getId();
+                        //idListaSelcted = llistaSkills.get(0).getId();
+                        activity.llistaSkillSelected = llistaSkills.get(0);
                         CargarSkills(0);
 
                         vpLlistes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -138,8 +141,9 @@ public class MenuListasSkillsFragment extends Fragment{
                             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
                             public void onPageSelected(int position) {
-
-                                idListaSelcted = llistaSkills.get(position).getId();
+                                //Toast.makeText(activity, activity.usuariValorat.getNom(), Toast.LENGTH_SHORT).show();
+                                //idListaSelcted = llistaSkills.get(position).getId();
+                                activity.llistaSkillSelected = llistaSkills.get(position);
                                 CargarSkills(position);
                             }
                         });
@@ -175,8 +179,9 @@ public class MenuListasSkillsFragment extends Fragment{
         vpSkills.setPadding(300, 0, 300, 0);
         vpSkills.setPageMargin(300);
 
-        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity,idListaSelcted,activity.usuariValorat);
+        SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity,idListaSelcted,activity.idUsuariSelected);
         vpSkills.setAdapter(skillsListsSkillAdpterViewPager);
+
     }
 
 

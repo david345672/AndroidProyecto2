@@ -29,17 +29,17 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     List<Skill> skills;
     Boolean esDocent;
     int idListaSelcted;
-    Usuari usuariValorat;
+    int idUsuariSelected;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
 
-    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted,Usuari usuariValorat) {
+    public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted, int idUsuariSelected) {
         this.activity = activity;
         this.context = context;
         this.skills = skills;
         this.esDocent = esDocent;
         this.idListaSelcted = idListaSelcted;
-        this.usuariValorat = usuariValorat;
+        this.idUsuariSelected = idUsuariSelected;
     }
 
     @Override
@@ -57,10 +57,14 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
             @Override
             public void onClick(View view) {
 
-                //if (usuariValorat != null)
-                //{
-                    activity.idListaSelected = idListaSelcted;
+//                skills.add(S);
+//                activity.SkillsSelected = skills;
+                //Toast.makeText(context, "id: " + idUsuariSelected, Toast.LENGTH_LONG).show();
+                if (activity.usuariValorat != null)
+                {
+                    //activity.idListaSelected = idListaSelcted;
                     activity.skillSelected = S;
+                    //Toast.makeText(context, "NomLlistaSelect: " + activity.llistaSkillSelected.getNom() + ", usuariSeleccionat: " + activity.usuariValorat.getNomUsuari() + ", Skill: " + activity.skillSelected.getNom(), Toast.LENGTH_LONG).show();
 
                     if (esDocent)
                     {
@@ -76,7 +80,7 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
                     //Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
                 //}
 
-                
+
             }
         });
 
