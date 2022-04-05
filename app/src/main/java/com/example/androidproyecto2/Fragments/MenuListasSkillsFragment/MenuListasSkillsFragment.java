@@ -99,6 +99,7 @@ public class MenuListasSkillsFragment extends Fragment{
         GrupService grupService = Api.getApi().create(GrupService.class);
         Call<Grup> grupCall = grupService.GetgrupsById(2);
 
+
         grupCall.enqueue(new Callback<Grup>() {
             @Override
             public void onResponse(Call<Grup> call, Response<Grup> response) {

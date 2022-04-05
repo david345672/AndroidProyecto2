@@ -1,5 +1,6 @@
 package com.example.androidproyecto2.Fragments.FragmentsAlumno.ValoracionAlumnoFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -41,10 +42,11 @@ import java.util.ListIterator;
 public class ValoracionAlumnoFragment extends Fragment {
 
     MainActivity activity;
-    int sizeKpis;
+    List<Kpi> kpis;
 
-    public ValoracionAlumnoFragment(Skill s) {
-        this.sizeKpis = 0;
+    public ValoracionAlumnoFragment() {
+        //Toast.makeText(activity, "", Toast.LENGTH_SHORT).show();
+
         // this.data = (ArrayList<Kpi>) s.getKpis();
 
     }
@@ -71,13 +73,19 @@ public class ValoracionAlumnoFragment extends Fragment {
 
 
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         activity = (MainActivity) getActivity();
+        this.kpis = activity.skillSelected.getKpis();
+        TextView nombreAvaluado = activity.findViewById(R.id.avaluatedName);
+        nombreAvaluado.setText("Valorant a : "+activity.usuariValorat.getNom()+" "+activity.usuariValorat.getCognoms());
         activity.layout = "HacerValoracion";
+
         TextView tx = activity.findViewById(R.id.titlekpi);
+
         tx.setText("FLEXIBILITAT");
 
         String[] prova = {"Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar"};
@@ -85,15 +93,15 @@ public class ValoracionAlumnoFragment extends Fragment {
 
         //NECESSITO KPI, USUARI A VALORAR, USUARI VALORAT EN UN OBJECTE
         RecyclerView rv = activity.findViewById(R.id.kpisRecycler);
-        /*
-        String[] dades = new String[this.sizeKpis];
+
+        /*String[] dades = new String[this.kpis.size()];
         int contador = 0;
-        for(Kpi k : this.data){
+        for(Kpi k : this.kpis){
             dades[contador] = k.getNom();
             contador++;
         }*/
 
-        AdapterValoracions adapter = new AdapterValoracions(prova);
+        AdapterValoracions adapter = new AdapterValoracions(this.kpis,activity);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 

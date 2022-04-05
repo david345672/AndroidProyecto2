@@ -150,7 +150,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
     }
 
 
-    private void insertValoracio(Valoracio valoracio){
+    public void insertValoracio(Valoracio valoracio){
         ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
         Call<Valoracio> valoracioCall = valoracionsService.insertValoracio(valoracio);
 
@@ -161,9 +161,11 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 {
                     case 201:
                         Toast.makeText(context, "valoracio afegida", Toast.LENGTH_LONG).show();
+                        System.out.println("valoracion afegida");
                         break;
                     case 400:
                         Gson gson = new Gson();
+                        System.out.println("valoracion afegida err");
                         MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
                         Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
                         break; 

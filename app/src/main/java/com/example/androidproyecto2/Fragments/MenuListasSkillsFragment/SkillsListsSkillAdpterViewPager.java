@@ -72,9 +72,9 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
                     }
                     else
                     {
-                        irAValoracionTipoAlumno(S);
+                        irAValoracionTipoAlumno();
                     }
-                //}
+                }
                 //else
                 //{
                     //Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
@@ -124,12 +124,12 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     }
 
 
-    private void irAValoracionTipoAlumno(Skill s)
+    private void irAValoracionTipoAlumno()
     {
         MainActivity activity = (MainActivity) context;
         mg = activity.getSupportFragmentManager();
         fragmentTransaction = mg.beginTransaction();
-        ValoracionAlumnoFragment valoracionDocenteFragment = new ValoracionAlumnoFragment(s);
+        ValoracionAlumnoFragment valoracionDocenteFragment = new ValoracionAlumnoFragment();
         fragmentTransaction.replace(R.id.FrContent,valoracionDocenteFragment);
         fragmentTransaction.commit();
     }

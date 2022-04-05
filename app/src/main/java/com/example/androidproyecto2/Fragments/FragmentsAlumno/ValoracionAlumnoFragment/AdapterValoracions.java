@@ -16,13 +16,22 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidproyecto2.Clases.Kpi;
 import com.example.androidproyecto2.Clases.Valoracio;
+import com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocenteFragment.KpiAdapterValoracion;
+import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.ViewHolder>{
 
-    private String[] mDataSet;
+    private List<Kpi> mDataSet;
     private View.OnClickListener listener;
+    private MainActivity activity;
+    private KpiAdapterValoracion adapterKPI;
+
 
     @Override
     public long getItemId(int position) {
@@ -36,20 +45,27 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView texto;
+        public TextView idKpiTexto;
         public ViewHolder(@NonNull View item) {
             super(item);
             //this.setIsRecyclable(false);
             texto = item.findViewById(R.id.texto);
+            idKpiTexto = item.findViewById(R.id.idKpi);
+
 
         }
-        public void bindValoracio(String pr){
-            texto.setText(pr);
+        public void bindValoracio(Kpi pr){
+            texto.setText(pr.getNom());
+            idKpiTexto.setText(Integer.toString(pr.getId()));
+
         }
     }
 
 
-    public AdapterValoracions(String[] myDataSet) {
-        setHasStableIds(true);mDataSet = myDataSet;
+    public AdapterValoracions(List<Kpi> kpis, MainActivity act) {
+        setHasStableIds(true);mDataSet = kpis;
+        this.activity = act;
+        this.adapterKPI = new KpiAdapterValoracion(act,activity.skillSelected.getKpis(), act, activity.skillSelected);
     }
 
 
@@ -63,33 +79,37 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
-                Toast.makeText(parent.getContext(), "Quitada la valoracion del KPI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Quitada la valoracion del KPI", Toast.LENGTH_SHORT).show();
+                System.out.println("AKFJDLÑA EW GET HEREEEEE");
                 CardView card = item.findViewById(R.id.cardItem);
+                TextView kpiIdTextView = item.findViewById(R.id.idKpi);
                 //Toast.makeText(parent.getContext(),"hola"+ (CharSequence) card.getCardBackgroundColor(), Toast.LENGTH_SHORT).show();
                 /*if(card.getCardBackgroundColor() == ColorStateList.valueOf(Color.GREEN)){
 x
                 }*/
                 card.setBackgroundColor(Color.WHITE);
+                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.idUsuariSelected, activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId());
+                adapterKPI.insertValoracio(v);
 
             }
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
-                System.out.println("TextSwipeRight");
+
                 CardView card = item.findViewById(R.id.cardItem);
+                TextView kpiIdTextView = item.findViewById(R.id.idKpi);
                 setCardColorTran(card);
                 //card.setBackgroundColor(Color.GREEN);
                 Toast.makeText(parent.getContext(), "KPI Valorada", Toast.LENGTH_SHORT).show();
-                //Valoracio v = new Valoracio()
+                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.idUsuariSelected, activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId());
+                adapterKPI.insertValoracio(v);
+
+
             }
             public void setCardColorTran(CardView card) {
                 ColorDrawable[] color = {new ColorDrawable(Color.WHITE), new ColorDrawable(Color.GREEN)};
                 TransitionDrawable trans = new TransitionDrawable(color);
-                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                    card.setBackground(trans);
-                } else {
-                    card.setBackgroundDrawable(trans);
-                }
+                card.setBackground(trans);
                 trans.startTransition(3000);
             }
         });
@@ -99,7 +119,7 @@ x
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.bindValoracio(mDataSet[position]);
+        holder.bindValoracio(mDataSet.get(position));
 
     }
 
@@ -117,6 +137,6 @@ x
 
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return mDataSet.size();
     }
 }
