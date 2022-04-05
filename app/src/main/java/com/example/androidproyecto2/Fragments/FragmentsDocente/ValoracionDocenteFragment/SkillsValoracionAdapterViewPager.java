@@ -27,6 +27,7 @@ import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
     private MainActivity activity;
     private Context context;
     private List<Skill> skills;
-    private List<Valoracio> valoracions;
+    private List<Valoracio> valoracions = new ArrayList<>();
 
 
     public SkillsValoracionAdapterViewPager(Context context, List<Skill> skills, MainActivity activity) {
@@ -72,7 +73,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
             Object param = new Timestamp(currentTime.getTime());
             Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),40,(Timestamp) param,-1,skills.get(position).getId(),activity.llistaSkillSelected.getId());
             valoracions.add(valoracio);
-            Toast.makeText(activity, "Tipus Valoracio: "+ valoracio.getNota(), Toast.LENGTH_SHORT).show();
+          
 
         }
 
