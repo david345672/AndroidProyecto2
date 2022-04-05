@@ -79,7 +79,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
             public void onClick(View v) {
                 for (int i = 0; i < valoracions.size();i ++){
 
-                    Toast.makeText(activity, "Valor: "+valoracions.get(i).getNota(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Valor "+ i + ": "+valoracions.get(i).getNota(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
