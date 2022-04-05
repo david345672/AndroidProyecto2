@@ -9,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -78,9 +79,9 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
-
+                    Object param = new Timestamp(currentTime.getTime());
                     //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb1.getText() + ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),currentTime,Integer.parseInt((String) rdb1.getText()),skill.getId(),activity.llistaSkillSelected.getId());
+                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(), (Timestamp) param,Integer.parseInt((String) rdb1.getText()),skill.getId(),activity.llistaSkillSelected.getId());
                     //Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
                     insertValoracio(valoracio);
 
@@ -91,8 +92,9 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
+                    Object param = new Timestamp(currentTime.getTime());
                     //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb2.getText() + ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),currentTime,Integer.parseInt((String) rdb2.getText()),skill.getId(),activity.llistaSkillSelected.getId());
+                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),(Timestamp) param,Integer.parseInt((String) rdb2.getText()),skill.getId(),activity.llistaSkillSelected.getId());
                     Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
                 }
             });
@@ -101,8 +103,9 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
+                    Object param = new Timestamp(currentTime.getTime());
                     //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb3.getText()+ ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),currentTime,Integer.parseInt((String) rdb3.getText()),skill.getId(),activity.llistaSkillSelected.getId());
+                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),(Timestamp) param,Integer.parseInt((String) rdb3.getText()),skill.getId(),activity.llistaSkillSelected.getId());
                     Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
                 }
             });
@@ -111,8 +114,9 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
+                    Object param = new Timestamp(currentTime.getTime());
                     //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb4.getText()+ ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),currentTime,Integer.parseInt((String) rdb4.getText()),skill.getId(),activity.llistaSkillSelected.getId());
+                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),(Timestamp) param,Integer.parseInt((String) rdb4.getText()),skill.getId(),activity.llistaSkillSelected.getId());
                     Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
                 }
             });

@@ -1,6 +1,7 @@
 package com.example.androidproyecto2.Clases;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -10,7 +11,7 @@ public class Valoracio implements Serializable
     private int kpis_id;
     private int usuari_valorat_id;
     private int usuari_pp_id;
-    private Date data;
+    private Timestamp data;
     private int nota;
     private int llistes_skills_id;
     private int skills_id;
@@ -19,7 +20,7 @@ public class Valoracio implements Serializable
     }
 
 
-    public Valoracio(int kpis_id, int usuari_valorat_id, int usuari_pp_id, Date data, int nota, int llistes_skills_id, int skills_id) {
+    public Valoracio(int kpis_id, int usuari_valorat_id, int usuari_pp_id, Timestamp data, int nota, int llistes_skills_id, int skills_id) {
         this.kpis_id = kpis_id;
         this.usuari_valorat_id = usuari_valorat_id;
         this.usuari_pp_id = usuari_pp_id;
@@ -55,11 +56,11 @@ public class Valoracio implements Serializable
         this.usuari_pp_id = usuari_pp_id;
     }
 
-    public Date getData() {
+    public Timestamp getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Timestamp data) {
         this.data = data;
     }
 
