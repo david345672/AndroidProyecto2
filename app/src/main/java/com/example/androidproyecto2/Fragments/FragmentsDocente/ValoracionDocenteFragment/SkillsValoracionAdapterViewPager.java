@@ -73,7 +73,16 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
                 false));
 
         ListKpiSkill.setAdapter(kpiAdapterValoracion);
+        Button BtnValorar = view.findViewById(R.id.BtnValorar);
+        BtnValorar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < valoracions.size();i ++){
 
+                    Toast.makeText(activity, "Valor: "+valoracions.get(i).getNota(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
 
