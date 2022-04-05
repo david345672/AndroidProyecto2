@@ -21,10 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.LlistaSkills;
+import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
+import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.ValoracionsService;
+import com.google.gson.Gson;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -33,13 +37,15 @@ import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SkillsValoracionAdapterViewPager extends PagerAdapter
 {
     private MainActivity activity;
     private Context context;
     private List<Skill> skills;
-    private List<Valoracio> valoracions = new ArrayList<>();
-
 
     public SkillsValoracionAdapterViewPager(Context context, List<Skill> skills, MainActivity activity) {
         this.context = context;
@@ -57,16 +63,20 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
 
         TextView nomSkill = view.findViewById(R.id.nomSkill);
         nomSkill.setText(skills.get(position).getNom());
+        List<Valoracio> valoracions = new ArrayList<>();
 
-        for (int i = 0; i < skills.get(position).getKpis().size();i ++){
+        for (int i = 0; i < skills.get(position).getKpis().size();i++){
             Date currentTime = Calendar.getInstance().getTime();
             Object param = new Timestamp(currentTime.getTime());
-            Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),40,(Timestamp) param,-1,skills.get(position).getId(),activity.llistaSkillSelected.getId());
+            Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),40,(Timestamp) param,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId());
             valoracions.add(valoracio);
+
         }
 
+        //Toast.makeText(activity, "position Skill: " + position, Toast.LENGTH_SHORT).show();
+
         RecyclerView ListKpiSkill = view.findViewById(R.id.ListKpiSkill);
-        KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis(),activity, skills.get(position),valoracions.get(position));
+        KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis(),activity, skills.get(position),valoracions);
         ListKpiSkill.setHasFixedSize(true);
         ListKpiSkill.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL,
@@ -77,9 +87,14 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         BtnValorar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Toast.makeText(activity, "ValCont: " + valoracions.size() + ", KpiCont: " + skills.get(position).getKpis().size(), Toast.LENGTH_SHORT).show();
+
                 for (int i = 0; i < valoracions.size();i ++){
 
-                    Toast.makeText(activity, "Valor "+ i + ": "+valoracions.get(i).getNota(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(activity, "Valor "+ i + ": "+valoracions.get(i).getNota(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(activity, valoracions.get(i).toString(), Toast.LENGTH_LONG).show();
+                    insertValoracio(valoracions.get(i));
                 }
             }
         });
@@ -112,6 +127,41 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
     public void destroyItem(ViewGroup collection, int position, Object view) {
         collection.removeView((View) view);
     }
+
+
+    private void insertValoracio(Valoracio valoracio){
+        ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
+        Call<Valoracio> valoracioCall = valoracionsService.insertValoracio(valoracio);
+
+        valoracioCall.enqueue(new Callback<Valoracio>() {
+            @Override
+            public void onResponse(Call<Valoracio> call, Response<Valoracio> response) {
+                switch (response.code())
+                {
+                    case 201:
+                        Toast.makeText(context, "valoracio afegida", Toast.LENGTH_LONG).show();
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Valoracio> call, Throwable t) {
+                Toast.makeText(context, t.getCause() + " - " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+    }
+
+
 
 
 }
