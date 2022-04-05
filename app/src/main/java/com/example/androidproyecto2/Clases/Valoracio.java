@@ -1,8 +1,11 @@
 package com.example.androidproyecto2.Clases;
 
+import com.google.type.DateTime;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -12,6 +15,7 @@ public class Valoracio implements Serializable
     private int usuari_valorat_id;
     private int usuari_pp_id;
     private Timestamp data;
+    private DateTime dateTime;
     private int nota;
     private int llistes_skills_id;
     private int skills_id;
