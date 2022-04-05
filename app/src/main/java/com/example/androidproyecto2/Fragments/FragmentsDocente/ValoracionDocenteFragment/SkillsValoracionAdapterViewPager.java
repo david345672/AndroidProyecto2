@@ -58,8 +58,15 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         TextView nomSkill = view.findViewById(R.id.nomSkill);
         nomSkill.setText(skills.get(position).getNom());
 
+        for (int i = 0; i < skills.get(position).getKpis().size();i ++){
+            Date currentTime = Calendar.getInstance().getTime();
+            Object param = new Timestamp(currentTime.getTime());
+            Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),40,(Timestamp) param,-1,skills.get(position).getId(),activity.llistaSkillSelected.getId());
+            valoracions.add(valoracio);
+        }
+
         RecyclerView ListKpiSkill = view.findViewById(R.id.ListKpiSkill);
-        KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis(),activity, skills.get(position));
+        KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis(),activity, skills.get(position),valoracions.get(position));
         ListKpiSkill.setHasFixedSize(true);
         ListKpiSkill.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL,
@@ -68,14 +75,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         ListKpiSkill.setAdapter(kpiAdapterValoracion);
 
 
-        for (int i = 0; i < skills.get(position).getKpis().size();i ++){
-            Date currentTime = Calendar.getInstance().getTime();
-            Object param = new Timestamp(currentTime.getTime());
-            Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),40,(Timestamp) param,-1,skills.get(position).getId(),activity.llistaSkillSelected.getId());
-            valoracions.add(valoracio);
-          
 
-        }
 
 
         container.addView(view);

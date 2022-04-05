@@ -1,5 +1,6 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocenteFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -43,12 +44,15 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
     private List<Kpi> kpis;
     private MainActivity activity;
     private Skill skill;
+    private Valoracio valoracio;
+    public int pos = 0;
 
-    public KpiAdapterValoracion(Context context, List<Kpi> kpis, MainActivity activity, Skill skill) {
+    public KpiAdapterValoracion(Context context, List<Kpi> kpis, MainActivity activity, Skill skill, Valoracio valoracio) {
         this.context = context;
         this.kpis = kpis;
         this.activity = activity;
         this.skill = skill;
+        this.valoracio = valoracio;
     }
 
 
@@ -83,9 +87,11 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
 
                     Timestamp param = new Timestamp(currentTime.getTime());
                     //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb1.getText() + ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,param,Integer.parseInt((String) rdb1.getText()),skill.getId(),activity.llistaSkillSelected.getId());
+                    Valoracio valoracioaux = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,param,Integer.parseInt((String) rdb1.getText()),skill.getId(),activity.llistaSkillSelected.getId());
                     //Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
                     //insertValoracio(valoracio);
+                    valoracio = valoracioaux;
+                    Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -96,7 +102,8 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                     Date currentTime = Calendar.getInstance().getTime();
                     Object param = new Timestamp(currentTime.getTime());
                     //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb2.getText() + ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,(Timestamp) param,Integer.parseInt((String) rdb2.getText()),skill.getId(),activity.llistaSkillSelected.getId());
+                    Valoracio valoracioaux = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,(Timestamp) param,Integer.parseInt((String) rdb2.getText()),skill.getId(),activity.llistaSkillSelected.getId());
+                    valoracio = valoracioaux;
                     Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
                 }
             });
@@ -137,9 +144,13 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
     }
 
 
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         holder.bindKpi(kpis.get(position));
+        pos = position;
+
+
+
     }
 
 
