@@ -15,7 +15,6 @@ public class Valoracio implements Serializable
     private int usuari_valorat_id;
     private int usuari_pp_id;
     private Timestamp data;
-    private DateTime dateTime;
     private int nota;
     private int llistes_skills_id;
     private int skills_id;

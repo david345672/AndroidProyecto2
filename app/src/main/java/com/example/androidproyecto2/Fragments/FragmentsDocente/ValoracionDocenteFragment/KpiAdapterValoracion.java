@@ -85,7 +85,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                     //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb1.getText() + ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
                     Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,param,Integer.parseInt((String) rdb1.getText()),skill.getId(),activity.llistaSkillSelected.getId());
                     //Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
-                    insertValoracio(valoracio);
+                    //insertValoracio(valoracio);
 
                 }
             });
@@ -166,7 +166,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                         Gson gson = new Gson();
                         MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
                         Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-                        break; 
+                        break;
                     default:
                         break;
                 }
