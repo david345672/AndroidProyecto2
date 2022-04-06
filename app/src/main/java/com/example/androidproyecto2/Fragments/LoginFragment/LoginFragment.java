@@ -54,7 +54,7 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mainActivity = (MainActivity) getActivity();
 
-        Button btnLogout = mainActivity.toolbar.findViewById(R.id.btnLogout);
+
 
         btnIniciarSesion = getActivity().findViewById(R.id.btnIniciarSesion);
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +93,8 @@ public class LoginFragment extends Fragment {
                 switch (response.code()){
                     case 200:
                         usuarisList = response.body();
+                        Button btnLogout = mainActivity.toolbar.findViewById(R.id.btnLogout);
+
 
                         for (Usuari userObject:usuarisList) {
                             if(userObject.getNomUsuari().equals(etUser.getText().toString())){
@@ -100,6 +102,8 @@ public class LoginFragment extends Fragment {
                                 //Comparar contrasenyas
                                 mainActivity.usuariLogin = (Usuari) userObject;
                                 pasarFragment();
+                                btnLogout.setVisibility(View.VISIBLE);
+
                                 //Toast.makeText(mainActivity, mainActivity.usuariLogin.getNomUsuari(), Toast.LENGTH_SHORT).show();
                             }
 //                            else{
