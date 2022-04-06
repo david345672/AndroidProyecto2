@@ -37,11 +37,8 @@ public class MainActivity extends AppCompatActivity {
     //Variables de seleccio
     public List<Grup> grups;
     public Skill skillSelected;
-    public int idListaSelected;
     public int idUsuariSelected;
     public LlistaSkills llistaSkillSelected;
-    public List<LlistaSkills> listaSkillsSelected;
-    public List<Skill> SkillsSelected;
     public Usuari usuariLogin = new Usuari();
     public Usuari usuariValorat;
 

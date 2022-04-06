@@ -87,7 +87,8 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
 
-                    Timestamp param = new Timestamp(currentTime.getTime());
+                    //Timestamp param = new Timestamp(currentTime.getTime());
+                    Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb1.getText()));
                     valoracio.setData(param);
@@ -100,7 +101,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
-                    Timestamp param = new Timestamp(currentTime.getTime());
+                    Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb2.getText()));
                     valoracio.setData(param);
@@ -112,7 +113,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
-                    Timestamp param = new Timestamp(currentTime.getTime());
+                    Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb3.getText()));
                     valoracio.setData(param);
@@ -124,7 +125,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
-                    Timestamp param = new Timestamp(currentTime.getTime());
+                    Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb4.getText()));
                     valoracio.setData(param);

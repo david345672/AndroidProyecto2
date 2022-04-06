@@ -67,13 +67,11 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
 
         for (int i = 0; i < skills.get(position).getKpis().size();i++){
             Date currentTime = Calendar.getInstance().getTime();
-            Object param = new Timestamp(currentTime.getTime());
-            Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),40,(Timestamp) param,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
+            Timestamp param = new Timestamp(new Date().getTime());
+            Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),40,param,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
             valoracions.add(valoracio);
 
         }
-
-        //Toast.makeText(activity, "position Skill: " + position, Toast.LENGTH_SHORT).show();
 
         RecyclerView ListKpiSkill = view.findViewById(R.id.ListKpiSkill);
         KpiAdapterValoracion kpiAdapterValoracion = new KpiAdapterValoracion(context,skills.get(position).getKpis(),activity, skills.get(position),valoracions);
@@ -88,12 +86,8 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
             @Override
             public void onClick(View v) {
 
-                //Toast.makeText(activity, "ValCont: " + valoracions.size() + ", KpiCont: " + skills.get(position).getKpis().size(), Toast.LENGTH_SHORT).show();
-
                 for (int i = 0; i < valoracions.size();i ++){
 
-                    //Toast.makeText(activity, "Valor "+ i + ": "+valoracions.get(i).getNota(), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(activity, valoracions.get(i).toString(), Toast.LENGTH_LONG).show();
                     insertValoracio(valoracions.get(i));
                 }
             }
