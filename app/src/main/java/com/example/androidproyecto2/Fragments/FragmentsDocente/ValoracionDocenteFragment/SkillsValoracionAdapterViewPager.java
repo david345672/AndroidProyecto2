@@ -86,10 +86,11 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
             @Override
             public void onClick(View v) {
 
-                for (int i = 0; i < valoracions.size();i ++){
-
+                for (int i = 0; i < valoracions.size();i ++)
+                {
                     insertValoracio(valoracions.get(i));
                 }
+
             }
         });
 
@@ -122,7 +123,6 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         collection.removeView((View) view);
     }
 
-
     private void insertValoracio(Valoracio valoracio){
         ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
         Call<Valoracio> valoracioCall = valoracionsService.insertValoracio(valoracio);
@@ -138,7 +138,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
                     case 400:
                         Gson gson = new Gson();
                         MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
-                        Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
                         break;
                     default:
                         break;
@@ -147,7 +147,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
 
             @Override
             public void onFailure(Call<Valoracio> call, Throwable t) {
-                Toast.makeText(context, t.getCause() + " - " + t.getMessage(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, t.getCause() + " - " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
