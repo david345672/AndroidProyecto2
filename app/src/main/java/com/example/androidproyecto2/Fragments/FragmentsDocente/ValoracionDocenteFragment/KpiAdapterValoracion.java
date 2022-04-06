@@ -1,10 +1,12 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocenteFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,12 +45,15 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
     private List<Kpi> kpis;
     private MainActivity activity;
     private Skill skill;
+    //private Valoracio valoracio;
+    private List<Valoracio> valoracions;
 
-    public KpiAdapterValoracion(Context context, List<Kpi> kpis, MainActivity activity, Skill skill) {
+    public KpiAdapterValoracion(Context context, List<Kpi> kpis, MainActivity activity, Skill skill,List<Valoracio> valoracions) {
         this.context = context;
         this.kpis = kpis;
         this.activity = activity;
         this.skill = skill;
+        this.valoracions = valoracions;
     }
 
 
@@ -59,6 +64,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
         RadioButton rdb2;
         RadioButton rdb3;
         RadioButton rdb4;
+        EditText txtObservacion;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -68,12 +74,12 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
             rdb2 = itemView.findViewById(R.id.rdb2);
             rdb3 = itemView.findViewById(R.id.rdb3);
             rdb4 = itemView.findViewById(R.id.rdb4);
+            txtObservacion = itemView.findViewById(R.id.txtObservacion);
 
         }
 
-        void bindKpi(Kpi kpi)
+        void bindKpi(Kpi kpi, Valoracio valoracio)
         {
-
             subskill.setText(kpi.getNom());
 
             rdb1.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +88,10 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                     Date currentTime = Calendar.getInstance().getTime();
 
                     Timestamp param = new Timestamp(currentTime.getTime());
-                    //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb1.getText() + ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,param,Integer.parseInt((String) rdb1.getText()),skill.getId(),activity.llistaSkillSelected.getId());
-                    //Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
-                    insertValoracio(valoracio);
+
+                    valoracio.setNota(Integer.parseInt((String) rdb1.getText()));
+                    valoracio.setData(param);
+                    valoracio.setObservacions(txtObservacion.getText().toString());
 
                 }
             });
@@ -94,10 +100,11 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
-                    Object param = new Timestamp(currentTime.getTime());
-                    //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb2.getText() + ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,(Timestamp) param,Integer.parseInt((String) rdb2.getText()),skill.getId(),activity.llistaSkillSelected.getId());
-                    Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
+                    Timestamp param = new Timestamp(currentTime.getTime());
+
+                    valoracio.setNota(Integer.parseInt((String) rdb2.getText()));
+                    valoracio.setData(param);
+                    valoracio.setObservacions(txtObservacion.getText().toString());
                 }
             });
 
@@ -105,10 +112,11 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
-                    Object param = new Timestamp(currentTime.getTime());
-                    //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb3.getText()+ ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,(Timestamp) param,Integer.parseInt((String) rdb3.getText()),skill.getId(),activity.llistaSkillSelected.getId());
-                    Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
+                    Timestamp param = new Timestamp(currentTime.getTime());
+
+                    valoracio.setNota(Integer.parseInt((String) rdb3.getText()));
+                    valoracio.setData(param);
+                    valoracio.setObservacions(txtObservacion.getText().toString());
                 }
             });
 
@@ -116,14 +124,16 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 @Override
                 public void onClick(View view) {
                     Date currentTime = Calendar.getInstance().getTime();
-                    Object param = new Timestamp(currentTime.getTime());
-                    //Toast.makeText(context, "Usuari Valorat: " + activity.usuariValorat.getNom() + ", LlistaSkillSelect: " + activity.llistaSkillSelected.getNom() + ", SkillValorada: " + skill.getNom() + ", Kpi: " + kpi.getNom() + ", UsuarioQueValora: " + activity.usuariLogin.getNomUsuari() + ", nota: " + rdb4.getText()+ ", dataActual: " + currentTime, Toast.LENGTH_LONG).show();
-                    Valoracio valoracio = new Valoracio(kpi.getId(),activity.usuariValorat.getId(),40,(Timestamp) param,Integer.parseInt((String) rdb4.getText()),skill.getId(),activity.llistaSkillSelected.getId());
-                    Toast.makeText(context, valoracio.toString(), Toast.LENGTH_LONG).show();
+                    Timestamp param = new Timestamp(currentTime.getTime());
+
+                    valoracio.setNota(Integer.parseInt((String) rdb4.getText()));
+                    valoracio.setData(param);
+                    valoracio.setObservacions(txtObservacion.getText().toString());
                 }
             });
 
         }
+
     }
 
 
@@ -139,7 +149,8 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
 
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        holder.bindKpi(kpis.get(position));
+        holder.bindKpi(kpis.get(position),valoracions.get(position));
+
     }
 
 
@@ -168,7 +179,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                         System.out.println("valoracion afegida err");
                         MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
                         Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-                        break; 
+                        break;
                     default:
                         break;
                 }
@@ -180,9 +191,6 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
             }
         });
 
-
-
-    }
 
 
 

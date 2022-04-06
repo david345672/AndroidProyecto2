@@ -15,16 +15,16 @@ public class Valoracio implements Serializable
     private int usuari_valorat_id;
     private int usuari_pp_id;
     private Timestamp data;
-    private DateTime dateTime;
     private int nota;
     private int llistes_skills_id;
     private int skills_id;
+    private String observacions;
 
     public Valoracio() {
     }
 
 
-    public Valoracio(int kpis_id, int usuari_valorat_id, int usuari_pp_id, Timestamp data, int nota, int llistes_skills_id, int skills_id) {
+    public Valoracio(int kpis_id, int usuari_valorat_id, int usuari_pp_id, Timestamp data, int nota, int llistes_skills_id, int skills_id, String observacions) {
         this.kpis_id = kpis_id;
         this.usuari_valorat_id = usuari_valorat_id;
         this.usuari_pp_id = usuari_pp_id;
@@ -32,6 +32,7 @@ public class Valoracio implements Serializable
         this.nota = nota;
         this.llistes_skills_id = llistes_skills_id;
         this.skills_id = skills_id;
+        this.observacions = observacions;
     }
 
 
@@ -92,6 +93,14 @@ public class Valoracio implements Serializable
         this.skills_id = skills_id;
     }
 
+    public String getObservacions() {
+        return observacions;
+    }
+
+    public void setObservacions(String observacions) {
+        this.observacions = observacions;
+    }
+
 
     @Override
     public String toString() {
@@ -103,6 +112,7 @@ public class Valoracio implements Serializable
                 ", nota=" + nota +
                 ", llistes_skills_id=" + llistes_skills_id +
                 ", skills_id=" + skills_id +
+                ", observacions='" + observacions + '\'' +
                 '}';
     }
 }
