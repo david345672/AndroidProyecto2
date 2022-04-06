@@ -54,12 +54,17 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mainActivity = (MainActivity) getActivity();
 
+        Button btnLogout = mainActivity.toolbar.findViewById(R.id.btnLogout);
 
         btnIniciarSesion = getActivity().findViewById(R.id.btnIniciarSesion);
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 comprovarDatosConAPI();
+//                btnLogout.setVisibility(View.VISIBLE);
+//                pasarFragment();
+
+                //Toast.makeText(mainActivity, mainActivity.usuariLogin.getNom(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -75,7 +80,7 @@ public class LoginFragment extends Fragment {
     }
 
 
-    private void comprovarDatosConAPI(){
+    public void comprovarDatosConAPI(){
         etUser = getActivity().findViewById(R.id.etUser);
         etPassword = getActivity().findViewById(R.id.etPassword);
 
@@ -93,10 +98,13 @@ public class LoginFragment extends Fragment {
                             if(userObject.getNomUsuari().equals(etUser.getText().toString())){
                             //Encriptar la contra k pone el user
                                 //Comparar contrasenyas
-                                mainActivity.usuariLogin=userObject;
-                            }else{
-                                Toast.makeText(mainActivity.getApplicationContext(), "Usuario y/o contrasenya incorrectos", Toast.LENGTH_SHORT).show();
+                                mainActivity.usuariLogin = (Usuari) userObject;
+                                pasarFragment();
+                                //Toast.makeText(mainActivity, mainActivity.usuariLogin.getNomUsuari(), Toast.LENGTH_SHORT).show();
                             }
+//                            else{
+//                                Toast.makeText(mainActivity.getApplicationContext(), "Usuario y/o contrasenya incorrectos", Toast.LENGTH_SHORT).show();
+//                            }
                         }
                         break;
                     case 400:
@@ -119,21 +127,30 @@ public class LoginFragment extends Fragment {
 
     private void pasarFragment(){
 
-        Button btnLogout = mainActivity.toolbar.findViewById(R.id.btnLogout);
-        btnIniciarSesion = getActivity().findViewById(R.id.btnIniciarSesion);
-        btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnLogout.setVisibility(View.VISIBLE);
-                AppCompatActivity activity = (AppCompatActivity) getActivity();
-                mgr = activity.getSupportFragmentManager();
-                fragmentTransaction = mgr.beginTransaction();
-                MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
-                fragmentTransaction.replace(R.id.FrContent,menuPrincipalFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        mgr = activity.getSupportFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+        MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
+        fragmentTransaction.replace(R.id.FrContent,menuPrincipalFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+
+//
+//        btnIniciarSesion = getActivity().findViewById(R.id.btnIniciarSesion);
+//        btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                AppCompatActivity activity = (AppCompatActivity) getActivity();
+//                mgr = activity.getSupportFragmentManager();
+//                fragmentTransaction = mgr.beginTransaction();
+//                MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
+//                fragmentTransaction.replace(R.id.FrContent,menuPrincipalFragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//            }
+//        });
 
     }
 

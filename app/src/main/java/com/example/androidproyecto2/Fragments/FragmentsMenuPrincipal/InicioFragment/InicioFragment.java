@@ -52,7 +52,7 @@ public class InicioFragment extends Fragment
 
         activity = (MainActivity) getActivity();
         mg = getActivity().getSupportFragmentManager();
-        //Toast.makeText(activity, "activity.usuariLogin.getNom()", Toast.LENGTH_SHORT).show();
+
 
 
         llenarGrupos();
@@ -60,6 +60,13 @@ public class InicioFragment extends Fragment
         Button btnHacerObservacionPropia = view.findViewById(R.id.btnHacerObservacionPropia);
         Button btnVerValoracionesPropias = view.findViewById(R.id.btnVerValoracionesPropias);
 
+
+        btnVerValoracionesPropias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(activity, "UsuarioLogin: " + activity.usuariLogin.getNom(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnHacerObservacionPropia.setOnClickListener(new View.OnClickListener() {
             @Override
