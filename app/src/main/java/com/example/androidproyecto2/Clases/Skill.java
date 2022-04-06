@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Skill implements Serializable
 {
-    private List<Kpi> Kpis;
+    private List<Kpi> kpis;
     private LlistaSkills llistes_skills;
     private int id;
     private String nom;
@@ -28,7 +28,7 @@ public class Skill implements Serializable
 
 
     public Skill(List<Kpi> kpis, LlistaSkills llistes_skills, int id, String nom, int llistes_skills_id, Boolean actiu, int colorFondo, int colorTexto) {
-        this.Kpis = kpis;
+        this.kpis = kpis;
         this.llistes_skills = llistes_skills;
         this.id = id;
         this.nom = nom;
@@ -40,11 +40,11 @@ public class Skill implements Serializable
 
 
     public List<Kpi> getKpis() {
-        return Kpis;
+        return kpis;
     }
 
     public void setKpis(List<Kpi> kpis) {
-        Kpis = kpis;
+        kpis = kpis;
     }
 
     public LlistaSkills getLlistes_skills() {

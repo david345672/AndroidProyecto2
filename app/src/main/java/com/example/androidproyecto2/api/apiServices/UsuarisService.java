@@ -1,5 +1,6 @@
 package com.example.androidproyecto2.api.apiServices;
 
+import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
 import com.example.androidproyecto2.Clases.Usuari;
 
@@ -20,6 +21,7 @@ public interface UsuarisService {
     @GET("api/usuaris/nom/{nom}")
     Call<Usuari> Getusuaris(@Path("nom") String nom);
 
-
+    @GET("api/usuaris/{id}")
+    Call<Usuari> Getusuaris(@Path("id") int id);
 
 }

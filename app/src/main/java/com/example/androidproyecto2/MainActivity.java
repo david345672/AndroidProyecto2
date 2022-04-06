@@ -37,12 +37,9 @@ public class MainActivity extends AppCompatActivity {
     //Variables de seleccio
     public List<Grup> grups;
     public Skill skillSelected;
-    public int idListaSelected;
     public int idUsuariSelected;
     public LlistaSkills llistaSkillSelected;
-    public List<LlistaSkills> listaSkillsSelected;
-    public List<Skill> SkillsSelected;
-    public Usuari usuariLogin;
+    public Usuari usuariLogin = new Usuari();
     public Usuari usuariValorat;
 
 
@@ -59,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
+
 
         //CargarUsuarioLogin();
         mgr = getSupportFragmentManager();
