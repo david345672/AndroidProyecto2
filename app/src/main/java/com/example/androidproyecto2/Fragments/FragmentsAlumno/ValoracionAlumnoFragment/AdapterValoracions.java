@@ -23,6 +23,8 @@ import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.ViewHolder>{
@@ -48,7 +50,6 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
         public TextView idKpiTexto;
         public ViewHolder(@NonNull View item) {
             super(item);
-            //this.setIsRecyclable(false);
             texto = item.findViewById(R.id.texto);
             idKpiTexto = item.findViewById(R.id.idKpi);
 
@@ -63,9 +64,10 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
 
 
     public AdapterValoracions(List<Kpi> kpis, MainActivity act) {
-        setHasStableIds(true);mDataSet = kpis;
+        setHasStableIds(true);
+        this.mDataSet = kpis;
         this.activity = act;
-        this.adapterKPI = new KpiAdapterValoracion(act,activity.skillSelected.getKpis(), act, activity.skillSelected);
+        this.adapterKPI = new KpiAdapterValoracion(act,activity.skillSelected.getKpis(), act, activity.skillSelected,null);
     }
 
 
@@ -88,7 +90,13 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
 x
                 }*/
                 card.setBackgroundColor(Color.WHITE);
-                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.idUsuariSelected, activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId());
+
+
+                //Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()),activity.usuariValorat.getId(),40, new Timestamp(new Date().getTime()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"null");
+
+
+                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
+                System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);
 
             }
@@ -101,7 +109,8 @@ x
                 setCardColorTran(card);
                 //card.setBackgroundColor(Color.GREEN);
                 Toast.makeText(parent.getContext(), "KPI Valorada", Toast.LENGTH_SHORT).show();
-                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.idUsuariSelected, activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId());
+                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
+                System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);
 
 

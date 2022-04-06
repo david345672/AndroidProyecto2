@@ -61,18 +61,6 @@ public class ValoracionAlumnoFragment extends Fragment {
     }
 
 
-    class Valorar{
-        Kpi kpiAValorar;
-        Usuari valorador;
-        Usuari valorat;
-
-        private void valorarUsuari()//crear valoracio i enviar a api
-        {
-
-        }
-
-
-    }
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -86,20 +74,8 @@ public class ValoracionAlumnoFragment extends Fragment {
 
         TextView tx = activity.findViewById(R.id.titlekpi);
 
-        tx.setText("FLEXIBILITAT");
-
-        String[] prova = {"Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar","Flexibilitza l'horari","Treballa amb qualsevol company","Utilitza qualsevol software","S'adapta a tot tipus de manera de treballar"};
-        LinearLayout layout = activity.findViewById(R.id.layout);
-
-        //NECESSITO KPI, USUARI A VALORAR, USUARI VALORAT EN UN OBJECTE
+        tx.setText(activity.skillSelected.getNom());
         RecyclerView rv = activity.findViewById(R.id.kpisRecycler);
-
-        /*String[] dades = new String[this.kpis.size()];
-        int contador = 0;
-        for(Kpi k : this.kpis){
-            dades[contador] = k.getNom();
-            contador++;
-        }*/
 
         AdapterValoracions adapter = new AdapterValoracions(this.kpis,activity);
         rv.setHasFixedSize(true);
@@ -111,8 +87,8 @@ public class ValoracionAlumnoFragment extends Fragment {
             public void onClick(View view){
 
                 TextView LabelName = activity.findViewById(R.id.texto);
-                LabelName.setText(prova[(rv.getChildAdapterPosition(view))]);
-                Toast.makeText(activity, "prova", Toast.LENGTH_SHORT).show();
+                //LabelName.setText(prova[(rv.getChildAdapterPosition(view))]);
+                //Toast.makeText(activity, "prova", Toast.LENGTH_SHORT).show();
 
             }
         });

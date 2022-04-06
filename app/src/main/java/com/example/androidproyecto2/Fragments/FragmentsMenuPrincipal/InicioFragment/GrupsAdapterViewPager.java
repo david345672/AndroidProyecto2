@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Fragments.FragmentsAlumno.VerValoracionAlumnoFragment.VerValoracionAlumnoFragment;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
@@ -71,6 +72,15 @@ public class GrupsAdapterViewPager extends PagerAdapter
         btnVerValoraciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity activity = (MainActivity) context;
+                activity.idGrupo = grup.getId();
+
+                //activity.layout = "MenuListaSkills";
+                mg = activity.getSupportFragmentManager();
+                fragmentTransaction = mg.beginTransaction();
+                VerValoracionAlumnoFragment vervaloracionalumno = new VerValoracionAlumnoFragment();
+                fragmentTransaction.replace(R.id.FrContent,vervaloracionalumno);
+                fragmentTransaction.commit();
 
 
             }

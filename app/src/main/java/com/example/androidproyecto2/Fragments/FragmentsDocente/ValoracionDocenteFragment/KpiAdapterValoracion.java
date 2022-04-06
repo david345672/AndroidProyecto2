@@ -172,13 +172,13 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                 {
                     case 201:
                         Toast.makeText(context, "valoracio afegida", Toast.LENGTH_LONG).show();
-                        System.out.println("valoracion afegida");
                         break;
                     case 400:
                         Gson gson = new Gson();
-                        System.out.println("valoracion afegida err");
+
                         MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
                         Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        System.out.println(missatgeError.getMessage() +"    ERROR ");
                         break;
                     default:
                         break;
@@ -194,4 +194,5 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
 
 
 
+    }
 }
