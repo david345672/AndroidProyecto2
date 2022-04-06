@@ -61,16 +61,25 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         //CargarUsuarioLogin();
-
-        Button btnAtras = toolbar.findViewById(R.id.btnAtras);
-        Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
 
-        MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
+        LoginFragment loginFragment = new LoginFragment();
 
-        fragmentTransaction.replace(R.id.FrContent, menuPrincipalFragment);
+        fragmentTransaction.replace(R.id.FrContent, loginFragment);
         fragmentTransaction.commit();
+
+
+        Button btnAtras = toolbar.findViewById(R.id.btnAtras);
+        Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
+
+        mgr = getSupportFragmentManager();
+        fragmentTransaction = mgr.beginTransaction();
+
+        //MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
+
+       // fragmentTransaction.replace(R.id.FrContent, menuPrincipalFragment);
+       // fragmentTransaction.commit();
 
 
         btnAtras.setOnClickListener(new View.OnClickListener() {
@@ -150,40 +159,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void CargarUsuarioLogin()
-//    {
-//        UsuarisService usuarisService = Api.getApi().create(UsuarisService.class);
-//        Call<Usuari> usuariCall = usuarisService.Getusuaris("user2");
-//
-//        usuariCall.enqueue(new Callback<Usuari>() {
-//            @Override
-//            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
-//                switch (response.code())
-//                {
-//                    case 204:
-//                        usuariLogin = response.body();
-//                        break;
-//                    case 400:
-//                        Gson gson = new Gson();
-//                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
-//                        Toast.makeText(getApplicationContext(), missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-//                        break;
-//                    case 404:
-//                        Toast.makeText(getApplicationContext(),"Registre no trobat", Toast.LENGTH_LONG).show();
-//                        break;
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Usuari> call, Throwable t) {
-//                Toast.makeText(getApplicationContext(),t.toString(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//
-//
-//    }
+    public void CargarUsuarioLogin()
+    {
+        UsuarisService usuarisService = Api.getApi().create(UsuarisService.class);
+        Call<Usuari> usuariCall = usuarisService.Getusuaris("user2");
+
+        usuariCall.enqueue(new Callback<Usuari>() {
+            @Override
+            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
+                switch (response.code())
+                {
+                    case 204:
+                        usuariLogin = response.body();
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(getApplicationContext(), missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(getApplicationContext(),"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuari> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
 
 }

@@ -26,10 +26,11 @@ public class MenuPrincipalFragment extends Fragment {
     MainActivity activity;
     private FragmentManager mgr;
     private FragmentTransaction fragmentTransaction;
-
+    FragmentManager mg;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_menu_principal, container, false);
         return view;
