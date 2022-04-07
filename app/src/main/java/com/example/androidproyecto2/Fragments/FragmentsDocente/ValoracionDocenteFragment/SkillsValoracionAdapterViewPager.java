@@ -86,9 +86,27 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
             @Override
             public void onClick(View v) {
 
+                List<Valoracio> valoracionsSeleccionadas = new ArrayList<>();
+
                 for (int i = 0; i < valoracions.size();i ++)
                 {
-                    insertValoracio(valoracions.get(i));
+                    if (valoracions.get(i).getNota() != -1)
+                    {
+                        valoracionsSeleccionadas.add(valoracions.get(i));
+                    }
+                }
+
+
+                if (valoracionsSeleccionadas.size() == 0)
+                {
+                    Toast.makeText(activity, "Selecciona una valoracion", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                  for (int i = 0; i < valoracionsSeleccionadas.size();i ++)
+                  {
+                     insertValoracio(valoracionsSeleccionadas.get(i));
+                  }
+
                 }
 
             }
