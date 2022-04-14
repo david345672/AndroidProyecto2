@@ -101,6 +101,16 @@ public class LoginFragment extends Fragment {
                             //Encriptar la contra k pone el user
                                 //Comparar contrasenyas
                                 mainActivity.usuariLogin = (Usuari) userObject;
+                                if (mainActivity.usuariLogin.getGrups_has_alumnes().size() != 0)
+                                {
+                                    mainActivity.esDocent = false;
+                                }
+                                else
+                                {
+                                    mainActivity.esDocent = true;
+                                }
+
+
                                 pasarFragment();
                                 btnLogout.setVisibility(View.VISIBLE);
 

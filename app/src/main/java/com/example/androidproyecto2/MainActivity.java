@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public Usuari usuariLogin;
     public Usuari usuariValorat;
 
-
     public String layout = "Login";
     public Boolean esDocent = true;
     FragmentManager mgr;
@@ -54,13 +54,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
-
 
         //CargarUsuarioLogin();
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
+
 
         LoginFragment loginFragment = new LoginFragment();
 
@@ -148,46 +150,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
-
     public void ocultarBarrasDispositivo()
     {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(Ventana.WINDOW_SETTINGS);
     }
 
-
-    public void CargarUsuarioLogin()
-    {
-        UsuarisService usuarisService = Api.getApi().create(UsuarisService.class);
-        Call<Usuari> usuariCall = usuarisService.Getusuaris("user2");
-
-        usuariCall.enqueue(new Callback<Usuari>() {
-            @Override
-            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
-                switch (response.code())
-                {
-                    case 204:
-                        usuariLogin = response.body();
-                        break;
-                    case 400:
-                        Gson gson = new Gson();
-                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
-                        Toast.makeText(getApplicationContext(), missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-                        break;
-                    case 404:
-                        Toast.makeText(getApplicationContext(),"Registre no trobat", Toast.LENGTH_LONG).show();
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Usuari> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.toString(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
 
 }
