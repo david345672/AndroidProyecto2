@@ -96,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
                 {
                     VolverAMenuListasSkills();
                 }
+                else if(layout.equals("VerValoraciones"))
+                {
+                    VolverAMenu();
+                    btnAtras.setVisibility(View.INVISIBLE);
+                }
 
             }
         });

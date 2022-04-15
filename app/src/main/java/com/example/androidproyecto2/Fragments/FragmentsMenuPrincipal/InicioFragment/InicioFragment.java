@@ -53,45 +53,8 @@ public class InicioFragment extends Fragment
         activity = (MainActivity) getActivity();
         mg = getActivity().getSupportFragmentManager();
 
-
-
         llenarGrupos();
-
-        Button btnHacerObservacionPropia = view.findViewById(R.id.btnHacerObservacionPropia);
-        Button btnVerValoracionesPropias = view.findViewById(R.id.btnVerValoracionesPropias);
-
-
-        btnVerValoracionesPropias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(activity, "UsuarioLogin: " + activity.usuariLogin.getNom(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnHacerObservacionPropia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(getContext(),"dfsd",Toast.LENGTH_LONG).show();
-                IrAMenuLS();
-                activity.idGrupo = -1;
-            }
-        });
-
-
-
-
-
-
     }
-
-    private void IrAMenuLS() {
-
-        fragmentTransaction = mg.beginTransaction();
-        MenuListasSkillsFragment menuListasSkillsFragment = new MenuListasSkillsFragment();
-        fragmentTransaction.replace(R.id.FrContent,menuListasSkillsFragment);
-        fragmentTransaction.commit();
-    }
-
 
 
     public void llenarGrupos()

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.VerValoracionesDocenteFragment;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
@@ -71,7 +72,9 @@ public class GrupsAdapterViewPager extends PagerAdapter
         btnVerValoraciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                irAMenuVerValoracionesDocente();
+                MainActivity activity = (MainActivity) context;
+                activity.idGrupo = grup.getId();
 
             }
         });
@@ -105,6 +108,20 @@ public class GrupsAdapterViewPager extends PagerAdapter
         fragmentTransaction.commit();
 
     }
+
+
+    private void irAMenuVerValoracionesDocente()
+    {
+
+        MainActivity activity = (MainActivity) context;
+        mg = activity.getSupportFragmentManager();
+        fragmentTransaction = mg.beginTransaction();
+        VerValoracionesDocenteFragment verValoracionesDocenteFragment = new VerValoracionesDocenteFragment();
+        fragmentTransaction.replace(R.id.FrContent,verValoracionesDocenteFragment);
+        fragmentTransaction.commit();
+
+    }
+
 
 
 }
