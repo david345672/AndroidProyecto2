@@ -1,12 +1,15 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +30,13 @@ import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
 import com.google.gson.Gson;
 
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -63,6 +71,13 @@ public class VerValoracionesDocenteFragment extends Fragment {
         activity.layout = "VerValoraciones";
         LstUsuarisGrup = view.findViewById(R.id.LstUsuarisGrup);
         cargarUsuariosListasSills();
+
+        Calendar cal = Calendar.getInstance();
+        int anio = cal.get(Calendar.YEAR);
+        Calendar mycal = new GregorianCalendar(anio, 1,1);
+        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        Toast.makeText(activity, "dias: " + daysInMonth, Toast.LENGTH_SHORT).show();
 
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
@@ -131,10 +146,15 @@ public class VerValoracionesDocenteFragment extends Fragment {
     }
 
 
+
+
     public ArrayList<Mes> getMeses()
     {
         Calendar cal = Calendar.getInstance();
         int anio = cal.get(Calendar.YEAR);
+
+        String[] months = new DateFormatSymbols().getMonths();
+        String[] weekdays = new DateFormatSymbols().getWeekdays();
 
         int [] dias = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
         int [] dias2 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
@@ -149,20 +169,23 @@ public class VerValoracionesDocenteFragment extends Fragment {
         int [] dias11 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
         int [] dias12 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
 
+
+
+
         ArrayList<Mes> meses = new ArrayList<Mes>();
 
-        meses.add(new Mes(anio,"Enero",dias));
-        meses.add(new Mes(anio,"Febrero",dias2));
-        meses.add(new Mes(anio,"Marzo",dias3));
-        meses.add(new Mes(anio,"Abril",dias4));
-        meses.add(new Mes(anio,"Mayo",dias5));
-        meses.add(new Mes(anio,"Junio",dias6));
-        meses.add(new Mes(anio,"Julio",dias7));
-        meses.add(new Mes(anio,"Agosto",dias8));
-        meses.add(new Mes(anio,"Septiembre",dias9));
-        meses.add(new Mes(anio,"Octubre",dias10));
-        meses.add(new Mes(anio,"Noviembre",dias11));
-        meses.add(new Mes(anio,"Diciembre",dias12));
+        meses.add(new Mes(anio,"Enero",1,dias));
+        meses.add(new Mes(anio,"Febrero",2,dias2));
+        meses.add(new Mes(anio,"Marzo",3,dias3));
+        meses.add(new Mes(anio,"Abril",4,dias4));
+        meses.add(new Mes(anio,"Mayo",5,dias5));
+        meses.add(new Mes(anio,"Junio",6,dias6));
+        meses.add(new Mes(anio,"Julio",7,dias7));
+        meses.add(new Mes(anio,"Agosto",8,dias8));
+        meses.add(new Mes(anio,"Septiembre",9,dias9));
+        meses.add(new Mes(anio,"Octubre",10,dias10));
+        meses.add(new Mes(anio,"Noviembre",11,dias11));
+        meses.add(new Mes(anio,"Diciembre",12,dias12));
 
 
         return meses;

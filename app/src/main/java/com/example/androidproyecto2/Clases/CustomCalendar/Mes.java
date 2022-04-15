@@ -4,12 +4,14 @@ public class Mes
 {
     private int Año;
     private String nombre;
+    private int numMes;
     private int[] dias;
 
 
-    public Mes(int año, String nombre, int[] dias) {
-        Año = año;
+    public Mes(int Año, String nombre, int numMes, int[] dias) {
+        this.Año = Año;
         this.nombre = nombre;
+        this.numMes = numMes;
         this.dias = dias;
     }
 
@@ -19,6 +21,10 @@ public class Mes
 
     public String getNombre() {
         return nombre;
+    }
+
+    public int getNumMes() {
+        return numMes;
     }
 
     public int[] getDias() {
