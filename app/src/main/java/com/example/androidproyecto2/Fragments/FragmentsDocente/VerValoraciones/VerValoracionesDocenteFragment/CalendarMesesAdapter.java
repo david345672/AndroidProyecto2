@@ -38,9 +38,14 @@ public class CalendarMesesAdapter extends PagerAdapter
         View view = LayoutInflater.from(context).inflate(R.layout.calendar_vpager_mes_item,container,false);
 
         TextView lblMesAño = view.findViewById(R.id.lblMesAño);
+        TextView lbldias = view.findViewById(R.id.lbldias);
         Mes mes = meses.get(position);
 
         lblMesAño.setText(mes.getNombre() + " de " + mes.getAño());
+
+        lbldias.setText("Dias: " + mes.getDias().get(mes.getDias().size() - 1).getNombre());
+
+
 
 
         container.addView(view);

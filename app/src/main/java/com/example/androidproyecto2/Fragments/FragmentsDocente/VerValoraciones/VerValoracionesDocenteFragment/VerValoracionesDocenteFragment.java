@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Año;
+import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
@@ -31,6 +32,7 @@ import com.example.androidproyecto2.api.apiServices.GrupService;
 import com.google.gson.Gson;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,12 +75,6 @@ public class VerValoracionesDocenteFragment extends Fragment {
         LstUsuarisGrup = view.findViewById(R.id.LstUsuarisGrup);
         cargarUsuariosListasSills();
 
-        Calendar cal = Calendar.getInstance();
-        int anio = cal.get(Calendar.YEAR);
-        Calendar mycal = new GregorianCalendar(anio, 1,1);
-        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        Toast.makeText(activity, "dias: " + daysInMonth, Toast.LENGTH_SHORT).show();
 
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
@@ -153,39 +150,41 @@ public class VerValoracionesDocenteFragment extends Fragment {
         Calendar cal = Calendar.getInstance();
         int anio = cal.get(Calendar.YEAR);
 
-        String[] months = new DateFormatSymbols().getMonths();
-        String[] weekdays = new DateFormatSymbols().getWeekdays();
-
-        int [] dias = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int [] dias2 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
-        int [] dias3 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int [] dias4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
-        int [] dias5 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int [] dias6 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
-        int [] dias7 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int [] dias8 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int [] dias9 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
-        int [] dias10 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int [] dias11 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
-        int [] dias12 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-
-
-
 
         ArrayList<Mes> meses = new ArrayList<Mes>();
+        String[] months = new DateFormatSymbols().getMonths();
+//        Calendar mycal = new GregorianCalendar(anio, 1,2);
+//        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        meses.add(new Mes(anio,"Enero",1,dias));
-        meses.add(new Mes(anio,"Febrero",2,dias2));
-        meses.add(new Mes(anio,"Marzo",3,dias3));
-        meses.add(new Mes(anio,"Abril",4,dias4));
-        meses.add(new Mes(anio,"Mayo",5,dias5));
-        meses.add(new Mes(anio,"Junio",6,dias6));
-        meses.add(new Mes(anio,"Julio",7,dias7));
-        meses.add(new Mes(anio,"Agosto",8,dias8));
-        meses.add(new Mes(anio,"Septiembre",9,dias9));
-        meses.add(new Mes(anio,"Octubre",10,dias10));
-        meses.add(new Mes(anio,"Noviembre",11,dias11));
-        meses.add(new Mes(anio,"Diciembre",12,dias12));
+        for (int i = 0; i < months.length; i++)
+        {
+            Calendar mycal = new GregorianCalendar(anio, i,1);
+            int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+            ArrayList<Dia> dias = new ArrayList<>();
+
+            for (int d = 1; d <= daysInMonth; d++)
+            {
+
+                String dateString = String.format("%d-%d-%d", anio, i + 1, d);
+                Date date = null;
+                try {
+                    date = new SimpleDateFormat("yyyy-M-d").parse(dateString);
+                    String dayOfWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date);
+
+                    Dia dia = new Dia(d,dayOfWeek);
+                    dias.add(dia);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            Mes mes = new Mes(anio,months[i],dias);
+
+            meses.add(mes);
+
+        }
 
 
         return meses;
