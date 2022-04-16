@@ -84,7 +84,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
         vpMesesAño.setClipToPadding(false);
 
-        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses);
+        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses, activity);
         vpMesesAño.setAdapter(calendarMesesAdapter);
 
 
@@ -170,7 +170,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
                 Date date = null;
                 try {
                     date = new SimpleDateFormat("yyyy-M-d").parse(dateString);
-                    String dayOfWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date);
+                    String dayOfWeek = new SimpleDateFormat("EEEE", new Locale("es", "ES")).format(date);
 
                     Dia dia = new Dia(d,dayOfWeek);
                     dias.add(dia);

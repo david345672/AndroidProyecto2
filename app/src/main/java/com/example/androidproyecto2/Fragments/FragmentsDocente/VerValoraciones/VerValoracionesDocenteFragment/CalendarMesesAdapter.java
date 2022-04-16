@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
@@ -20,10 +23,12 @@ public class CalendarMesesAdapter extends PagerAdapter
 {
     private Context context;
     private ArrayList<Mes> meses;
+    private MainActivity activity;
 
-    public CalendarMesesAdapter(Context context, ArrayList<Mes> meses) {
+    public CalendarMesesAdapter(Context context, ArrayList<Mes> meses,MainActivity activity) {
         this.context = context;
         this.meses = meses;
+        this.activity = activity;
     }
 
 
@@ -38,14 +43,18 @@ public class CalendarMesesAdapter extends PagerAdapter
         View view = LayoutInflater.from(context).inflate(R.layout.calendar_vpager_mes_item,container,false);
 
         TextView lblMesAño = view.findViewById(R.id.lblMesAño);
-        TextView lbldias = view.findViewById(R.id.lbldias);
         Mes mes = meses.get(position);
 
         lblMesAño.setText(mes.getNombre() + " de " + mes.getAño());
 
-        lbldias.setText("Dias: " + mes.getDias().get(mes.getDias().size() - 1).getNombre());
+        RecyclerView ListDias = view.findViewById(R.id.ListDias);
+        DiasAdapter diasAdapter = new DiasAdapter(context,mes.getDias());
+        ListDias.setHasFixedSize(true);
+        ListDias.setLayoutManager(new LinearLayoutManager(context,
+                LinearLayoutManager.VERTICAL,
+                false));
 
-
+        ListDias.setAdapter(diasAdapter);
 
 
         container.addView(view);
