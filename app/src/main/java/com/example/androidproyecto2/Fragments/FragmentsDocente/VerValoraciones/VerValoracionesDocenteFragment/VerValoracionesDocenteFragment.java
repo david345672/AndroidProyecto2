@@ -96,7 +96,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
     public void cargarUsuariosListasSills()
     {
         GrupService grupService = Api.getApi().create(GrupService.class);
-        Call<Grup> grupCall = grupService.GetgrupsById(2);
+        Call<Grup> grupCall = grupService.GetgrupsById(activity.idGrupo);
 
         grupCall.enqueue(new Callback<Grup>() {
             @Override
@@ -144,34 +144,40 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
 
 
-
+    //Coger los meses del año actual
     public ArrayList<Mes> getMeses()
     {
+        //coger año actual
         Calendar cal = Calendar.getInstance();
         int anio = cal.get(Calendar.YEAR);
 
-
+        //Crear arrayList de meses y coger los nombres de los meses del año en un array normal
         ArrayList<Mes> meses = new ArrayList<Mes>();
         String[] months = new DateFormatSymbols().getMonths();
-//        Calendar mycal = new GregorianCalendar(anio, 1,2);
-//        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
+        //como siempre son 12, recorrer con un for 12 veces para llenar el arrayList de meses
         for (int i = 0; i < months.length; i++)
         {
+            //Los meses empiezan en 0, coger todos los dias del año actual, del mes i donde Enero sera 0, Febrero 1,...
             Calendar mycal = new GregorianCalendar(anio, i,1);
             int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
+            //Crear ArrayList de dias donde guardaremos el numero y el nombre, Ej: 2 y Lunes
             ArrayList<Dia> dias = new ArrayList<>();
 
+            //recorremos cada uno de los dias iniciando en 1 para tener el dia exacto
             for (int d = 1; d <= daysInMonth; d++)
             {
-
+                //Crear un String con la fecha del año actual, el mes que en este caso no empieza en 0 sino en 1, y el dia
                 String dateString = String.format("%d-%d-%d", anio, i + 1, d);
                 Date date = null;
                 try {
+                    //Creamos un objeto Date con los datos del dateString y cogemos el nombre del dia de la semana
+                    //Le ponemos el idioma que queremos en mi caso pongo Español
                     date = new SimpleDateFormat("yyyy-M-d").parse(dateString);
                     String dayOfWeek = new SimpleDateFormat("EEEE", new Locale("es", "ES")).format(date);
 
+                    //Una vez cogido el dia y el nombre, crear un objeto Dia para añadir lo al array de dias
                     Dia dia = new Dia(d,dayOfWeek);
                     dias.add(dia);
                 } catch (ParseException e) {
@@ -179,7 +185,8 @@ public class VerValoracionesDocenteFragment extends Fragment {
                 }
 
             }
-
+            //Despues de llenar el arrayList de dias, Crear un objeto Mes con el año actual, el nombre del mes que en nuestro caso sera
+            //la iteracion del array de meses y el arrayList de dias, Finalmente añadimos el mes en el arrayList de meses
             Mes mes = new Mes(anio,months[i],dias);
 
             meses.add(mes);
