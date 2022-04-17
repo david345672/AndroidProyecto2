@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
-import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.GraficosFragment.GraficosFragment;
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.ColoresGraficosFragment.ColoresGraficosFragment;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.IdiomasFragment.IdiomasFragment;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.NotificacionesFragment.NotificacionesFragment;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.TemasFragment.TemasFragment;
@@ -96,7 +96,7 @@ public class MenuConfiguracionFragment extends Fragment {
     public void irAgraficos(){
         mgr = getChildFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
-        GraficosFragment graficosFragment = new GraficosFragment();
+        ColoresGraficosFragment graficosFragment = new ColoresGraficosFragment();
         fragmentTransaction.replace(R.id.FrContentMenuConfig, graficosFragment);
         fragmentTransaction.commit();
     }

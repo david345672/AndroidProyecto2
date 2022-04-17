@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     public int idGrupo = -1;
 
+    //Array de Colores Para Graficos
+    public int [] coloresGraficos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
 
+        coloresGraficos = llenarColoresGraficos();
 
         LoginFragment loginFragment = new LoginFragment();
 
@@ -118,6 +123,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    private int[] llenarColoresGraficos()
+    {
+        int []colores = {
+        Color.parseColor("#FF0800"),Color.parseColor("#00FF40"),Color.parseColor("#EDF400"),Color.parseColor("#FFC500"),
+        Color.parseColor("#0044FF"),Color.parseColor("#FFFFFF"),Color.parseColor("#BE00FF"),Color.parseColor("#FCFF8B"),
+        Color.parseColor("#0F9900"),Color.parseColor("#000000"),Color.parseColor("#00F9FF"),Color.parseColor("#FF00B9"),
+        Color.parseColor("#00FFB4"),Color.parseColor("#ABFF00"),Color.parseColor("#FF4200"),Color.parseColor("#848180"),
+        Color.parseColor("#9EB2FD"),Color.parseColor("#915800"),Color.parseColor("#70007F"),Color.parseColor("#25007F")
+        };
+
+        return colores;
+    }
+
 
     public void irALogin()
     {
