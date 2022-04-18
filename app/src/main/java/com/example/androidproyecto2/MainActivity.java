@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.Grup;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     public int idGrupo = -1;
 
+    public LinearLayout fondo;
+
     //Array de Colores Para Graficos
     public int [] coloresGraficos;
 
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
+        fondo = findViewById(R.id.fondo);
+
 
         //CargarUsuarioLogin();
         mgr = getSupportFragmentManager();
