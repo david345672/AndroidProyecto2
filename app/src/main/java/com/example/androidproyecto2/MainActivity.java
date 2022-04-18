@@ -131,10 +131,9 @@ public class MainActivity extends AppCompatActivity {
     {
         int []colores = {
         Color.parseColor("#FF0800"),Color.parseColor("#00FF40"),Color.parseColor("#EDF400"),Color.parseColor("#FFC500"),
-        Color.parseColor("#0044FF"),Color.parseColor("#FFFFFF"),Color.parseColor("#BE00FF"),Color.parseColor("#FCFF8B"),
-        Color.parseColor("#0F9900"),Color.parseColor("#000000"),Color.parseColor("#00F9FF"),Color.parseColor("#FF00B9"),
-        Color.parseColor("#00FFB4"),Color.parseColor("#ABFF00"),Color.parseColor("#FF4200"),Color.parseColor("#848180"),
-        Color.parseColor("#9EB2FD"),Color.parseColor("#915800"),Color.parseColor("#70007F"),Color.parseColor("#25007F")
+        Color.parseColor("#0044FF"),Color.parseColor("#389EA2"),Color.parseColor("#BE00FF"),Color.parseColor("#6F4C00"),
+        Color.parseColor("#0F9900"),Color.parseColor("#83945A"),Color.parseColor("#00F9FF"),Color.parseColor("#FF00B9"),
+        Color.parseColor("#00FFB4"),Color.parseColor("#ABFF00"),Color.parseColor("#08AA7C"),Color.parseColor("#848180"),
         };
 
         return colores;
