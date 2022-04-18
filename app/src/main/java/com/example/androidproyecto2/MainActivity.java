@@ -18,6 +18,7 @@ import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Ventana;
+import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.ColoresGraficosFragment.ColoresGraficosFragment;
 import com.example.androidproyecto2.Fragments.LoginFragment.LoginFragment;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
@@ -70,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
         coloresGraficos = llenarColoresGraficos();
 
         LoginFragment loginFragment = new LoginFragment();
+        ColoresGraficosFragment coloresGraficosFragment = new ColoresGraficosFragment();
 
-        fragmentTransaction.replace(R.id.FrContent, loginFragment);
+        fragmentTransaction.replace(R.id.FrContent, coloresGraficosFragment);
         fragmentTransaction.commit();
 
 
