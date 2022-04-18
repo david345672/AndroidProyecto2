@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         LoginFragment loginFragment = new LoginFragment();
         ColoresGraficosFragment coloresGraficosFragment = new ColoresGraficosFragment();
 
-        fragmentTransaction.replace(R.id.FrContent, coloresGraficosFragment);
+        fragmentTransaction.replace(R.id.FrContent, loginFragment);
         fragmentTransaction.commit();
 
 
