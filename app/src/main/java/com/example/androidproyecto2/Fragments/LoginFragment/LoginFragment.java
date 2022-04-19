@@ -96,6 +96,8 @@ public class LoginFragment extends Fragment {
                                 {
                                     Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
                                 }
+                            }else{
+                                Toast.makeText(getContext(),"socorro",Toast.LENGTH_LONG).show();
                             }
                         }
                         break;
