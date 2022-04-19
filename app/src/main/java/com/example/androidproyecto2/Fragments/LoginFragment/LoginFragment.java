@@ -8,13 +8,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.androidproyecto2.BCrypt;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipalFragment;
@@ -22,10 +25,18 @@ import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.UsuarisService;
+import com.example.androidproyecto2.sha;
 import com.google.gson.Gson;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,12 +82,6 @@ public class LoginFragment extends Fragment {
 
 
         //pasarFragment();
-
-
-
-
-
-
     }
 
 
@@ -85,6 +90,7 @@ public class LoginFragment extends Fragment {
         etPassword = getActivity().findViewById(R.id.etPassword);
 
         UsuarisService userService = Api.getApi().create(UsuarisService.class);
+
         Call<List<Usuari>> listCall = userService.Getusuaris();
 
         listCall.enqueue(new Callback<List<Usuari>>() {
@@ -96,10 +102,48 @@ public class LoginFragment extends Fragment {
 
                         for (Usuari userObject:usuarisList) {
                             if(userObject.getNomUsuari().equals(etUser.getText().toString())){
-                            //Encriptar la contra k pone el user
+
+                                try
+                                {
+                                    String test = etPassword.getText().toString();
+
+                                    MessageDigest md = MessageDigest.getInstance("SHA-512");
+                                    byte[] digest = md.digest(test.getBytes());
+                                    StringBuilder sb = new StringBuilder();
+                                    for (int i = 0; i < digest.length; i++)
+                                    {
+                                        sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+                                    }
+                                    String hashed512 = sb.toString();
+                                    userObject.getContrasenya();
+                                    String result;
+
+
+
+                                    if (BCrypt.checkpw(hashed512,"$2a$11$znDHTDShhkqqtBDPTutOKeE6HTxVnfJ7mkeSZ/4PUBJI5yPV6VerK"))
+                                    {
+                                        Toast.makeText(getContext(), "aaaa", Toast.LENGTH_SHORT).show();
+                                        mainActivity.usuariLogin = (Usuari) userObject;
+                                        pasarFragment();
+                                    }
+                                    else
+                                    {
+                                        result = "It does not match";
+                                    }
+
+
+                                }
+                                catch(Exception e)
+                                {
+                                    Toast.makeText(getContext(),
+                                            "No s'ha pogut verificar",
+                                            Toast.LENGTH_LONG).show();
+
+                                }
+
+                                //Encriptar la contra k pone el user
                                 //Comparar contrasenyas
-                                mainActivity.usuariLogin = (Usuari) userObject;
-                                pasarFragment();
+
                                 //Toast.makeText(mainActivity, mainActivity.usuariLogin.getNomUsuari(), Toast.LENGTH_SHORT).show();
                             }
 //                            else{
@@ -115,6 +159,8 @@ public class LoginFragment extends Fragment {
                     case 404:
                         Toast.makeText(mainActivity.getApplicationContext(),"Registre no trobat",Toast.LENGTH_LONG).show();
                         break;
+
+
                 }
             }
 
