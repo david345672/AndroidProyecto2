@@ -1,5 +1,9 @@
 package com.example.androidproyecto2.Clases.CustomCalendar;
 
+import com.example.androidproyecto2.Clases.Valoracio;
+
+import java.util.ArrayList;
+
 public class Dia
 {
     private int num;
@@ -18,6 +22,5 @@ public class Dia
     public String getNombre() {
         return nombre;
     }
-
 
 }

@@ -1,5 +1,6 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment;
 
+import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -23,12 +24,14 @@ import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
+import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment.GrupsAdapterViewPager;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
+import com.example.androidproyecto2.api.apiServices.ValoracionsService;
 import com.google.gson.Gson;
 
 import java.text.DateFormatSymbols;
@@ -57,6 +60,9 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
     private ArrayList<Mes> meses;
 
+
+    private List<Valoracio> valoracions = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,6 +80,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
         activity.layout = "VerValoraciones";
         LstUsuarisGrup = view.findViewById(R.id.LstUsuarisGrup);
         cargarUsuariosListasSills();
+        CogerTodasLasValoraciones();
 
 
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
@@ -143,6 +150,43 @@ public class VerValoracionesDocenteFragment extends Fragment {
     }
 
 
+    public void CogerTodasLasValoraciones()
+    {
+        ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
+        Call<List<Valoracio>> listCall = valoracionsService.GetValoracions();
+
+        listCall.enqueue(new Callback<List<Valoracio>>() {
+            @Override
+            public void onResponse(Call<List<Valoracio>> call, Response<List<Valoracio>> response) {
+                switch (response.code())
+                {
+                    case 200:
+                        valoracions = response.body();
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError mensajeError = gson.fromJson(response.errorBody().charStream(),MissatgeError.class);
+                        Toast.makeText(activity, mensajeError.getMessage(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 404:
+                        Toast.makeText(activity,"Registre no trobat",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Valoracio>> call, Throwable t) {
+
+            }
+        });
+
+
+
+    }
+
+
 
     //Coger los meses del año actual
     public ArrayList<Mes> getMeses()
@@ -176,6 +220,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
                     //Le ponemos el idioma que queremos en mi caso pongo Español
                     date = new SimpleDateFormat("yyyy-M-d").parse(dateString);
                     String dayOfWeek = new SimpleDateFormat("EEEE", new Locale("es", "ES")).format(date);
+
 
                     //Una vez cogido el dia y el nombre, crear un objeto Dia para añadir lo al array de dias
                     Dia dia = new Dia(d,dayOfWeek);

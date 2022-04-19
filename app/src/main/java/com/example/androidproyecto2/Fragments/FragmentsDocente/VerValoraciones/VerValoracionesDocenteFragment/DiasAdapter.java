@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
+import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
 import com.example.androidproyecto2.R;
 
 import java.util.ArrayList;
@@ -30,13 +32,14 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     {
         TextView lblNumDia;
         TextView lblNombreDia;
+        RecyclerView ListValoraciones;
 
 
         public ViewHolder(View item) {
             super(item);
             lblNumDia = item.findViewById(R.id.lblNumDia);
             lblNombreDia = item.findViewById(R.id.lblNombreDia);
-
+            ListValoraciones = item.findViewById(R.id.ListValoraciones);
 
 
         }
@@ -45,6 +48,16 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
         {
             lblNumDia.setText(Integer.toString(dia.getNum()));
             lblNombreDia.setText(dia.getNombre());
+
+
+//            ValoracioAdapter valoracioAdapter = new UsuarisAdapter(context,);
+//            ListValoraciones.setHasFixedSize(true);
+//            ListValoraciones.setLayoutManager(new LinearLayoutManager(context,
+//                    LinearLayoutManager.HORIZONTAL,
+//                    false));
+//
+//            ListValoraciones.setAdapter(valoracioAdapter);
+
 
         }
 

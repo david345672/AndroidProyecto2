@@ -18,6 +18,7 @@ import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.Usuari;
+import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Clases.Ventana;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.ColoresGraficosFragment.ColoresGraficosFragment;
 import com.example.androidproyecto2.Fragments.LoginFragment.LoginFragment;
@@ -26,8 +27,10 @@ import com.example.androidproyecto2.Fragments.MenuPrincipalFragment.MenuPrincipa
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
 import com.example.androidproyecto2.api.apiServices.UsuarisService;
+import com.example.androidproyecto2.api.apiServices.ValoracionsService;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Array de Colores Para Graficos
     public int [] coloresGraficos;
+
 
 
     @Override
@@ -92,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
        // fragmentTransaction.replace(R.id.FrContent, menuPrincipalFragment);
        // fragmentTransaction.commit();
-
 
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +189,9 @@ public class MainActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(Ventana.WINDOW_SETTINGS);
     }
+
+
+
 
 
 

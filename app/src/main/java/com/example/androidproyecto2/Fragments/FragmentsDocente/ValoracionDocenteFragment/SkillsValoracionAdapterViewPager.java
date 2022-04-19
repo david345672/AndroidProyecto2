@@ -68,7 +68,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         for (int i = 0; i < skills.get(position).getKpis().size();i++){
             Date currentTime = Calendar.getInstance().getTime();
             Timestamp param = new Timestamp(new Date().getTime());
-            Valoracio valoracio = new Valoracio(skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),param,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
+            Valoracio valoracio = new Valoracio(null,null,null,skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),param,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
             valoracions.add(valoracio);
 
         }
