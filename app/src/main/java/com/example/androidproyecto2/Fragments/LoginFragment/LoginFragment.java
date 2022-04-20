@@ -86,20 +86,7 @@ public class LoginFragment extends Fragment {
                                     String test = etPassword.getText().toString();
                                     if (BCrypt.checkpw(test,userObject.getContrasenya())){
 
-                                        mainActivity.usuariLogin = (Usuari) userObject;
-
-                                        if (mainActivity.usuariLogin.getGrups_has_alumnes().size() != 0)
-                                        {
-                                            mainActivity.esDocent = false;
-                                        }
-                                        else
-                                        {
-                                            mainActivity.esDocent = true;
-                                        }
-
-
-                                        pasarFragment();
-                                        mainActivity.toolbar.findViewById(R.id.btnLogout).setVisibility(View.VISIBLE);
+                                        getUsuario(userObject.getId());
                                     }
                                 }
                                 catch(Exception e)
@@ -134,4 +121,55 @@ public class LoginFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+
+    public void getUsuario(int id)
+    {
+        UsuarisService userService = Api.getApi().create(UsuarisService.class);
+        Call<Usuari> userCall = userService.Getusuaris(id);
+
+        userCall.enqueue(new Callback<Usuari>() {
+            @Override
+            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
+                switch (response.code())
+                {
+                    case 200:
+
+                        mainActivity.usuariLogin = response.body();
+
+                        if (mainActivity.usuariLogin.getGrups_has_alumnes().size() != 0)
+                        {
+                            mainActivity.esDocent = false;
+                        }
+                        else
+                        {
+                            mainActivity.esDocent = true;
+                        }
+
+
+                        pasarFragment();
+                        mainActivity.toolbar.findViewById(R.id.btnLogout).setVisibility(View.VISIBLE);
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(mainActivity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(mainActivity,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuari> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
+
 }
