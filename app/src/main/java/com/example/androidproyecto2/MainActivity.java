@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public LlistaSkills llistaSkillSelected;
     public Usuari usuariLogin;
     public Usuari usuariValorat;
+    public Usuari usuariSeleccionat;
 
     public String layout = "Login";
     public Boolean esDocent = true;
@@ -59,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Array de Colores Para Graficos
     public int [] coloresGraficos;
+
+    public List<Valoracio> valoracions = new ArrayList<>();
+    public List<Valoracio> valoracionsUsuari = new ArrayList<>();
 
 
 
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
-
+        CogerTodasLasValoraciones();
         //MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
 
        // fragmentTransaction.replace(R.id.FrContent, menuPrincipalFragment);
@@ -145,6 +149,42 @@ public class MainActivity extends AppCompatActivity {
         };
 
         return colores;
+    }
+
+
+    public void CogerTodasLasValoraciones()
+    {
+        ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
+        Call<List<Valoracio>> listCall = valoracionsService.Getvaloracions();
+
+        listCall.enqueue(new Callback<List<Valoracio>>() {
+            @Override
+            public void onResponse(Call<List<Valoracio>> call, Response<List<Valoracio>> response) {
+                switch (response.code())
+                {
+                    case 200:
+                        valoracions = response.body();
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError mensajeError = gson.fromJson(response.errorBody().charStream(),MissatgeError.class);
+                        Toast.makeText(MainActivity.this, mensajeError.getMessage(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 404:
+                        Toast.makeText(MainActivity.this,"Registre no trobat",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Valoracio>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error: " + t.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
     }
 
 

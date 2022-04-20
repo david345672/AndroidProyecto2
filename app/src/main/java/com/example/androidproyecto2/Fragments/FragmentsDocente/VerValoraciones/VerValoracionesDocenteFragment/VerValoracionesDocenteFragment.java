@@ -61,8 +61,11 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
     private ArrayList<Mes> meses;
 
+    //public List<Valoracio> valoracions = new ArrayList<>();
+    public List<Valoracio> valoracionsUsuari = new ArrayList<>();
 
-    private List<Valoracio> valoracions = new ArrayList<>();
+
+    private VerValoracionesDocenteFragment verValoracionesDocenteFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,10 +81,12 @@ public class VerValoracionesDocenteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         activity = (MainActivity) getActivity();
+        verValoracionesDocenteFragment = (VerValoracionesDocenteFragment) getParentFragment();
+
         activity.layout = "VerValoraciones";
         LstUsuarisGrup = view.findViewById(R.id.LstUsuarisGrup);
         cargarUsuariosListasSills();
-        CogerTodasLasValoraciones();
+        //CogerTodasLasValoraciones();
 
 
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
@@ -92,10 +97,8 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
         vpMesesAño.setClipToPadding(false);
 
-        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses, activity);
+        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses, activity, valoracionsUsuari);
         vpMesesAño.setAdapter(calendarMesesAdapter);
-
-
 
     }
 
@@ -119,13 +122,13 @@ public class VerValoracionesDocenteFragment extends Fragment {
                             usuaris.add(gH.getUsuaris());
                         }
 
-                        UsuarisAdapter usuarisAdapter = new UsuarisAdapter(getContext(),usuaris,activity);
+                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),usuaris,activity,verValoracionesDocenteFragment);
                         LstUsuarisGrup.setHasFixedSize(true);
                         LstUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.VERTICAL,
                                 false));
 
-                        LstUsuarisGrup.setAdapter(usuarisAdapter);
+                        LstUsuarisGrup.setAdapter(usuarisValoracionsAdapter);
 
 
 
@@ -151,41 +154,6 @@ public class VerValoracionesDocenteFragment extends Fragment {
     }
 
 
-    public void CogerTodasLasValoraciones()
-    {
-        ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
-        Call<List<Valoracio>> listCall = valoracionsService.Getvaloracions();
-
-        listCall.enqueue(new Callback<List<Valoracio>>() {
-            @Override
-            public void onResponse(Call<List<Valoracio>> call, Response<List<Valoracio>> response) {
-                switch (response.code())
-                {
-                    case 200:
-                        valoracions = response.body();
-                        Toast.makeText(activity, valoracions.get(0).toString(), Toast.LENGTH_SHORT).show();
-
-                        break;
-                    case 400:
-                        Gson gson = new Gson();
-                        MissatgeError mensajeError = gson.fromJson(response.errorBody().charStream(),MissatgeError.class);
-                        Toast.makeText(activity, mensajeError.getMessage(), Toast.LENGTH_SHORT).show();
-                        break;
-                    case 404:
-                        Toast.makeText(activity,"Registre no trobat",Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Valoracio>> call, Throwable t) {
-                Toast.makeText(activity, "Error: " + t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-
-    }
 
 
 

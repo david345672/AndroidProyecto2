@@ -33,6 +33,7 @@ import com.google.type.DateTime;
 import com.google.type.DateTimeOrBuilder;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import java.util.Calendar;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,12 +72,11 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         List<Valoracio> valoracions = new ArrayList<>();
 
         for (int i = 0; i < skills.get(position).getKpis().size();i++){
-            Date currentTime = Calendar.getInstance().getTime();
-            Timestamp param = new Timestamp(new Date().getTime());
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+            String currentDateandTime = sdf.format(new Date());
 
-
-            Valoracio valoracio = new Valoracio(null,null,null,skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),currentTime,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
+            Valoracio valoracio = new Valoracio(null,null,null,skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),currentDateandTime,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
             valoracions.add(valoracio);
 
         }
