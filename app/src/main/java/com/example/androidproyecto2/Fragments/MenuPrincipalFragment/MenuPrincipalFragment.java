@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment.InicioFragment;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.MenuConfiguracionFragment.MenuConfiguracionFragment;
@@ -92,7 +93,6 @@ public class MenuPrincipalFragment extends Fragment {
         InicioFragment inicioFragment = new InicioFragment();
         fragmentTransaction.replace(R.id.FrContentMenu, inicioFragment);
         fragmentTransaction.commit();
-
     }
 
     public void irATutorial()

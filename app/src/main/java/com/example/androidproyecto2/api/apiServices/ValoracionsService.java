@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 public interface ValoracionsService
 {
     @GET("api/valoracions/")
-    Call<List<Valoracio>> GetValoracions();
+    Call<List<Valoracio>> Getvaloracions();
 
     @POST("api/valoracions/")
     Call<Valoracio> insertValoracio(@Body Valoracio valoracio);

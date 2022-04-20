@@ -17,7 +17,7 @@ public class Valoracio implements Serializable
     private int kpis_id;
     private int usuari_valorat_id;
     private int usuari_pp_id;
-    private Timestamp data;
+    private Date data;
     private int nota;
     private int llistes_skills_id;
     private int skills_id;
@@ -26,7 +26,7 @@ public class Valoracio implements Serializable
     public Valoracio() {
     }
 
-    public Valoracio(Kpi kpis, Usuari usuaris, Usuari usuaris1, int kpis_id, int usuari_valorat_id, int usuari_pp_id, Timestamp data, int nota, int llistes_skills_id, int skills_id, String observacions) {
+    public Valoracio(Kpi kpis, Usuari usuaris, Usuari usuaris1, int kpis_id, int usuari_valorat_id, int usuari_pp_id, Date data, int nota, int llistes_skills_id, int skills_id, String observacions) {
         this.kpis = kpis;
         this.usuaris = usuaris;
         this.usuaris1 = usuaris1;
@@ -76,11 +76,11 @@ public class Valoracio implements Serializable
         this.usuari_pp_id = usuari_pp_id;
     }
 
-    public Timestamp getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(Timestamp data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

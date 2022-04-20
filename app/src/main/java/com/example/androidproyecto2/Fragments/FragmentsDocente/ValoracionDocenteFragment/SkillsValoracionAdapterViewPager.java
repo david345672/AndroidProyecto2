@@ -29,8 +29,12 @@ import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.ValoracionsService;
 import com.google.gson.Gson;
+import com.google.type.DateTime;
+import com.google.type.DateTimeOrBuilder;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ConcurrentModificationException;
@@ -68,7 +72,10 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
         for (int i = 0; i < skills.get(position).getKpis().size();i++){
             Date currentTime = Calendar.getInstance().getTime();
             Timestamp param = new Timestamp(new Date().getTime());
-            Valoracio valoracio = new Valoracio(null,null,null,skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),param,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
+
+
+
+            Valoracio valoracio = new Valoracio(null,null,null,skills.get(position).getKpis().get(i).getId(),activity.usuariValorat.getId(),activity.usuariLogin.getId(),currentTime,-1,activity.llistaSkillSelected.getId(),skills.get(position).getId(),"");
             valoracions.add(valoracio);
 
         }

@@ -33,6 +33,7 @@ import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
 import com.example.androidproyecto2.api.apiServices.ValoracionsService;
 import com.google.gson.Gson;
+import com.google.type.DateTime;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -153,7 +154,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
     public void CogerTodasLasValoraciones()
     {
         ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
-        Call<List<Valoracio>> listCall = valoracionsService.GetValoracions();
+        Call<List<Valoracio>> listCall = valoracionsService.Getvaloracions();
 
         listCall.enqueue(new Callback<List<Valoracio>>() {
             @Override
@@ -162,7 +163,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
                 {
                     case 200:
                         valoracions = response.body();
-
+                        Toast.makeText(activity, valoracions.get(0).toString(), Toast.LENGTH_SHORT).show();
 
                         break;
                     case 400:
@@ -178,7 +179,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Valoracio>> call, Throwable t) {
-
+                Toast.makeText(activity, "Error: " + t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 

@@ -91,7 +91,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                     Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb1.getText()));
-                    valoracio.setData(param);
+                    //valoracio.setData(param);
                     valoracio.setObservacions(txtObservacion.getText().toString());
 
                 }
@@ -104,7 +104,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                     Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb2.getText()));
-                    valoracio.setData(param);
+                    //valoracio.setData(param);
                     valoracio.setObservacions(txtObservacion.getText().toString());
                 }
             });
@@ -116,7 +116,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                     Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb3.getText()));
-                    valoracio.setData(param);
+                    //valoracio.setData(param);
                     valoracio.setObservacions(txtObservacion.getText().toString());
                 }
             });
@@ -128,7 +128,7 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
                     Timestamp param = new Timestamp(new Date().getTime());
 
                     valoracio.setNota(Integer.parseInt((String) rdb4.getText()));
-                    valoracio.setData(param);
+                    //valoracio.setData(param);
                     valoracio.setObservacions(txtObservacion.getText().toString());
                 }
             });
