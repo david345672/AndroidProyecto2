@@ -88,6 +88,10 @@ public class LoginFragment extends Fragment {
 
                                         getUsuario(userObject.getId());
                                     }
+                                    else
+                                    {
+                                        Toast.makeText(mainActivity, "nombre de usuario o la contrasenya no existe", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 catch(Exception e)
                                 {
@@ -108,7 +112,7 @@ public class LoginFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<List<Usuari>> call, Throwable t) {
-
+                Toast.makeText(mainActivity, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
