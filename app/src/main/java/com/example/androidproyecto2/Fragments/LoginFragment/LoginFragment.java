@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment {
                                 {
                                     String test = etPassword.getText().toString();
                                     if (BCrypt.checkpw(test,userObject.getContrasenya())){
-                                        Toast.makeText(getContext(), "aaaa", Toast.LENGTH_SHORT).show();
+
                                         mainActivity.usuariLogin = (Usuari) userObject;
 
                                         if (mainActivity.usuariLogin.getGrups_has_alumnes().size() != 0)
@@ -99,18 +99,13 @@ public class LoginFragment extends Fragment {
 
 
                                         pasarFragment();
-                                    }
-                                    else
-                                    {
-                                      Toast.makeText(getContext(),"socorro",Toast.LENGTH_LONG).show();
+                                        mainActivity.toolbar.findViewById(R.id.btnLogout).setVisibility(View.VISIBLE);
                                     }
                                 }
                                 catch(Exception e)
                                 {
                                     Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
                                 }
-                            }else{
-                                Toast.makeText(getContext(),"socorro",Toast.LENGTH_LONG).show();
                             }
                         }
                         break;
