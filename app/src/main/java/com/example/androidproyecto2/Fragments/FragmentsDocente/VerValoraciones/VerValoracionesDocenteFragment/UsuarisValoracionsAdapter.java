@@ -57,10 +57,9 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                     SelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
                     activity.usuariSeleccionat = usuaris.get(SelectedPosition);
-                    List<Valoracio> valoraciones = new ArrayList<>();
-                    
-                    valoraciones = cargarValoracionesUsuario();
-                    Toast.makeText(activity, valoraciones.get(0).toString(), Toast.LENGTH_SHORT).show();
+
+                    verValoracionesDocenteFragment.valoracionsUsuari = cargarValoracionesUsuario();
+                    Toast.makeText(activity,  "t: " + verValoracionesDocenteFragment.valoracionsUsuari.size(), Toast.LENGTH_SHORT).show();
 
                 }
             });
