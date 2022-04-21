@@ -130,7 +130,7 @@ public class CalendarMesesAdapter extends PagerAdapter
             char [] numFecha = valoracions.get(i).getData().toCharArray();
             String diaStr = new StringBuilder(numFecha[6]).append(numFecha[7]).toString();
             int dia = Integer.parseInt(diaStr);
-            Toast.makeText(context, "numDia: " + dia, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "numDia: " + diaStr, Toast.LENGTH_SHORT).show();
             for (int j = 0; j < dias.size(); j++)
             {
                 if (dia == dias.get(j).getNum())
