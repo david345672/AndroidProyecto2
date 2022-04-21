@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +22,13 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
 {
     private Context context;
     private ArrayList<Dia> dias;
-    
+    private ArrayList<Valoracio> valoracionsMes;
 
-    public DiasAdapter(Context context, ArrayList<Dia> dias) {
+
+    public DiasAdapter(Context context, ArrayList<Dia> dias, ArrayList<Valoracio> valoracionsMes) {
         this.context = context;
         this.dias = dias;
-
+        this.valoracionsMes = valoracionsMes;
     }
 
 
@@ -51,14 +53,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
             lblNumDia.setText(Integer.toString(dia.getNum()));
             lblNombreDia.setText(dia.getNombre());
 
-
-//            ValoracioAdapter valoracioAdapter = new UsuarisAdapter(context,);
-//            ListValoraciones.setHasFixedSize(true);
-//            ListValoraciones.setLayoutManager(new LinearLayoutManager(context,
-//                    LinearLayoutManager.HORIZONTAL,
-//                    false));
-//
-//            ListValoraciones.setAdapter(valoracioAdapter);
+            ArrayList<Valoracio> valoracionsDia = cargarValoracionesPorDia(valoracionsMes, dia);
 
 
         }
@@ -88,6 +83,40 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     {
         return dias.size();
     }
+
+
+    /*
+        Cargar Todas las valoraciones que tiene el usuario por dia
+        - valoracionesMes = valoraciones del mes del item del ViewPager
+        - dia = dia en el que estoy dentro de la recyclerView de los dias del mes
+     */
+    public ArrayList<Valoracio> cargarValoracionesPorDia(ArrayList<Valoracio> valoracionsMes, Dia dia)
+    {
+        ArrayList<Valoracio> valoracionsDia = new ArrayList<>();
+
+        for (Valoracio vals: valoracionsMes) {
+
+            char [] numFecha = vals.getData().toCharArray();
+
+            char[] diasC = new char[2];
+            diasC[0] = numFecha[6];
+            diasC[1] = numFecha[7];
+            String diaStr = String.valueOf(diasC);
+            int diaVal = Integer.parseInt(diaStr);
+
+            if (diaVal == dia.getNum())
+            {
+                valoracionsDia.add(vals);
+            }
+
+        }
+
+        return valoracionsDia;
+
+    }
+
+
+
 
 
 

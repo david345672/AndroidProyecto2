@@ -63,7 +63,7 @@ public class CalendarMesesAdapter extends PagerAdapter
 
         lblMesAño.setText(mes.getNombre() + " de " + mes.getAño());
         RecyclerView ListDias = view.findViewById(R.id.ListDias);
-        DiasAdapter diasAdapter = new DiasAdapter(context,diasMes);
+        DiasAdapter diasAdapter = new DiasAdapter(context,diasMes,valoracionsMes);
         ListDias.setHasFixedSize(true);
         ListDias.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL,
