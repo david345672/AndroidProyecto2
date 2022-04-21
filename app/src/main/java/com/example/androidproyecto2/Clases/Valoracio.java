@@ -11,10 +11,13 @@ import java.util.Date;
 
 public class Valoracio implements Serializable
 {
+    private Kpi kpis;
+    private Usuari usuaris;
+    private Usuari usuaris1;
     private int kpis_id;
     private int usuari_valorat_id;
     private int usuari_pp_id;
-    private Timestamp data;
+    private String data;
     private int nota;
     private int llistes_skills_id;
     private int skills_id;
@@ -23,8 +26,10 @@ public class Valoracio implements Serializable
     public Valoracio() {
     }
 
-
-    public Valoracio(int kpis_id, int usuari_valorat_id, int usuari_pp_id, Timestamp data, int nota, int llistes_skills_id, int skills_id, String observacions) {
+    public Valoracio(Kpi kpis, Usuari usuaris, Usuari usuaris1, int kpis_id, int usuari_valorat_id, int usuari_pp_id, String data, int nota, int llistes_skills_id, int skills_id, String observacions) {
+        this.kpis = kpis;
+        this.usuaris = usuaris;
+        this.usuaris1 = usuaris1;
         this.kpis_id = kpis_id;
         this.usuari_valorat_id = usuari_valorat_id;
         this.usuari_pp_id = usuari_pp_id;
@@ -35,7 +40,17 @@ public class Valoracio implements Serializable
         this.observacions = observacions;
     }
 
+    public Kpi getKpis() {
+        return kpis;
+    }
 
+    public Usuari getUsuaris() {
+        return usuaris;
+    }
+
+    public Usuari getUsuaris1() {
+        return usuaris1;
+    }
 
     public int getKpis_id() {
         return kpis_id;
@@ -61,11 +76,11 @@ public class Valoracio implements Serializable
         this.usuari_pp_id = usuari_pp_id;
     }
 
-    public Timestamp getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Timestamp data) {
+    public void setData(String data) {
         this.data = data;
     }
 

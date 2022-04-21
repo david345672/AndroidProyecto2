@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFragment.InicioFragment;
 import com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.MenuConfiguracionFragment.MenuConfiguracionFragment;
@@ -26,10 +27,11 @@ public class MenuPrincipalFragment extends Fragment {
     MainActivity activity;
     private FragmentManager mgr;
     private FragmentTransaction fragmentTransaction;
-
+    FragmentManager mg;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_menu_principal, container, false);
         return view;
@@ -91,7 +93,6 @@ public class MenuPrincipalFragment extends Fragment {
         InicioFragment inicioFragment = new InicioFragment();
         fragmentTransaction.replace(R.id.FrContentMenu, inicioFragment);
         fragmentTransaction.commit();
-
     }
 
     public void irATutorial()

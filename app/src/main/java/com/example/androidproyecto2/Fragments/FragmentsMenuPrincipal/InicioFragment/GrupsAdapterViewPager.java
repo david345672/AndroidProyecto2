@@ -13,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Fragments.FragmentsAlumno.VerValoracionAlumnoFragment.VerValoracionAlumnoFragment;
+import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.VerValoracionesDocenteFragment;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.MenuListasSkillsFragment;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
@@ -82,6 +83,16 @@ public class GrupsAdapterViewPager extends PagerAdapter
                 fragmentTransaction.replace(R.id.FrContent,vervaloracionalumno);
                 fragmentTransaction.commit();
 
+                MainActivity activity = (MainActivity) context;
+                activity.idGrupo = grup.getId();
+                //Si es docente ire a un menu diferente
+                if (activity.esDocent)
+                {
+                    irAMenuVerValoracionesDocente();
+                } else
+                {
+                    irAMenuVerValoracionesAlumno();
+                }
 
             }
         });
@@ -115,6 +126,30 @@ public class GrupsAdapterViewPager extends PagerAdapter
         fragmentTransaction.commit();
 
     }
+
+
+    private void irAMenuVerValoracionesDocente()
+    {
+
+        MainActivity activity = (MainActivity) context;
+        mg = activity.getSupportFragmentManager();
+        fragmentTransaction = mg.beginTransaction();
+        VerValoracionesDocenteFragment verValoracionesDocenteFragment = new VerValoracionesDocenteFragment();
+        fragmentTransaction.replace(R.id.FrContent,verValoracionesDocenteFragment);
+        fragmentTransaction.commit();
+
+    }
+
+    private void irAMenuVerValoracionesAlumno()
+    {
+        MainActivity activity = (MainActivity) context;
+        mg = activity.getSupportFragmentManager();
+        fragmentTransaction = mg.beginTransaction();
+        VerValoracionAlumnoFragment verValoracionAlumnoFragment = new VerValoracionAlumnoFragment();
+        fragmentTransaction.replace(R.id.FrContent,verValoracionAlumnoFragment);
+        fragmentTransaction.commit();
+    }
+
 
 
 }
