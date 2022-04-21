@@ -133,6 +133,13 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         //Coger las valoraciones que ha hecho el usuario
                         userSelected.getValoracions();
 
+                        if (userSelected.getValoracions().size() != 0)
+                        {
+                            cogerValoracionesPorMes(meses,userSelected.getValoracions());
+                        }
+
+
+
                         vpMesesAño.setClipToPadding(false);
                         CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(context,meses, activity, userSelected.getValoracions());
                         vpMesesAño.setAdapter(calendarMesesAdapter);
@@ -161,6 +168,14 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
 
 
+    public void cogerValoracionesPorMes(ArrayList<Mes> meses, List<Valoracio> valoracions)
+    {
+        Toast.makeText(activity, "size: " + valoracions.get(0).getData().length()+ "data: " + valoracions.get(0).getData(), Toast.LENGTH_SHORT).show();
+        char [] numFecha = valoracions.get(0).getData().toCharArray();
+
+//        String mes = String.valueOf(numFecha[4] + numFecha[5]);
+//        Toast.makeText(activity, mes, Toast.LENGTH_SHORT).show();
+    }
 
 
 
