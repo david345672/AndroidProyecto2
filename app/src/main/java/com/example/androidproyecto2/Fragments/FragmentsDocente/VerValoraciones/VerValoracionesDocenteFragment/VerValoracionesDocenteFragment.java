@@ -61,9 +61,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
     private ArrayList<Mes> meses;
 
-    //public List<Valoracio> valoracions = new ArrayList<>();
     public List<Valoracio> valoracionsUsuari = new ArrayList<>();
-
 
     private VerValoracionesDocenteFragment verValoracionesDocenteFragment;
 
@@ -93,12 +91,11 @@ public class VerValoracionesDocenteFragment extends Fragment {
         btnAtras.setVisibility(View.VISIBLE);
 
         meses = getMeses();
+
         vpMesesAño = view.findViewById(R.id.vpMesesAño);
-
-        vpMesesAño.setClipToPadding(false);
-
-        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses, activity, valoracionsUsuari);
-        vpMesesAño.setAdapter(calendarMesesAdapter);
+//        vpMesesAño.setClipToPadding(false);
+//        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses, activity, valoracionsUsuari);
+//        vpMesesAño.setAdapter(calendarMesesAdapter);
 
     }
 
@@ -122,7 +119,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
                             usuaris.add(gH.getUsuaris());
                         }
 
-                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),usuaris,activity,verValoracionesDocenteFragment);
+                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),usuaris,activity, vpMesesAño,meses);
                         LstUsuarisGrup.setHasFixedSize(true);
                         LstUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.VERTICAL,

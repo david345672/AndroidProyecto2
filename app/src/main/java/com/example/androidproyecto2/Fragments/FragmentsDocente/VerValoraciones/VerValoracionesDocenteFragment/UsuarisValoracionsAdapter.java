@@ -12,34 +12,44 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
+import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
+import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.UsuarisService;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValoracionsAdapter.ViewHolder>
 {
     private MainActivity activity;
-    private VerValoracionesDocenteFragment verValoracionesDocenteFragment;
-    private int idUsuariSelected;
     private Context context;
     private List<Usuari> usuaris;
     private ViewPager vpMesesAño;
+    private Usuari userSelected;
+    private ArrayList<Mes> meses;
 
 
     private  Boolean isRadioButtonCheched = false;
     private  int SelectedPosition = -1;
 
 
-    public UsuarisValoracionsAdapter(Context context, List<Usuari> usuaris,MainActivity activity,VerValoracionesDocenteFragment verValoracionesDocenteFragment) {
+    public UsuarisValoracionsAdapter(Context context,List<Usuari> usuaris,MainActivity activity, ViewPager vpMesesAño, ArrayList<Mes> meses) {
         this.context = context;
         this.usuaris = usuaris;
         this.activity = activity;
-        this.verValoracionesDocenteFragment = verValoracionesDocenteFragment;
+        this.vpMesesAño = vpMesesAño;
+        this.meses = meses;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -56,10 +66,12 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                 public void onClick(View view) {
                     SelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
-                    activity.usuariSeleccionat = usuaris.get(SelectedPosition);
+                    //activity.usuariSeleccionat = usuaris.get(SelectedPosition);
+                    getUsuario(usuaris.get(SelectedPosition).getId(), view);
 
-                    verValoracionesDocenteFragment.valoracionsUsuari = cargarValoracionesUsuario();
-                    Toast.makeText(activity,  "t: " + verValoracionesDocenteFragment.valoracionsUsuari.size(), Toast.LENGTH_SHORT).show();
+
+
+
 
                 }
             });
@@ -104,20 +116,50 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
 
 
-
-    public List<Valoracio> cargarValoracionesUsuario()
+    public void getUsuario(int id, View view)
     {
-        List<Valoracio> valoracionsUsuari = new ArrayList<>();
 
-        for (Valoracio val: activity.valoracions) {
-            if (val.getUsuari_valorat_id() == activity.usuariSeleccionat.getId())
-            {
-                valoracionsUsuari.add(val);
+        UsuarisService userService = Api.getApi().create(UsuarisService.class);
+        Call<Usuari> userCall = userService.Getusuaris(id);
+
+        userCall.enqueue(new Callback<Usuari>() {
+            @Override
+            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
+                switch (response.code())
+                {
+                    case 200:
+                        userSelected = response.body();
+
+                        //Coger las valoraciones que ha hecho el usuario
+                        userSelected.getValoracions();
+
+                        vpMesesAño.setClipToPadding(false);
+                        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(context,meses, activity, userSelected.getValoracions());
+                        vpMesesAño.setAdapter(calendarMesesAdapter);
+
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(activity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(activity,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
             }
-        }
 
-        return valoracionsUsuari;
+            @Override
+            public void onFailure(Call<Usuari> call, Throwable t) {
+
+            }
+        });
+
     }
+
+
 
 
 
