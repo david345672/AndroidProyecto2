@@ -21,7 +21,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
 {
     private Context context;
     private ArrayList<Dia> dias;
-
+    
 
     public DiasAdapter(Context context, ArrayList<Dia> dias) {
         this.context = context;

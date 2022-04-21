@@ -51,12 +51,11 @@ public class CalendarMesesAdapter extends PagerAdapter
     {
         View view = LayoutInflater.from(context).inflate(R.layout.calendar_vpager_mes_item,container,false);
 
-        Button btnVerValoracionesMensuales = view.findViewById(R.id.btnVerValoracionesMensuales);
         TextView lblMesAño = view.findViewById(R.id.lblMesAño);
         Mes mes = meses.get(position);
 
         ArrayList<Valoracio> valoracionsMes = cogerValoracionesDeMes(mes.getNum(), valoracions);
-        HashSet<Dia> diasMesValoraciones = cogerDiasMesDeValoraciones(mes.getDias(),valoracions);
+        HashSet<Dia> diasMesValoraciones = cogerDiasMesDeValoraciones(mes.getDias(),valoracionsMes);
 
         ArrayList<Dia> diasMes = new ArrayList<>(diasMesValoraciones);
         Collections.sort(diasMes);
@@ -72,15 +71,6 @@ public class CalendarMesesAdapter extends PagerAdapter
 
         ListDias.setAdapter(diasAdapter);
 
-
-        btnVerValoracionesMensuales.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (Valoracio vals: valoracionsMes) {
-                    Toast.makeText(activity, vals.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         container.addView(view);
 
@@ -120,7 +110,11 @@ public class CalendarMesesAdapter extends PagerAdapter
     }
 
 
-    //Coger todos los dias sin repedidos de la valoraciones
+    //Coger todos los dias sin repedidos del mes donde se han hecho valoraciones de ese mes
+    /*
+     - ArrayList<Dia> dias = arrayList de dias de el mes
+     - ArrayList<Valoracio> valoracions = arrayList de valoraciones de ese mes
+     */
     public HashSet<Dia> cogerDiasMesDeValoraciones(ArrayList<Dia> dias, List<Valoracio> valoracions)
     {
         HashSet<Dia> diasValoracion = new HashSet<>();
@@ -128,9 +122,13 @@ public class CalendarMesesAdapter extends PagerAdapter
         for (int i = 0; i < valoracions.size(); i++)
         {
             char [] numFecha = valoracions.get(i).getData().toCharArray();
-            String diaStr = new StringBuilder(numFecha[6]).append(numFecha[7]).toString();
+
+            char[] diasC = new char[2];
+            diasC[0] = numFecha[6];
+            diasC[1] = numFecha[7];
+            String diaStr = String.valueOf(diasC);
             int dia = Integer.parseInt(diaStr);
-            Toast.makeText(context, "numDia: " + diaStr, Toast.LENGTH_SHORT).show();
+
             for (int j = 0; j < dias.size(); j++)
             {
                 if (dia == dias.get(j).getNum())

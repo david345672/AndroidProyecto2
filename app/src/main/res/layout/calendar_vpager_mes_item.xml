@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnVerValoracionesMensuales"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"/>
+
     <TextView
         android:id="@+id/lblMesAño"
         android:layout_width="match_parent"
