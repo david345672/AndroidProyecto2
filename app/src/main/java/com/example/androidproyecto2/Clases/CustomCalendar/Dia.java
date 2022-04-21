@@ -4,7 +4,7 @@ import com.example.androidproyecto2.Clases.Valoracio;
 
 import java.util.ArrayList;
 
-public class Dia
+public class Dia implements Comparable<Dia>
 {
     private int num;
     private String nombre;
@@ -23,4 +23,11 @@ public class Dia
         return nombre;
     }
 
+    @Override
+    public int compareTo(Dia dia) {
+        int comparenum = ((Dia)dia).getNum();
+
+        //  For Ascending order
+        return this.num - comparenum;
+    }
 }

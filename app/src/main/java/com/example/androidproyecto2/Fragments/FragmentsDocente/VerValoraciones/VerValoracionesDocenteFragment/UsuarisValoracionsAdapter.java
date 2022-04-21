@@ -24,7 +24,11 @@ import com.example.androidproyecto2.api.apiServices.UsuarisService;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -133,16 +137,27 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         //Coger las valoraciones que ha hecho el usuario
                         userSelected.getValoracions();
 
+
                         if (userSelected.getValoracions().size() != 0)
                         {
-                            cogerValoracionesPorMes(meses,userSelected.getValoracions());
+
+                            HashSet<Mes> mesesValoracion = cogerMesesDeValoraciones(meses,userSelected.getValoracions());
+
+                            //ArrayList<Valoracio> valoracionesDeMes = cogerValoracionesDeMes(meses,userSelected.getValoracions());
+                            //De los meses repetidos convertirlo a un arrayList Normal
+                            ArrayList<Mes> mesesDeValoraciones = new ArrayList<>(mesesValoracion);
+                            Collections.sort(mesesDeValoraciones);
+                            vpMesesAño.setClipToPadding(false);
+                            CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(context,mesesDeValoraciones, activity, userSelected.getValoracions());
+                            vpMesesAño.setAdapter(calendarMesesAdapter);
+
+
+
+
                         }
 
 
 
-                        vpMesesAño.setClipToPadding(false);
-                        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(context,meses, activity, userSelected.getValoracions());
-                        vpMesesAño.setAdapter(calendarMesesAdapter);
 
 
 
@@ -167,15 +182,62 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     }
 
 
-
-    public void cogerValoracionesPorMes(ArrayList<Mes> meses, List<Valoracio> valoracions)
+    //Coger todos los meses sin repedidos de la valoraciones
+    public HashSet<Mes> cogerMesesDeValoraciones(ArrayList<Mes> meses, List<Valoracio> valoracions)
     {
-        Toast.makeText(activity, "size: " + valoracions.get(0).getData().length()+ "data: " + valoracions.get(0).getData(), Toast.LENGTH_SHORT).show();
-        char [] numFecha = valoracions.get(0).getData().toCharArray();
+        HashSet<Mes> mesesValoracion = new HashSet<>();
 
-//        String mes = String.valueOf(numFecha[4] + numFecha[5]);
-//        Toast.makeText(activity, mes, Toast.LENGTH_SHORT).show();
+        for (int i = 0; i < valoracions.size(); i++)
+        {
+            char [] numFecha = valoracions.get(i).getData().toCharArray();
+            String mesStr = new StringBuilder(numFecha[4]).append(numFecha[5]).toString();
+            int mes = Integer.parseInt(mesStr);
+
+            for (int j = 0; j < meses.size(); j++)
+            {
+                if (mes - 1 == j)
+                {
+                    mesesValoracion.add(meses.get(j));
+                }
+            }
+
+        }
+
+
+       return mesesValoracion;
     }
+
+//    public ArrayList<Valoracio> cogerValoracionesDeMes(ArrayList<Mes> meses, List<Valoracio> valoracions)
+//    {
+//        ArrayList<Valoracio> valoracionesDeMeses = new ArrayList<>();
+//
+//
+//        for (int i = 0; i < meses.size(); i++)
+//        {
+//
+//            for (int j = 0; j < valoracions.size(); j++)
+//            {
+//                char [] numFecha = valoracions.get(j).getData().toCharArray();
+//                String mesStr = new StringBuilder(numFecha[4]).append(numFecha[5]).toString();
+//                int mes = Integer.parseInt(mesStr);
+//
+//                if (mes - 1 == i)
+//                {
+//                    valoracionesDeMeses.add(valoracions.get(j));
+//                }
+//
+//            }
+//
+//        }
+//
+//
+//        for (Valoracio vl: valoracionesDeMeses) {
+//            Toast.makeText(activity, vl.getData(), Toast.LENGTH_SHORT).show();
+//        }
+//
+//
+//        return valoracionesDeMeses;
+//    }
 
 
 

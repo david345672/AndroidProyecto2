@@ -198,7 +198,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
             }
             //Despues de llenar el arrayList de dias, Crear un objeto Mes con el año actual, el nombre del mes que en nuestro caso sera
             //la iteracion del array de meses y el arrayList de dias, Finalmente añadimos el mes en el arrayList de meses
-            Mes mes = new Mes(anio,months[i],dias);
+            Mes mes = new Mes(anio,months[i],i + 1,dias);
 
             meses.add(mes);
 
