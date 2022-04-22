@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproyecto2.Clases.LlistaSkills;
+import com.example.androidproyecto2.Clases.Skill;
+import com.example.androidproyecto2.Clases.SkillMedia;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.R;
 
@@ -47,6 +49,9 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
             lblnombreListaSkillVal.setText(llistaSkills.getNom());
 
             ArrayList<Valoracio> valoracionsLlistesSkillsDia = getValoracionesDeListaSkill(llistaSkills.getId());
+
+            ArrayList<SkillMedia> mediasValoracionesSkill = getMediasSkills(llistaSkills.getSkills(),valoracionsLlistesSkillsDia);
+
 
         }
 
@@ -92,10 +97,33 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
         return valoracionsLLista;
     }
 
-
-    public void getMediasSkills(List<LlistaSkills> llistaSkills)
+    //Hacer la media de las valoraciones de la lista de skill filtrando por skills y devolver un arrayList con el nombre de la Skill y su media
+    public ArrayList<SkillMedia> getMediasSkills(List<Skill> skills, ArrayList<Valoracio> valoracions)
     {
-        
+
+        ArrayList<SkillMedia> mediasSkills = new ArrayList<>();
+
+        int i = 0;
+        for (Skill skill: skills)
+        {
+            int sumaNota = 0;
+            int contVals = 0;
+            for (Valoracio vals: valoracions)
+            {
+                if(skill.getId() == vals.getSkills_id())
+                {
+                    contVals++;
+                    sumaNota = sumaNota + vals.getNota();
+                }
+            }
+
+            float media = sumaNota / (float)contVals;
+            mediasSkills.add(new SkillMedia(skill.getNom(), media));
+
+            i++;
+        }
+
+        return mediasSkills;
     }
 
 
