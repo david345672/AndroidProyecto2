@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,20 +13,22 @@ import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillValoracioAdapter.ViewHolder>
 {
-    private int anio;
-    private int mes;
-    private int dia;
+
     private Context context;
     private List<LlistaSkills> llistesSkills;
+    ArrayList<Valoracio> valoracionsDia;
 
-    public ListSkillValoracioAdapter(Context context, List<LlistaSkills> llistesSkills) {
+
+    public ListSkillValoracioAdapter(Context context, List<LlistaSkills> llistesSkills, ArrayList<Valoracio> valoracionsDia) {
         this.context = context;
         this.llistesSkills = llistesSkills;
+        this.valoracionsDia = valoracionsDia;
     }
 
 
@@ -42,6 +45,8 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
         void bindLlistaSkills(LlistaSkills llistaSkills)
         {
             lblnombreListaSkillVal.setText(llistaSkills.getNom());
+
+            ArrayList<Valoracio> valoracionsLlistesSkillsDia = getValoracionesDeListaSkill(llistaSkills.getId());
 
         }
 
@@ -70,6 +75,28 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
         return llistesSkills.size();
     }
 
+
+    //coger las valoraciones de la lista de skill
+    public ArrayList<Valoracio> getValoracionesDeListaSkill(int idLlista)
+    {
+        ArrayList<Valoracio> valoracionsLLista = new ArrayList<>();
+
+        for (Valoracio valsDia: valoracionsDia)
+        {
+            if (valsDia.getLlistes_skills_id() == idLlista)
+            {
+                valoracionsLLista.add(valsDia);
+            }
+        }
+
+        return valoracionsLLista;
+    }
+
+
+    public void getMediasSkills(List<LlistaSkills> llistaSkills)
+    {
+        
+    }
 
 
 

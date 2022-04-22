@@ -130,7 +130,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     }
 
 
-    public void getLlistaSkill(RecyclerView ListListasSkills, ArrayList<Valoracio> valoracions)
+    public void getLlistaSkill(RecyclerView ListListasSkills, ArrayList<Valoracio> valoracionsDia)
     {
         LlistesSkillsService llistesSkillsService = Api.getApi().create(LlistesSkillsService.class);
         Call<List<LlistaSkills>> llistes = llistesSkillsService.Getllistes_skills();
@@ -144,12 +144,12 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
                     case 200:
                         llistesSkills = response.body();
 
-                        HashSet<LlistaSkills> llistaSkills = getLlistesSkillsValoracio(valoracions);
+                        HashSet<LlistaSkills> llistaSkills = getLlistesSkillsValoracio(valoracionsDia);
 
                         ArrayList<LlistaSkills> LlistesSkillsValoraciones = new ArrayList<>(llistaSkills);
 
 
-                        ListSkillValoracioAdapter listSkillValoracioAdapter = new ListSkillValoracioAdapter(context,LlistesSkillsValoraciones);
+                        ListSkillValoracioAdapter listSkillValoracioAdapter = new ListSkillValoracioAdapter(context,LlistesSkillsValoraciones,valoracionsDia);
                         ListListasSkills.setHasFixedSize(true);
                         ListListasSkills.setLayoutManager(new LinearLayoutManager(context,
                                 LinearLayoutManager.HORIZONTAL,
@@ -181,6 +181,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     }
 
 
+    //Cargar todas las listas de skills donde se le a valorado a l'usuario de ese dia
     public HashSet<LlistaSkills> getLlistesSkillsValoracio(ArrayList<Valoracio> valoracionsDia)
     {
         HashSet<LlistaSkills> llistaSkills = new HashSet<>();
