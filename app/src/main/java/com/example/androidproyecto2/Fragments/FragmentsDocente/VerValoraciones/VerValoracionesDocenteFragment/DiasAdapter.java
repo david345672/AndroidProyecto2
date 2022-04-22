@@ -11,12 +11,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
+import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
+import com.example.androidproyecto2.Clases.Grups_has_alumnes;
 import com.example.androidproyecto2.Clases.LlistaSkills;
+import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
 import com.example.androidproyecto2.R;
+import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.LlistesSkillsService;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
@@ -24,6 +36,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     private Context context;
     private ArrayList<Dia> dias;
     private ArrayList<Valoracio> valoracionsMes;
+    private List<LlistaSkills> llistesSkills;
 
 
     public DiasAdapter(Context context, ArrayList<Dia> dias, ArrayList<Valoracio> valoracionsMes) {
@@ -45,7 +58,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
             lblNumDia = item.findViewById(R.id.lblNumDia);
             lblNombreDia = item.findViewById(R.id.lblNombreDia);
             ListListasSkills = item.findViewById(R.id.ListListasSkills);
-
+            //getLlistaSkill(ListListasSkills);
 
         }
 
@@ -55,7 +68,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
             lblNombreDia.setText(dia.getNombre());
 
             ArrayList<Valoracio> valoracionsDia = cargarValoracionesPorDia(valoracionsMes, dia);
-
+            getLlistaSkill(ListListasSkills,valoracionsDia);
 
         }
 
@@ -117,9 +130,77 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     }
 
 
-    public ArrayList<LlistaSkills> getLlistaSkill()
+    public void getLlistaSkill(RecyclerView ListListasSkills, ArrayList<Valoracio> valoracions)
     {
+        LlistesSkillsService llistesSkillsService = Api.getApi().create(LlistesSkillsService.class);
+        Call<List<LlistaSkills>> llistes = llistesSkillsService.Getllistes_skills();
+
+
+        llistes.enqueue(new Callback<List<LlistaSkills>>() {
+            @Override
+            public void onResponse(Call<List<LlistaSkills>> call, Response<List<LlistaSkills>> response) {
+                switch (response.code())
+                {
+                    case 200:
+                        llistesSkills = response.body();
+
+                        HashSet<LlistaSkills> llistaSkills = getLlistesSkillsValoracio(valoracions);
+
+                        ArrayList<LlistaSkills> LlistesSkillsValoraciones = new ArrayList<>(llistaSkills);
+
+
+                        ListSkillValoracioAdapter listSkillValoracioAdapter = new ListSkillValoracioAdapter(context,LlistesSkillsValoraciones);
+                        ListListasSkills.setHasFixedSize(true);
+                        ListListasSkills.setLayoutManager(new LinearLayoutManager(context,
+                                LinearLayoutManager.HORIZONTAL,
+                                false));
+
+                        ListListasSkills.setAdapter(listSkillValoracioAdapter);
+
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(context,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<LlistaSkills>> call, Throwable t) {
+
+            }
+        });
 
 
     }
+
+
+    public HashSet<LlistaSkills> getLlistesSkillsValoracio(ArrayList<Valoracio> valoracionsDia)
+    {
+        HashSet<LlistaSkills> llistaSkills = new HashSet<>();
+
+        for (LlistaSkills lS: llistesSkills)
+        {
+            for (Valoracio vals: valoracionsDia)
+            {
+                if(vals.getLlistes_skills_id() == lS.getId())
+                {
+                    llistaSkills.add(lS);
+                }
+            }
+
+        }
+
+        return llistaSkills;
+    }
+
+
+
+
 }

@@ -8,10 +8,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillValoracioAdapter.ViewHolder>
 {
@@ -19,11 +21,11 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
     private int mes;
     private int dia;
     private Context context;
-    private ArrayList<Valoracio> valoraciones;
+    private List<LlistaSkills> llistesSkills;
 
-    public ListSkillValoracioAdapter(Context context, ArrayList<Valoracio> valoraciones) {
+    public ListSkillValoracioAdapter(Context context, List<LlistaSkills> llistesSkills) {
         this.context = context;
-        this.valoraciones = valoraciones;
+        this.llistesSkills = llistesSkills;
     }
 
 
@@ -31,17 +33,15 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
     {
         TextView lblnombreListaSkillVal;
 
-
-
         public ViewHolder(View item) {
             super(item);
             lblnombreListaSkillVal = item.findViewById(R.id.lblnombreListaSkillVal);
 
         }
 
-        void bindValoracio(Valoracio valoracio)
+        void bindLlistaSkills(LlistaSkills llistaSkills)
         {
-            lblnombreListaSkillVal.setText("nota: " + valoracio);
+            lblnombreListaSkillVal.setText(llistaSkills.getNom());
 
         }
 
@@ -59,7 +59,7 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
 
     public void onBindViewHolder(ListSkillValoracioAdapter.ViewHolder holder, int position)
     {
-        holder.bindValoracio(valoraciones.get(position));
+        holder.bindLlistaSkills(llistesSkills.get(position));
 
     }
 
@@ -67,7 +67,7 @@ public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillVal
 
     public int getItemCount()
     {
-        return valoraciones.size();
+        return llistesSkills.size();
     }
 
 

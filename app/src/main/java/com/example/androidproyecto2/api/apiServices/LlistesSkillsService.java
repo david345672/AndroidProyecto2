@@ -10,5 +10,5 @@ import retrofit2.http.GET;
 public interface LlistesSkillsService
 {
     @GET("api/llistes_skills/")
-    Call<List<LlistaSkills>> Getusuaris();
+    Call<List<LlistaSkills>> Getllistes_skills();
 }
