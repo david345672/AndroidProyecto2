@@ -96,7 +96,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
     @Override
     public void onBindViewHolder(UsuarisValoracionsAdapter.ViewHolder holder, int position) {
-        holder.rdbUsuari.setText(usuaris.get(position).getNomUsuari());
+        holder.rdbUsuari.setText(usuaris.get(position).getNom() + " " + usuaris.get(position).getCognoms());
 
         holder.rdbUsuari.setChecked(position == SelectedPosition);
 
@@ -151,9 +151,10 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                             CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(context,mesesDeValoraciones, activity, userSelected.getValoracions());
                             vpMesesAño.setAdapter(calendarMesesAdapter);
 
-
-
-
+                        }
+                        else
+                        {
+                            vpMesesAño.setAdapter(null);
                         }
 
 
