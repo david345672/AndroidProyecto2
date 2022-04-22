@@ -8,13 +8,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.R;
 
 import java.util.ArrayList;
 
-public class ValoracioAdapter extends RecyclerView.Adapter<ValoracioAdapter.ViewHolder>
+public class ListSkillValoracioAdapter extends RecyclerView.Adapter<ListSkillValoracioAdapter.ViewHolder>
 {
     private int anio;
     private int mes;
@@ -22,7 +21,7 @@ public class ValoracioAdapter extends RecyclerView.Adapter<ValoracioAdapter.View
     private Context context;
     private ArrayList<Valoracio> valoraciones;
 
-    public ValoracioAdapter(Context context, ArrayList<Valoracio> valoraciones) {
+    public ListSkillValoracioAdapter(Context context, ArrayList<Valoracio> valoraciones) {
         this.context = context;
         this.valoraciones = valoraciones;
     }
@@ -30,19 +29,19 @@ public class ValoracioAdapter extends RecyclerView.Adapter<ValoracioAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView lblnotaValoracion;
+        TextView lblnombreListaSkillVal;
 
 
 
         public ViewHolder(View item) {
             super(item);
-            lblnotaValoracion = item.findViewById(R.id.lblnotaValoracion);
+            lblnombreListaSkillVal = item.findViewById(R.id.lblnombreListaSkillVal);
 
         }
 
         void bindValoracio(Valoracio valoracio)
         {
-            lblnotaValoracion.setText("nota: " + valoracio);
+            lblnombreListaSkillVal.setText("nota: " + valoracio);
 
         }
 
@@ -50,15 +49,15 @@ public class ValoracioAdapter extends RecyclerView.Adapter<ValoracioAdapter.View
 
 
     @Override
-    public ValoracioAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListSkillValoracioAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.valoraciones_item,parent,false);
+                inflate(R.layout.listaskill_valoraciones_item,parent,false);
 
-        return new ValoracioAdapter.ViewHolder(item);
+        return new ListSkillValoracioAdapter.ViewHolder(item);
     }
 
 
-    public void onBindViewHolder(ValoracioAdapter.ViewHolder holder, int position)
+    public void onBindViewHolder(ListSkillValoracioAdapter.ViewHolder holder, int position)
     {
         holder.bindValoracio(valoraciones.get(position));
 

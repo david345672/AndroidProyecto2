@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
+import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
 import com.example.androidproyecto2.R;
@@ -36,14 +37,14 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     {
         TextView lblNumDia;
         TextView lblNombreDia;
-        RecyclerView ListValoraciones;
+        RecyclerView ListListasSkills;
 
 
         public ViewHolder(View item) {
             super(item);
             lblNumDia = item.findViewById(R.id.lblNumDia);
             lblNombreDia = item.findViewById(R.id.lblNombreDia);
-            ListValoraciones = item.findViewById(R.id.ListValoraciones);
+            ListListasSkills = item.findViewById(R.id.ListListasSkills);
 
 
         }
@@ -116,9 +117,9 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     }
 
 
+    public ArrayList<LlistaSkills> getLlistaSkill()
+    {
 
 
-
-
-
+    }
 }
