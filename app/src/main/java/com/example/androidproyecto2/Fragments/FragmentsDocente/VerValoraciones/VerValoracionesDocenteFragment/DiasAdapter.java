@@ -17,6 +17,7 @@ import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
+import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.LlistesSkillsService;
@@ -37,12 +38,14 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
     private ArrayList<Dia> dias;
     private ArrayList<Valoracio> valoracionsMes;
     private List<LlistaSkills> llistesSkills;
+    private MainActivity activity;
 
 
-    public DiasAdapter(Context context, ArrayList<Dia> dias, ArrayList<Valoracio> valoracionsMes) {
+    public DiasAdapter(Context context, ArrayList<Dia> dias, ArrayList<Valoracio> valoracionsMes, MainActivity activity) {
         this.context = context;
         this.dias = dias;
         this.valoracionsMes = valoracionsMes;
+        this.activity = activity;
     }
 
 
@@ -149,7 +152,7 @@ public class DiasAdapter extends RecyclerView.Adapter<DiasAdapter.ViewHolder>
                         ArrayList<LlistaSkills> LlistesSkillsValoraciones = new ArrayList<>(llistaSkills);
 
 
-                        ListSkillValoracioAdapter listSkillValoracioAdapter = new ListSkillValoracioAdapter(context,LlistesSkillsValoraciones,valoracionsDia);
+                        ListSkillValoracioAdapter listSkillValoracioAdapter = new ListSkillValoracioAdapter(context,LlistesSkillsValoraciones,valoracionsDia,activity);
                         ListListasSkills.setHasFixedSize(true);
                         ListListasSkills.setLayoutManager(new LinearLayoutManager(context,
                                 LinearLayoutManager.HORIZONTAL,

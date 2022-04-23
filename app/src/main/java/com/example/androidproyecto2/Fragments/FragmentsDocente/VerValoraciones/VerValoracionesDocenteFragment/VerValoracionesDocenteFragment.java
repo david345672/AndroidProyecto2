@@ -45,6 +45,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,7 +62,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
     private ArrayList<Mes> meses;
 
-    public List<Valoracio> valoracionsUsuari = new ArrayList<>();
+
 
     private VerValoracionesDocenteFragment verValoracionesDocenteFragment;
 
@@ -207,6 +208,53 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
         return meses;
     }
+
+
+
+    public int[] cogerColoresRandom(int cantidad)
+    {
+        // Esta variable se usará para llenar el array en la posición correspondiente
+        int index = 0;
+
+        // array que guarda los números aleatorios
+        int [] coloresRandom = new int[cantidad];
+
+        // Nuestro primer bucle que se ejecutará hasta que hayamos llenado el arrary
+        while(index < cantidad) {
+            // Variable que guarda el número aleatorio del array de colores del main
+            int RandomColor = activity.coloresGraficos[new Random().nextInt(activity.coloresGraficos.length)];
+            // Variable que indica si el RandomColor está repetido
+            // asumimos que aún no está repetido y la establecemos a false
+            boolean repetido = false;
+            //Segundo bucle que se ejecutará siempre que el número no esté repetido
+            while(!repetido) {
+                // Bucle que recorre el array comparando el RandomColor con
+                // cada uno de los items del array
+                for(int i=0; i<index; i++) {
+                    //realizamos la comparación
+                    if(RandomColor == coloresRandom[i]) {
+                        // si el número se repite, establecemos repetido=true
+                        repetido = true;
+                    }
+                }
+                // verificamos el estado del valor repetido. Si es false, significa
+                // que hemos recorrido el array hasta la posición index sin encontrar
+                // coincidencias
+                if(!repetido) {
+                    // almacenamos el valor propuesto ya que no está repetido
+                    // incrementamos el índice
+                    coloresRandom[index] = RandomColor;
+                    index++;
+                }
+            }
+
+        }
+
+
+        return coloresRandom;
+
+    }
+
 
 
 
