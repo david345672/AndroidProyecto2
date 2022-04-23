@@ -22,6 +22,7 @@ import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
+import com.example.androidproyecto2.Clases.Grups_has_docents;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
@@ -56,7 +57,9 @@ public class VerValoracionesDocenteFragment extends Fragment {
     private MainActivity activity;
     private Grup DadesGrup;
     private List<Grups_has_alumnes> grupsHasAlumnes = new ArrayList<>();
-    private List<Usuari> usuaris = new ArrayList<>();
+    private List<Grups_has_docents> grupsHasDocents = new ArrayList<>();
+    private List<Usuari> alumnes = new ArrayList<>();
+    private List<Usuari> docents = new ArrayList<>();
     private RecyclerView LstUsuarisGrup;
     private ViewPager vpMesesAño;
 
@@ -84,25 +87,21 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
         activity.layout = "VerValoraciones";
         LstUsuarisGrup = view.findViewById(R.id.LstUsuarisGrup);
-        cargarUsuariosListasSills();
-        //CogerTodasLasValoraciones();
+        cargarUsuariosGrupo();
 
 
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
 
         meses = getMeses();
-
         vpMesesAño = view.findViewById(R.id.vpMesesAño);
-//        vpMesesAño.setClipToPadding(false);
-//        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses, activity, valoracionsUsuari);
-//        vpMesesAño.setAdapter(calendarMesesAdapter);
+
 
     }
 
 
 
-    public void cargarUsuariosListasSills()
+    public void cargarUsuariosGrupo()
     {
         GrupService grupService = Api.getApi().create(GrupService.class);
         Call<Grup> grupCall = grupService.GetgrupsById(activity.idGrupo);
@@ -115,12 +114,19 @@ public class VerValoracionesDocenteFragment extends Fragment {
                     case 200:
                         DadesGrup = response.body();
                         grupsHasAlumnes = DadesGrup.getGrups_has_alumnes();
+                        grupsHasDocents = DadesGrup.getGrups_has_docents();
 
+                        //Coger todos los alumnos
                         for (Grups_has_alumnes gH: grupsHasAlumnes) {
-                            usuaris.add(gH.getUsuaris());
+                            alumnes.add(gH.getUsuaris());
                         }
 
-                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),usuaris,activity, vpMesesAño,meses);
+                        //Coger todos los profesores
+                        for (Grups_has_docents gH: grupsHasDocents) {
+                            docents.add(gH.getUsuaris());
+                        }
+
+                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),alumnes,activity, vpMesesAño,meses);
                         LstUsuarisGrup.setHasFixedSize(true);
                         LstUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.HORIZONTAL,

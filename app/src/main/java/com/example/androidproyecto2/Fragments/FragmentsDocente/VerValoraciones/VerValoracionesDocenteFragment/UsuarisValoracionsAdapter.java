@@ -1,5 +1,6 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,12 +71,17 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                 public void onClick(View view) {
                     SelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
-                    //activity.usuariSeleccionat = usuaris.get(SelectedPosition);
+
+
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+                    LayoutInflater inflater = activity.getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.usuario_ver_valoracion_docente_item, null);
+                    dialogBuilder.setView(dialogView);
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
+
+
                     getUsuario(usuaris.get(SelectedPosition).getId(), view);
-
-
-
-
 
                 }
             });
@@ -134,31 +140,10 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                     case 200:
                         userSelected = response.body();
 
-                        //Coger las valoraciones que ha hecho el usuario
+                        //Coger las valoraciones que le han hecho al usuario de toda la gente incluido profesores
                         userSelected.getValoracions();
 
-
-                        if (userSelected.getValoracions().size() != 0)
-                        {
-
-                            HashSet<Mes> mesesValoracion = cogerMesesDeValoraciones(meses,userSelected.getValoracions());
-
-                            //ArrayList<Valoracio> valoracionesDeMes = cogerValoracionesDeMes(meses,userSelected.getValoracions());
-                            //De los meses repetidos convertirlo a un arrayList Normal
-                            ArrayList<Mes> mesesDeValoraciones = new ArrayList<>(mesesValoracion);
-                            Collections.sort(mesesDeValoraciones);
-                            vpMesesAño.setClipToPadding(false);
-                            CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(context,mesesDeValoraciones, activity, userSelected.getValoracions());
-                            vpMesesAño.setAdapter(calendarMesesAdapter);
-
-                        }
-                        else
-                        {
-                            vpMesesAño.setAdapter(null);
-                        }
-
-
-
+                        cargarVPagerMesesValoraciones(userSelected.getValoracions());
 
 
 
@@ -208,37 +193,28 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
        return mesesValoracion;
     }
 
-//    public ArrayList<Valoracio> cogerValoracionesDeMes(ArrayList<Mes> meses, List<Valoracio> valoracions)
-//    {
-//        ArrayList<Valoracio> valoracionesDeMeses = new ArrayList<>();
-//
-//
-//        for (int i = 0; i < meses.size(); i++)
-//        {
-//
-//            for (int j = 0; j < valoracions.size(); j++)
-//            {
-//                char [] numFecha = valoracions.get(j).getData().toCharArray();
-//                String mesStr = new StringBuilder(numFecha[4]).append(numFecha[5]).toString();
-//                int mes = Integer.parseInt(mesStr);
-//
-//                if (mes - 1 == i)
-//                {
-//                    valoracionesDeMeses.add(valoracions.get(j));
-//                }
-//
-//            }
-//
-//        }
-//
-//
-//        for (Valoracio vl: valoracionesDeMeses) {
-//            Toast.makeText(activity, vl.getData(), Toast.LENGTH_SHORT).show();
-//        }
-//
-//
-//        return valoracionesDeMeses;
-//    }
+
+    public void cargarVPagerMesesValoraciones(List<Valoracio> valoracions)
+    {
+        if (valoracions.size() != 0)
+        {
+
+            HashSet<Mes> mesesValoracion = cogerMesesDeValoraciones(meses,valoracions);
+
+            //ArrayList<Valoracio> valoracionesDeMes = cogerValoracionesDeMes(meses,userSelected.getValoracions());
+            //De los meses repetidos convertirlo a un arrayList Normal
+            ArrayList<Mes> mesesDeValoraciones = new ArrayList<>(mesesValoracion);
+            Collections.sort(mesesDeValoraciones);
+            vpMesesAño.setClipToPadding(false);
+            CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(context,mesesDeValoraciones, activity, valoracions);
+            vpMesesAño.setAdapter(calendarMesesAdapter);
+
+        }
+        else
+        {
+            vpMesesAño.setAdapter(null);
+        }
+    }
 
 
 
