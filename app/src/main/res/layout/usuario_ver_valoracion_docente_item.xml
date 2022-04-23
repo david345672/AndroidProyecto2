@@ -16,21 +16,20 @@
 
 
         <RadioButton
-            android:id="@+id/btnTodasVals"
+            android:id="@+id/rdbTodasVals"
             android:layout_width="300dp"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:background="@drawable/bg_radiobutton_grafico"
             android:button="@null"
-            android:checked="true"
             android:gravity="center"
             android:text="Ver Valoraciones De Todos"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <RadioButton
-            android:id="@+id/btnGrupoDocenteVals"
+            android:id="@+id/rdbGrupoDocenteVals"
             android:layout_width="300dp"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -43,7 +42,7 @@
             android:textStyle="bold" />
 
         <RadioButton
-            android:id="@+id/btnDocentesVals"
+            android:id="@+id/rdbDocentesVals"
             android:layout_width="300dp"
             android:layout_height="0dp"
             android:layout_weight="1"

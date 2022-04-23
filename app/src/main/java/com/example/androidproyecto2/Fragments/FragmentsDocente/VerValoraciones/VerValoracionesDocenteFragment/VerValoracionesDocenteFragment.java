@@ -126,7 +126,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
                             docents.add(gH.getUsuaris());
                         }
 
-                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),alumnes,activity, vpMesesAño,meses);
+                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),alumnes,docents,activity, vpMesesAño,meses);
                         LstUsuarisGrup.setHasFixedSize(true);
                         LstUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.HORIZONTAL,

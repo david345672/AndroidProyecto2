@@ -1,10 +1,12 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -40,6 +42,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     private MainActivity activity;
     private Context context;
     private List<Usuari> usuaris;
+    private List<Usuari> docentsGrup;
     private ViewPager vpMesesAño;
     private Usuari userSelected;
     private ArrayList<Mes> meses;
@@ -49,21 +52,37 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     private  int SelectedPosition = -1;
 
 
-    public UsuarisValoracionsAdapter(Context context,List<Usuari> usuaris,MainActivity activity, ViewPager vpMesesAño, ArrayList<Mes> meses) {
+    public UsuarisValoracionsAdapter(Context context,List<Usuari> usuaris,List<Usuari> docentsGrup,MainActivity activity, ViewPager vpMesesAño, ArrayList<Mes> meses) {
         this.context = context;
         this.usuaris = usuaris;
         this.activity = activity;
         this.vpMesesAño = vpMesesAño;
         this.meses = meses;
+        this.docentsGrup = docentsGrup;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         RadioButton rdbUsuari;
 
+        //Botones del dialog
+        Dialog dialogSeleccionarTipoVerValoracion;
+        RadioButton rdbTodasVals;
+        RadioButton rdbGrupoDocenteVals;
+        RadioButton rdbDocentesVals;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             rdbUsuari = itemView.findViewById(R.id.rdbUsuari);
+            dialogSeleccionarTipoVerValoracion = new Dialog(activity);
+            dialogSeleccionarTipoVerValoracion.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialogSeleccionarTipoVerValoracion.setContentView(R.layout.usuario_ver_valoracion_docente_item);
+            dialogSeleccionarTipoVerValoracion.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+            rdbTodasVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbTodasVals);
+            rdbGrupoDocenteVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbGrupoDocenteVals);
+            rdbDocentesVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbDocentesVals);
+
 
 
             rdbUsuari.setOnClickListener(new View.OnClickListener() {
@@ -71,18 +90,8 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                 public void onClick(View view) {
                     SelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
-
-
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
-                    LayoutInflater inflater = activity.getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.usuario_ver_valoracion_docente_item, null);
-                    dialogBuilder.setView(dialogView);
-                    AlertDialog alertDialog = dialogBuilder.create();
-                    alertDialog.show();
-
-
-                    getUsuario(usuaris.get(SelectedPosition).getId(), view);
-
+                    dialogSeleccionarTipoVerValoracion.show();
+                    getUsuario(usuaris.get(SelectedPosition).getId(),rdbTodasVals,rdbGrupoDocenteVals,rdbDocentesVals);
                 }
             });
 
@@ -126,7 +135,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
 
 
-    public void getUsuario(int id, View view)
+    public void getUsuario(int id,RadioButton rdbTodasVals, RadioButton rdbGrupoDocenteVals, RadioButton rdbDocentesVals)
     {
 
         UsuarisService userService = Api.getApi().create(UsuarisService.class);
@@ -143,8 +152,29 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         //Coger las valoraciones que le han hecho al usuario de toda la gente incluido profesores
                         userSelected.getValoracions();
 
-                        cargarVPagerMesesValoraciones(userSelected.getValoracions());
+                        rdbTodasVals.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                cargarVPagerMesesValoraciones(userSelected.getValoracions());
+                            }
+                        });
 
+
+                        rdbGrupoDocenteVals.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                List<Valoracio> ValoracionesDocentesGrupo =  cogerValoracionesDocentesGrupo(userSelected.getValoracions());
+                                cargarVPagerMesesValoraciones(ValoracionesDocentesGrupo);
+
+                            }
+                        });
+
+                        rdbDocentesVals.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        });
 
 
                         break;
@@ -216,6 +246,27 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
         }
     }
 
+
+
+    public List<Valoracio> cogerValoracionesDocentesGrupo(List<Valoracio> valsUsuari)
+    {
+        List<Valoracio> valsDocent = new ArrayList<>();
+
+        for (Valoracio vals: valsUsuari) {
+
+            for (Usuari user: docentsGrup)
+            {
+                if (vals.getUsuari_pp_id() == user.getId())
+                {
+                    valsDocent.add(vals);
+                }
+
+            }
+
+        }
+
+        return valsDocent;
+    }
 
 
 }
