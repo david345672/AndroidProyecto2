@@ -160,7 +160,16 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         rdbTodasVals.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                cargarVPagerMesesValoraciones(userSelected.getValoracions());
+
+                                if(userSelected.getValoracions().size() != 0)
+                                {
+                                    cargarVPagerMesesValoraciones(userSelected.getValoracions());
+                                }
+                                else
+                                {
+                                    Toast.makeText(activity, "No hay registros de valoraciones", Toast.LENGTH_SHORT).show();
+                                }
+                                                                
                             }
                         });
 
@@ -169,7 +178,14 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                             @Override
                             public void onClick(View view) {
                                 List<Valoracio> ValoracionesDocentesGrupo =  cogerValoracionesDocentesGrupo(userSelected.getValoracions(), docentsGrup);
-                                cargarVPagerMesesValoraciones(ValoracionesDocentesGrupo);
+                                if(ValoracionesDocentesGrupo.size() != 0)
+                                {
+                                    cargarVPagerMesesValoraciones(ValoracionesDocentesGrupo);
+                                }
+                                else
+                                {
+                                    Toast.makeText(activity, "No hay registros de valoraciones", Toast.LENGTH_SHORT).show();
+                                }
 
                             }
                         });
@@ -300,7 +316,14 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         Collections.sort(docents);
 
                         List<Valoracio> ValoracionesDocentes =  cogerValoracionesDocentesGrupo(userSelected.getValoracions(), docents);
-                        cargarVPagerMesesValoraciones(ValoracionesDocentes);
+                        if(ValoracionesDocentes.size() != 0)
+                        {
+                            cargarVPagerMesesValoraciones(ValoracionesDocentes);
+                        }
+                        else
+                        {
+                            Toast.makeText(activity, "No hay registros de valoraciones", Toast.LENGTH_SHORT).show();
+                        }
 
 
                         break;
@@ -360,7 +383,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         }
                         else
                         {
-                            Toast.makeText(activity, "No he valorado a este usuario", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "No hay registros de valoraciones", Toast.LENGTH_SHORT).show();
                         }
 
 
