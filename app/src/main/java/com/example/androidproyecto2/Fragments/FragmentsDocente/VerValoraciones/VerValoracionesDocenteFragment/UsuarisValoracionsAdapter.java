@@ -73,6 +73,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
         RadioButton rdbTodasVals;
         RadioButton rdbGrupoDocenteVals;
         RadioButton rdbDocentesVals;
+        RadioButton rdbMisUserVals;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +86,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
             rdbTodasVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbTodasVals);
             rdbGrupoDocenteVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbGrupoDocenteVals);
             rdbDocentesVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbDocentesVals);
+            rdbMisUserVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbMisUserVals);
 
 
 
@@ -94,7 +96,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                     SelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
                     dialogSeleccionarTipoVerValoracion.show();
-                    getUsuario(usuaris.get(SelectedPosition).getId(),rdbTodasVals,rdbGrupoDocenteVals,rdbDocentesVals);
+                    getUsuario(usuaris.get(SelectedPosition).getId(),rdbTodasVals,rdbGrupoDocenteVals,rdbDocentesVals,rdbMisUserVals);
                 }
             });
 
@@ -138,7 +140,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
 
 
-    public void getUsuario(int id,RadioButton rdbTodasVals, RadioButton rdbGrupoDocenteVals, RadioButton rdbDocentesVals)
+    public void getUsuario(int id,RadioButton rdbTodasVals, RadioButton rdbGrupoDocenteVals, RadioButton rdbDocentesVals, RadioButton rdbMisUserVals)
     {
 
         UsuarisService userService = Api.getApi().create(UsuarisService.class);
@@ -179,6 +181,13 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                             }
                         });
 
+                        rdbMisUserVals.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                cogerMisValoracionesDocentAlUsuarioSelect(userSelected);
+                            }
+                        });
 
                         break;
                     case 400:
@@ -328,6 +337,69 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     }
 
 
+
+    public void cogerMisValoracionesDocentAlUsuarioSelect(Usuari usuariSelected)
+    {
+        UsuarisService usuarisService = Api.getApi().create(UsuarisService.class);
+        Call<Usuari> usuariCall = usuarisService.Getusuaris(activity.usuariLogin.getId());
+
+        usuariCall.enqueue(new Callback<Usuari>() {
+            @Override
+            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
+                switch (response.code())
+                {
+                    case 200:
+
+                        Usuari YoDocent = response.body();
+
+                        //mis valoraciones
+                        List<Valoracio> misValoracions = cogerMisValoracionesDeUsuario(YoDocent.getValoracions1(), usuariSelected);
+                        if(misValoracions.size() != 0)
+                        {
+                            cargarVPagerMesesValoraciones(misValoracions);
+                        }
+                        else
+                        {
+                            Toast.makeText(activity, "No he valorado a este usuario", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(activity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(activity,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuari> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    public List<Valoracio> cogerMisValoracionesDeUsuario(List<Valoracio> misVals, Usuari userSel)
+    {
+        List<Valoracio> misValsUser = new ArrayList<>();
+
+        for (Valoracio vals: misVals) {
+            if(vals.getUsuari_valorat_id() == userSel.getId())
+            {
+                misValsUser.add(vals);
+            }
+        }
+
+        return misValsUser;
+
+    }
 
 }
 
