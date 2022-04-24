@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
+import com.example.androidproyecto2.Clases.Grups_has_docents;
+import com.example.androidproyecto2.Clases.Grups_has_llistes_skills;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
@@ -23,6 +25,7 @@ import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAd
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.GrupsHasDocentService;
 import com.example.androidproyecto2.api.apiServices.UsuarisService;
 import com.google.gson.Gson;
 
@@ -163,7 +166,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         rdbGrupoDocenteVals.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                List<Valoracio> ValoracionesDocentesGrupo =  cogerValoracionesDocentesGrupo(userSelected.getValoracions());
+                                List<Valoracio> ValoracionesDocentesGrupo =  cogerValoracionesDocentesGrupo(userSelected.getValoracions(), docentsGrup);
                                 cargarVPagerMesesValoraciones(ValoracionesDocentesGrupo);
 
                             }
@@ -172,7 +175,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         rdbDocentesVals.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
+                                cogerTodosLosDocentes(userSelected);
                             }
                         });
 
@@ -248,13 +251,13 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
 
 
-    public List<Valoracio> cogerValoracionesDocentesGrupo(List<Valoracio> valsUsuari)
+    public List<Valoracio> cogerValoracionesDocentesGrupo(List<Valoracio> valsUsuari, List<Usuari> docentsG)
     {
         List<Valoracio> valsDocent = new ArrayList<>();
 
         for (Valoracio vals: valsUsuari) {
 
-            for (Usuari user: docentsGrup)
+            for (Usuari user: docentsG)
             {
                 if (vals.getUsuari_pp_id() == user.getId())
                 {
@@ -267,6 +270,63 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
         return valsDocent;
     }
+
+
+    public void cogerTodosLosDocentes(Usuari usuariSelected)
+    {
+        GrupsHasDocentService grupsHasDocentService = Api.getApi().create(GrupsHasDocentService.class);
+        Call<List<Grups_has_docents>> listCall = grupsHasDocentService.Getgrups_has_docents();
+
+        listCall.enqueue(new Callback<List<Grups_has_docents>>() {
+            @Override
+            public void onResponse(Call<List<Grups_has_docents>> call, Response<List<Grups_has_docents>> response) {
+                switch (response.code())
+                {
+                    case 200:
+
+                        List<Grups_has_docents> grupsHasDocents = response.body();
+
+                        HashSet<Usuari> HashDocents = getDocents(grupsHasDocents);
+                        List<Usuari> docents = new ArrayList<>(HashDocents);
+                        Collections.sort(docents);
+
+                        List<Valoracio> ValoracionesDocentes =  cogerValoracionesDocentesGrupo(userSelected.getValoracions(), docents);
+                        cargarVPagerMesesValoraciones(ValoracionesDocentes);
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(activity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(activity,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Grups_has_docents>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //Coger todos los docentes de la Api sin repetidos
+    public HashSet<Usuari> getDocents(List<Grups_has_docents> grups_has_docents)
+    {
+        ArrayList<Usuari> docentsRep = new ArrayList<>();
+
+        for (Grups_has_docents GD: grups_has_docents) {
+            docentsRep.add(GD.getUsuaris());
+        }
+        HashSet<Usuari> docents = new HashSet<>(docentsRep);
+
+        return docents;
+    }
+
 
 
 }
