@@ -1,6 +1,5 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,11 +16,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.Grups_has_docents;
-import com.example.androidproyecto2.Clases.Grups_has_llistes_skills;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
-import com.example.androidproyecto2.Fragments.MenuListasSkillsFragment.UsuarisAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
@@ -31,10 +28,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,7 +75,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
             rdbUsuari = itemView.findViewById(R.id.rdbUsuari);
             dialogSeleccionarTipoVerValoracion = new Dialog(activity);
             dialogSeleccionarTipoVerValoracion.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialogSeleccionarTipoVerValoracion.setContentView(R.layout.usuario_ver_valoracion_docente_item);
+            dialogSeleccionarTipoVerValoracion.setContentView(R.layout.dialog_menu_valoraciones_docente);
             dialogSeleccionarTipoVerValoracion.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
             rdbTodasVals = dialogSeleccionarTipoVerValoracion.findViewById(R.id.rdbTodasVals);
@@ -169,7 +164,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                                 {
                                     Toast.makeText(activity, "No hay registros de valoraciones", Toast.LENGTH_SHORT).show();
                                 }
-                                                                
+
                             }
                         });
 
