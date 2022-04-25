@@ -95,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-        Button btnAtras = toolbar.findViewById(R.id.btnAtras);
-        Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
 
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
