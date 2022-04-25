@@ -76,15 +76,6 @@ public class GrupsAdapterViewPager extends PagerAdapter
                 MainActivity activity = (MainActivity) context;
                 activity.idGrupo = grup.getId();
 
-                //activity.layout = "MenuListaSkills";
-                mg = activity.getSupportFragmentManager();
-                fragmentTransaction = mg.beginTransaction();
-                VerValoracionAlumnoFragment vervaloracionalumno = new VerValoracionAlumnoFragment();
-                fragmentTransaction.replace(R.id.FrContent,vervaloracionalumno);
-                fragmentTransaction.commit();
-
-                MainActivity activity = (MainActivity) context;
-                activity.idGrupo = grup.getId();
                 //Si es docente ire a un menu diferente
                 if (activity.esDocent)
                 {
