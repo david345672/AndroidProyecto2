@@ -78,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //CargarUsuarioLogin();
-        usuariLogin.setNomUsuari("userLogin");
-        usuariLogin.setId(40);
-
+    
         Button btnAtras = toolbar.findViewById(R.id.btnAtras);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
         mgr = getSupportFragmentManager();
