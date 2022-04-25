@@ -3,24 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <RadioGroup
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <RadioButton
                 android:id="@+id/RdbNotificacion"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Notificaciones"
                 android:button="@null"
@@ -29,8 +28,8 @@
                 android:checked="true"/>
             <RadioButton
                 android:id="@+id/RdbTemas"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Temas"
                 android:button="@null"
@@ -38,8 +37,8 @@
                 android:background="@drawable/bg_radiobutton_menu_configuracion"/>
             <RadioButton
                 android:id="@+id/RdbGraficos"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Graficos"
                 android:button="@null"
@@ -47,8 +46,8 @@
                 android:background="@drawable/bg_radiobutton_menu_configuracion"/>
             <RadioButton
                 android:id="@+id/RdbIdioma"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Idioma"
                 android:button="@null"
@@ -60,8 +59,8 @@
 
     <FrameLayout
         android:id="@+id/FrContentMenuConfig"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="6"/>
 
 </LinearLayout>
