@@ -44,34 +44,18 @@ public class TemasFragment extends Fragment {
         btnTemaClaro = view.findViewById(R.id.btnTemaClaro);
         btnTemaOscuro = view.findViewById(R.id.btnTemaOscuro);
 
-        sharedPreferences = activity.getSharedPreferences("VALUES",activity.MODE_PRIVATE);
-        int theme = sharedPreferences.getInt("THEME",1);
-        switch (theme)
-        {
-            case 1:
-                activity.setTheme(R.style.Theme_AndroidProyecto2);
-                break;
-            case 2:
-                activity.setTheme(R.style.Theme2_AndroidProyecto2);
-                break;
-        }
 
         btnTemaClaro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPreferences.edit().putInt("THEME",1).apply();
-                activity.setTheme(R.style.Theme_AndroidProyecto2);
-                //updateTheme("DEFAULT", "#FFFFFF", "#4C6BFF");
+                updateTheme("DEFAULT", "#FFFFFF", "#4C6BFF");
             }
         });
 
         btnTemaOscuro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPreferences.edit().putInt("THEME",2).apply();
-
-                activity.setTheme(R.style.Theme2_AndroidProyecto2);
-
+                updateTheme("DARK", "#212121", "#37474f");
             }
         });
 
@@ -80,7 +64,7 @@ public class TemasFragment extends Fragment {
 
     public void updateTheme(String key, String c1, String c2)
     {
-        SharedPreferences savePreferences = activity.getSharedPreferences("config_theme", Context.MODE_PRIVATE);
+        SharedPreferences savePreferences = activity.getSharedPreferences("config_theme", activity.MODE_PRIVATE);
         SharedPreferences.Editor ObjEditor = savePreferences.edit();
         ObjEditor.putString("theme",key);
         ObjEditor.commit();
@@ -89,6 +73,9 @@ public class TemasFragment extends Fragment {
         activity.toolbar.setBackgroundColor(Color.parseColor(c2));
 
     }
+
+
+
 
 
 

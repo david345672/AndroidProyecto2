@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -62,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public int [] coloresGraficos;
 
     public List<Valoracio> valoracions = new ArrayList<>();
-    public List<Valoracio> valoracionsUsuari = new ArrayList<>();
-
 
 
     @Override
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
         fondo = findViewById(R.id.fondo);
-
+        loadTheme();
 
         //CargarUsuarioLogin();
     
@@ -197,6 +197,34 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void loadTheme()
+    {
+        SharedPreferences loadPreferences = getSharedPreferences("config_theme", MODE_PRIVATE);
+        String actualTema = loadPreferences.getString("theme","DEFAULT");
+
+        if(actualTema.equals("DEFAULT"))
+        {
+            updateTheme("DEFAULT", "#212121", "#37474f");
+        }
+        else if(actualTema.equals("DARK"))
+        {
+            updateTheme("DARK", "#FFFFFF", "#4C6BFF");
+        }
+
+    }
+
+
+    public void updateTheme(String key, String c1, String c2)
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("config_theme", MODE_PRIVATE);
+        SharedPreferences.Editor ObjEditor = sharedPreferences.edit();
+        ObjEditor.putString("theme",key);
+        ObjEditor.commit();
+
+        fondo.setBackgroundColor(Color.parseColor(c1));
+        toolbar.setBackgroundColor(Color.parseColor(c2));
+
+    }
 
 
 
