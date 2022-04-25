@@ -24,9 +24,11 @@ import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.ViewHolder>{
 
@@ -106,8 +108,11 @@ x
 
                 //Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()),activity.usuariValorat.getId(),40, new Timestamp(new Date().getTime()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"null");
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date());
 
-                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
+
+                Valoracio v = new Valoracio(null,null,null,Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), currentDateandTime, 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
                 System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);
 
@@ -131,7 +136,11 @@ x
                 setCardColorTran(card);
                 //card.setBackgroundColor(Color.GREEN);
                 Toast.makeText(activity, "KPI Valorada", Toast.LENGTH_SHORT).show();
-                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date());
+
+                Valoracio v = new Valoracio(null,null,null,Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), currentDateandTime, 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
                 System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);
 
