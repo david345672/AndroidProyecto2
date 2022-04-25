@@ -73,6 +73,15 @@ public class GrupsAdapterViewPager extends PagerAdapter
         btnVerValoraciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity activity = (MainActivity) context;
+                activity.idGrupo = grup.getId();
+
+                //activity.layout = "MenuListaSkills";
+                mg = activity.getSupportFragmentManager();
+                fragmentTransaction = mg.beginTransaction();
+                VerValoracionAlumnoFragment vervaloracionalumno = new VerValoracionAlumnoFragment();
+                fragmentTransaction.replace(R.id.FrContent,vervaloracionalumno);
+                fragmentTransaction.commit();
 
                 MainActivity activity = (MainActivity) context;
                 activity.idGrupo = grup.getId();

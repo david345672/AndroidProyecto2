@@ -6,9 +6,35 @@
     tools:context=".Fragments.FragmentsAlumno.VerValoracionAlumnoFragment.VerValoracionAlumnoFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+    <RadioButton
+        android:id="@+id/radioButtonHexa"
+        android:text="Gráfico araña"
+        android:checked="true"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+        <RadioButton
+            android:id="@+id/radioButtonPie"
+            android:text="Gráfico circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            /><RadioButton
+        android:text="Gráfico de barras"
+        android:id="@+id/radioButtonBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    </RadioGroup>
+
+    <com.github.mikephil.charting.charts.RadarChart
+        android:id="@+id/RADARCHART"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

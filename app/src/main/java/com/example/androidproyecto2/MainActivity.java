@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public Usuari usuariSeleccionat;
 
     public String layout = "Login";
-    public Boolean esDocent = true;
+    public Boolean esDocent = false;
     FragmentManager mgr;
     FragmentTransaction fragmentTransaction;
     public int idGrupo = -1;
@@ -78,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         //CargarUsuarioLogin();
+        usuariLogin.setNomUsuari("userLogin");
+        usuariLogin.setId(40);
+
+        Button btnAtras = toolbar.findViewById(R.id.btnAtras);
+        Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
 
@@ -90,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-        Button btnAtras = toolbar.findViewById(R.id.btnAtras);
-        Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
 
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();

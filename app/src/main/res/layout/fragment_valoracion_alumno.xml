@@ -6,9 +6,42 @@
     tools:context=".Fragments.FragmentsAlumno.ValoracionAlumnoFragment.ValoracionAlumnoFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/question" />
+
     <TextView
+        android:id="@+id/avaluatedName"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
+        android:textSize="15sp"
+        android:textColor="@color/black"
         android:layout_height="match_parent"
-        android:text="Valoracio tipus Alumne" />
+        android:text="Avaluando a : Pepito Mancorrenas Rodríguez" />
+    <TextView
+        android:id="@+id/titlekpi"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:layout_width="match_parent"
+        android:textSize="30sp"
+        android:textColor="@color/purple_500"
+        android:layout_height="match_parent"
+        android:text="TITULO KPI" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:paddingHorizontal="30dp"
+        android:id="@+id/kpisRecycler"
+        android:layout_marginTop="105sp"
+
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>
