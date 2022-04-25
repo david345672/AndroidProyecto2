@@ -44,18 +44,34 @@ public class TemasFragment extends Fragment {
         btnTemaClaro = view.findViewById(R.id.btnTemaClaro);
         btnTemaOscuro = view.findViewById(R.id.btnTemaOscuro);
 
+        sharedPreferences = activity.getSharedPreferences("VALUES",activity.MODE_PRIVATE);
+        int theme = sharedPreferences.getInt("THEME",1);
+        switch (theme)
+        {
+            case 1:
+                activity.setTheme(R.style.Theme_AndroidProyecto2);
+                break;
+            case 2:
+                activity.setTheme(R.style.Theme2_AndroidProyecto2);
+                break;
+        }
 
         btnTemaClaro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateTheme("DEFAULT", "#FFFFFF", "#4C6BFF");
+                sharedPreferences.edit().putInt("THEME",1).apply();
+                activity.setTheme(R.style.Theme_AndroidProyecto2);
+                //updateTheme("DEFAULT", "#FFFFFF", "#4C6BFF");
             }
         });
 
         btnTemaOscuro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateTheme("DARK", "#212121", "#747474");
+                sharedPreferences.edit().putInt("THEME",2).apply();
+
+                activity.setTheme(R.style.Theme2_AndroidProyecto2);
+
             }
         });
 
