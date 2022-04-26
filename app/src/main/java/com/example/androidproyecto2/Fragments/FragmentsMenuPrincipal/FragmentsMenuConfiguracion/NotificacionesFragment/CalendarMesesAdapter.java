@@ -54,7 +54,7 @@ public class CalendarMesesAdapter extends PagerAdapter
         ArrayList<Valoracio> valoracionsMes = cogerValoracionesDeMes(mes.getNum(), valoracions);
         HashSet<Dia> diasMesValoraciones = cogerDiasMesDeValoraciones(mes.getDias(),valoracionsMes);
 
-        ArrayList<Dia> diasMes = new ArrayList<>(diasMesValoraciones);
+        ArrayList<Dia> diasMes = new ArrayList<>(mes.getDias());
         Collections.sort(diasMes);
 
 
