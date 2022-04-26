@@ -22,19 +22,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-public class CalendarMesesAdapter extends PagerAdapter
+public class CalendarMesesAdapterNotificaciones extends PagerAdapter
 {
     private Context context;
     private ArrayList<Mes> meses;
     private MainActivity activity;
-    private List<Valoracio> valoracions;
 
-
-    public CalendarMesesAdapter(Context context, ArrayList<Mes> meses, MainActivity activity, List<Valoracio> valoracions) {
+    public CalendarMesesAdapterNotificaciones(Context context, ArrayList<Mes> meses, MainActivity activity) {
         this.context = context;
         this.meses = meses;
         this.activity = activity;
-        this.valoracions = valoracions;
     }
 
 
@@ -51,16 +48,10 @@ public class CalendarMesesAdapter extends PagerAdapter
         TextView lblMesAño = view.findViewById(R.id.lblMesAño);
         Mes mes = meses.get(position);
 
-        ArrayList<Valoracio> valoracionsMes = cogerValoracionesDeMes(mes.getNum(), valoracions);
-        HashSet<Dia> diasMesValoraciones = cogerDiasMesDeValoraciones(mes.getDias(),valoracionsMes);
-
-        ArrayList<Dia> diasMes = new ArrayList<>(mes.getDias());
-        Collections.sort(diasMes);
-
 
         lblMesAño.setText(mes.getNombre() + " de " + mes.getAño());
         RecyclerView ListDias = view.findViewById(R.id.ListDias);
-        DiasAdapter diasAdapter = new DiasAdapter(context,diasMes,valoracionsMes,activity);
+        DiasAdapterNotificaciones diasAdapter = new DiasAdapterNotificaciones(context,mes.getDias(),activity);
         ListDias.setHasFixedSize(true);
         ListDias.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL,

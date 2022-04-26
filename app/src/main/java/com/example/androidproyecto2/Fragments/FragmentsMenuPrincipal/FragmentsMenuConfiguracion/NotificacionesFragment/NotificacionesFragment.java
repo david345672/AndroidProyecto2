@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
+import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.CalendarMesesAdapter;
+import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.text.DateFormatSymbols;
@@ -20,13 +22,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class NotificacionesFragment extends Fragment {
 
+    private MainActivity activity;
     private ViewPager vpMesesAñoNotificaciones;
+    private ArrayList<Mes> meses;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,8 +46,15 @@ public class NotificacionesFragment extends Fragment {
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        activity = (MainActivity) getActivity();
+        meses = getMeses();
 
-        
+        vpMesesAñoNotificaciones = view.findViewById(R.id.vpMesesAñoNotificaciones);
+
+        Collections.sort(meses);
+        vpMesesAñoNotificaciones.setClipToPadding(false);
+        CalendarMesesAdapterNotificaciones calendarMesesAdapter = new CalendarMesesAdapterNotificaciones(getContext(),meses, activity);
+        vpMesesAñoNotificaciones.setAdapter(calendarMesesAdapter);
 
 
     }
