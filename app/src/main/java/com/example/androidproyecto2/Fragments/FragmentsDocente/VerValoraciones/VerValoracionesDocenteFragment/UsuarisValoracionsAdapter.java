@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,19 +45,18 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     private ViewPager vpMesesAño;
     private Usuari userSelected;
     private ArrayList<Mes> meses;
-
-
-    private  Boolean isRadioButtonCheched = false;
+    private TextView lblTipoVal;
     private  int SelectedPosition = -1;
 
 
-    public UsuarisValoracionsAdapter(Context context,List<Usuari> usuaris,List<Usuari> docentsGrup,MainActivity activity, ViewPager vpMesesAño, ArrayList<Mes> meses) {
+    public UsuarisValoracionsAdapter(Context context,List<Usuari> usuaris,List<Usuari> docentsGrup,MainActivity activity, ViewPager vpMesesAño, ArrayList<Mes> meses,TextView lblTipoVal) {
         this.context = context;
         this.usuaris = usuaris;
         this.activity = activity;
         this.vpMesesAño = vpMesesAño;
         this.meses = meses;
         this.docentsGrup = docentsGrup;
+        this.lblTipoVal = lblTipoVal;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -156,6 +156,8 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                             @Override
                             public void onClick(View view) {
 
+                                lblTipoVal.setText("Ver valoraciones de todos a " + userSelected.getNom() + " " + userSelected.getCognoms());
+
                                 if(userSelected.getValoracions().size() != 0)
                                 {
                                     cargarVPagerMesesValoraciones(userSelected.getValoracions());
@@ -173,6 +175,9 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                             @Override
                             public void onClick(View view) {
                                 List<Valoracio> ValoracionesDocentesGrupo =  cogerValoracionesDocentesGrupo(userSelected.getValoracions(), docentsGrup);
+
+                                lblTipoVal.setText("Ver valoraciones de Docentes del Grupo a " + userSelected.getNom() + " " + userSelected.getCognoms());
+
                                 if(ValoracionesDocentesGrupo.size() != 0)
                                 {
                                     cargarVPagerMesesValoraciones(ValoracionesDocentesGrupo);
@@ -188,6 +193,9 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         rdbDocentesVals.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                lblTipoVal.setText("Ver valoraciones de todos los Docentes a " + userSelected.getNom() + " " + userSelected.getCognoms());
+
                                 cogerTodosLosDocentes(userSelected);
                             }
                         });
@@ -195,6 +203,8 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                         rdbMisUserVals.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                lblTipoVal.setText("Ver mis valoraciones a " + userSelected.getNom() + " " + userSelected.getCognoms());
 
                                 cogerMisValoracionesDocentAlUsuarioSelect(userSelected);
                             }
