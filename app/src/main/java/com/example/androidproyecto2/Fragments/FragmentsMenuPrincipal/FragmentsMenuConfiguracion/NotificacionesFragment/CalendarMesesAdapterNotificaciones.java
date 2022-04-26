@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
+import com.example.androidproyecto2.Clases.Notificacio;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.DiasAdapter;
 import com.example.androidproyecto2.MainActivity;
@@ -27,11 +28,13 @@ public class CalendarMesesAdapterNotificaciones extends PagerAdapter
     private Context context;
     private ArrayList<Mes> meses;
     private MainActivity activity;
+    private List<Notificacio> notificacions;
 
-    public CalendarMesesAdapterNotificaciones(Context context, ArrayList<Mes> meses, MainActivity activity) {
+    public CalendarMesesAdapterNotificaciones(Context context, ArrayList<Mes> meses, MainActivity activity, List<Notificacio> notificacions) {
         this.context = context;
         this.meses = meses;
         this.activity = activity;
+        this.notificacions = notificacions;
     }
 
 
@@ -48,16 +51,21 @@ public class CalendarMesesAdapterNotificaciones extends PagerAdapter
         TextView lblMesAño = view.findViewById(R.id.lblMesAño);
         Mes mes = meses.get(position);
 
+        ArrayList<Notificacio> notificacionsMes = cogerNotificacionesDeMes(mes.getNum(), notificacions);
+        HashSet<Dia> diasMesNotificacions = cogerDiasMesDeNotificaciones(mes.getDias(),notificacionsMes);
+
+        ArrayList<Dia> diasMes = new ArrayList<>(diasMesNotificacions);
+        Collections.sort(diasMes);
 
         lblMesAño.setText(mes.getNombre() + " de " + mes.getAño());
         RecyclerView ListDias = view.findViewById(R.id.ListDias);
-        DiasAdapterNotificaciones diasAdapter = new DiasAdapterNotificaciones(context,mes.getDias(),activity);
+        DiasAdapterNotificaciones diasAdapterNotificaciones = new DiasAdapterNotificaciones(context,diasMes,notificacionsMes,activity);
         ListDias.setHasFixedSize(true);
         ListDias.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL,
                 false));
 
-        ListDias.setAdapter(diasAdapter);
+        ListDias.setAdapter(diasAdapterNotificaciones);
 
 
         container.addView(view);
@@ -77,39 +85,36 @@ public class CalendarMesesAdapterNotificaciones extends PagerAdapter
     }
 
 
-    public ArrayList<Valoracio> cogerValoracionesDeMes(int posMes, List<Valoracio> valoracions)
+    public ArrayList<Notificacio> cogerNotificacionesDeMes(int posMes, List<Notificacio> notificacions)
     {
 
-        ArrayList<Valoracio> valoracionesDeMeses = new ArrayList<>();
+        ArrayList<Notificacio> notificacionsDeMeses = new ArrayList<>();
 
-        for (int i = 0; i < valoracions.size(); i++)
+        for (int i = 0; i < notificacions.size(); i++)
         {
-            char [] numFecha = valoracions.get(i).getData().toCharArray();
+            char [] numFecha = notificacions.get(i).getData().toCharArray();
             String mesStr = new StringBuilder(numFecha[4]).append(numFecha[5]).toString();
             int mes = Integer.parseInt(mesStr);
             //Toast.makeText(context, "mes: " + mes, Toast.LENGTH_SHORT).show();
             if (posMes == mes)
             {
-                valoracionesDeMeses.add(valoracions.get(i));
+                notificacionsDeMeses.add(notificacions.get(i));
             }
 
         }
-        return valoracionesDeMeses;
+        return notificacionsDeMeses;
     }
 
 
-    //Coger todos los dias sin repedidos del mes donde se han hecho valoraciones de ese mes
-    /*
-     - ArrayList<Dia> dias = arrayList de dias de el mes
-     - ArrayList<Valoracio> valoracions = arrayList de valoraciones de ese mes
-     */
-    public HashSet<Dia> cogerDiasMesDeValoraciones(ArrayList<Dia> dias, List<Valoracio> valoracions)
-    {
-        HashSet<Dia> diasValoracion = new HashSet<>();
+    //Coger todos los dias sin repedidos del mes donde el usuario tiene notificaciones de ese mes
 
-        for (int i = 0; i < valoracions.size(); i++)
+    public HashSet<Dia> cogerDiasMesDeNotificaciones(ArrayList<Dia> dias, List<Notificacio> notificacions)
+    {
+        HashSet<Dia> diasNotifiacions = new HashSet<>();
+
+        for (int i = 0; i < notificacions.size(); i++)
         {
-            char [] numFecha = valoracions.get(i).getData().toCharArray();
+            char [] numFecha = notificacions.get(i).getData().toCharArray();
 
             char[] diasC = new char[2];
             diasC[0] = numFecha[6];
@@ -121,14 +126,14 @@ public class CalendarMesesAdapterNotificaciones extends PagerAdapter
             {
                 if (dia == dias.get(j).getNum())
                 {
-                    diasValoracion.add(dias.get(j));
+                    diasNotifiacions.add(dias.get(j));
                 }
             }
 
         }
 
 
-        return diasValoracion;
+        return diasNotifiacions;
     }
 
 

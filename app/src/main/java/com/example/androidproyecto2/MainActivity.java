@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
         fondo = findViewById(R.id.fondo);
-        loadTheme();
+        //loadTheme();
 
         //CargarUsuarioLogin();
     

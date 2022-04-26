@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
+import com.example.androidproyecto2.Clases.Notificacio;
+import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.CalendarMesesAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
@@ -25,6 +27,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 public class NotificacionesFragment extends Fragment {
@@ -47,13 +51,17 @@ public class NotificacionesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         activity = (MainActivity) getActivity();
+
         meses = getMeses();
+        HashSet<Mes> mesesNotificacion = cogerMesesDeNotificaciones(meses,activity.usuariLogin.getNotificacions());
+        ArrayList<Mes> mesesDeNotificaciones = new ArrayList<>(mesesNotificacion);
+        Collections.sort(mesesDeNotificaciones);
 
         vpMesesAñoNotificaciones = view.findViewById(R.id.vpMesesAñoNotificaciones);
 
         Collections.sort(meses);
         vpMesesAñoNotificaciones.setClipToPadding(false);
-        CalendarMesesAdapterNotificaciones calendarMesesAdapter = new CalendarMesesAdapterNotificaciones(getContext(),meses, activity);
+        CalendarMesesAdapterNotificaciones calendarMesesAdapter = new CalendarMesesAdapterNotificaciones(getContext(),mesesDeNotificaciones, activity, activity.usuariLogin.getNotificacions());
         vpMesesAñoNotificaciones.setAdapter(calendarMesesAdapter);
 
 
@@ -116,6 +124,32 @@ public class NotificacionesFragment extends Fragment {
     }
 
 
+
+
+    //Coger todos los meses sin repedidos de las notificaciones
+    public HashSet<Mes> cogerMesesDeNotificaciones(ArrayList<Mes> meses, List<Notificacio> notificacions)
+    {
+        HashSet<Mes> mesesNotificacion = new HashSet<>();
+
+        for (int i = 0; i < notificacions.size(); i++)
+        {
+            char [] numFecha = notificacions.get(i).getData().toCharArray();
+            String mesStr = new StringBuilder(numFecha[4]).append(numFecha[5]).toString();
+            int mes = Integer.parseInt(mesStr);
+
+            for (int j = 0; j < meses.size(); j++)
+            {
+                if (mes - 1 == j)
+                {
+                    mesesNotificacion.add(meses.get(j));
+                }
+            }
+
+        }
+
+
+        return mesesNotificacion;
+    }
 
 
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
+import com.example.androidproyecto2.Clases.Notificacio;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.ListSkillValoracioAdapter;
 import com.example.androidproyecto2.MainActivity;
@@ -34,13 +35,14 @@ public class DiasAdapterNotificaciones extends RecyclerView.Adapter<DiasAdapterN
 {
     private Context context;
     private ArrayList<Dia> dias;
-    private List<LlistaSkills> llistesSkills;
+    private ArrayList<Notificacio> notificacionsMes;
     private MainActivity activity;
 
 
-    public DiasAdapterNotificaciones(Context context, ArrayList<Dia> dias, MainActivity activity) {
+    public DiasAdapterNotificaciones(Context context, ArrayList<Dia> dias, ArrayList<Notificacio> notificacionsMes, MainActivity activity) {
         this.context = context;
         this.dias = dias;
+        this.notificacionsMes = notificacionsMes;
         this.activity = activity;
     }
 
@@ -49,15 +51,14 @@ public class DiasAdapterNotificaciones extends RecyclerView.Adapter<DiasAdapterN
     {
         TextView lblNumDia;
         TextView lblNombreDia;
-        RecyclerView ListListasSkills;
+        RecyclerView ListNotificaciones;
 
 
         public ViewHolder(View item) {
             super(item);
             lblNumDia = item.findViewById(R.id.lblNumDia);
             lblNombreDia = item.findViewById(R.id.lblNombreDia);
-            ListListasSkills = item.findViewById(R.id.ListListasSkills);
-            //getLlistaSkill(ListListasSkills);
+            ListNotificaciones = item.findViewById(R.id.ListNotificaciones);
 
         }
 
@@ -65,6 +66,16 @@ public class DiasAdapterNotificaciones extends RecyclerView.Adapter<DiasAdapterN
         {
             lblNumDia.setText(Integer.toString(dia.getNum()));
             lblNombreDia.setText(dia.getNombre());
+
+            ArrayList<Notificacio> notificacionsDia = cargarNotificacionesPorDia(notificacionsMes, dia);
+
+            NotificacionsAdapter notificacionsAdapter = new NotificacionsAdapter(context,notificacionsDia);
+            ListNotificaciones.setHasFixedSize(true);
+            ListNotificaciones.setLayoutManager(new LinearLayoutManager(context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false));
+
+            ListNotificaciones.setAdapter(notificacionsAdapter);
 
 
         }
@@ -97,17 +108,15 @@ public class DiasAdapterNotificaciones extends RecyclerView.Adapter<DiasAdapterN
 
 
     /*
-        Cargar Todas las valoraciones que tiene el usuario por dia
-        - valoracionesMes = valoraciones del mes del item del ViewPager
-        - dia = dia en el que estoy dentro de la recyclerView de los dias del mes
+        Cargar Todas las notificaciones que a hecho el usuario por dia
      */
-    public ArrayList<Valoracio> cargarValoracionesPorDia(ArrayList<Valoracio> valoracionsMes, Dia dia)
+    public ArrayList<Notificacio> cargarNotificacionesPorDia(ArrayList<Notificacio> notificacionsMes, Dia dia)
     {
-        ArrayList<Valoracio> valoracionsDia = new ArrayList<>();
+        ArrayList<Notificacio> notificacionsDia = new ArrayList<>();
 
-        for (Valoracio vals: valoracionsMes) {
+        for (Notificacio nots: notificacionsMes) {
 
-            char [] numFecha = vals.getData().toCharArray();
+            char [] numFecha = nots.getData().toCharArray();
 
             char[] diasC = new char[2];
             diasC[0] = numFecha[6];
@@ -117,86 +126,16 @@ public class DiasAdapterNotificaciones extends RecyclerView.Adapter<DiasAdapterN
 
             if (diaVal == dia.getNum())
             {
-                valoracionsDia.add(vals);
+                notificacionsDia.add(nots);
             }
 
         }
 
-        return valoracionsDia;
+        return notificacionsDia;
 
     }
 
 
-    public void getLlistaSkill(RecyclerView ListListasSkills, ArrayList<Valoracio> valoracionsDia)
-    {
-        LlistesSkillsService llistesSkillsService = Api.getApi().create(LlistesSkillsService.class);
-        Call<List<LlistaSkills>> llistes = llistesSkillsService.Getllistes_skills();
-
-
-        llistes.enqueue(new Callback<List<LlistaSkills>>() {
-            @Override
-            public void onResponse(Call<List<LlistaSkills>> call, Response<List<LlistaSkills>> response) {
-                switch (response.code())
-                {
-                    case 200:
-                        llistesSkills = response.body();
-
-                        HashSet<LlistaSkills> llistaSkills = getLlistesSkillsValoracio(valoracionsDia);
-
-                        ArrayList<LlistaSkills> LlistesSkillsValoraciones = new ArrayList<>(llistaSkills);
-
-
-                        ListSkillValoracioAdapter listSkillValoracioAdapter = new ListSkillValoracioAdapter(context,LlistesSkillsValoraciones,valoracionsDia,activity);
-                        ListListasSkills.setHasFixedSize(true);
-                        ListListasSkills.setLayoutManager(new LinearLayoutManager(context,
-                                LinearLayoutManager.HORIZONTAL,
-                                false));
-
-                        ListListasSkills.setAdapter(listSkillValoracioAdapter);
-
-
-
-                        break;
-                    case 400:
-                        Gson gson = new Gson();
-                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
-                        Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-                        break;
-                    case 404:
-                        Toast.makeText(context,"Registre no trobat", Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<LlistaSkills>> call, Throwable t) {
-
-            }
-        });
-
-
-    }
-
-
-    //Cargar todas las listas de skills donde se le a valorado a l'usuario de ese dia
-    public HashSet<LlistaSkills> getLlistesSkillsValoracio(ArrayList<Valoracio> valoracionsDia)
-    {
-        HashSet<LlistaSkills> llistaSkills = new HashSet<>();
-
-        for (LlistaSkills lS: llistesSkills)
-        {
-            for (Valoracio vals: valoracionsDia)
-            {
-                if(vals.getLlistes_skills_id() == lS.getId())
-                {
-                    llistaSkills.add(lS);
-                }
-            }
-
-        }
-
-        return llistaSkills;
-    }
 
 
 
