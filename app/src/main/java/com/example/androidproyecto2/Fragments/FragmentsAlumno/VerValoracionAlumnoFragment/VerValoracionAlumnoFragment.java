@@ -3,6 +3,8 @@ package com.example.androidproyecto2.Fragments.FragmentsAlumno.VerValoracionAlum
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,9 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.androidproyecto2.BCrypt;
+import com.example.androidproyecto2.Clases.MissatgeError;
+import com.example.androidproyecto2.Clases.Usuari;
+import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
+import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.UsuarisService;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -25,105 +34,193 @@ import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VerValoracionAlumnoFragment extends Fragment {
+    public int[] cogerColoresRandom(int cantidad)
+    {
+        // Esta variable se usará para llenar el array en la posición correspondiente
+        int index = 0;
+
+        // array que guarda los números aleatorios
+        int [] coloresRandom = new int[cantidad];
+
+        // Nuestro primer bucle que se ejecutará hasta que hayamos llenado el arrary
+        while(index < cantidad) {
+            // Variable que guarda el número aleatorio del array de colores del main
+            MainActivity activity = (MainActivity) getActivity();
+            int RandomColor = activity.coloresGraficos[new Random().nextInt(activity.coloresGraficos.length)];
+            // Variable que indica si el RandomColor está repetido
+            // asumimos que aún no está repetido y la establecemos a false
+            boolean repetido = false;
+            //Segundo bucle que se ejecutará siempre que el número no esté repetido
+            while(!repetido) {
+                // Bucle que recorre el array comparando el RandomColor con
+                // cada uno de los items del array
+                for(int i=0; i<index; i++) {
+                    //realizamos la comparación
+                    if(RandomColor == coloresRandom[i]) {
+                        // si el número se repite, establecemos repetido=true
+                        repetido = true;
+                    }
+                }
+                // verificamos el estado del valor repetido. Si es false, significa
+                // que hemos recorrido el array hasta la posición index sin encontrar
+                // coincidencias
+                if(!repetido) {
+                    // almacenamos el valor propuesto ya que no está repetido
+                    // incrementamos el índice
+                    coloresRandom[index] = RandomColor;
+                    index++;
+                }
+            }
+
+        }
 
 
+        return coloresRandom;
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        MainActivity ma;
+        ma = (MainActivity) getActivity();
+        Button btnAtras = ma.findViewById(R.id.btnAtras);
+        btnAtras.setVisibility(View.VISIBLE);
+        if(ma == null ) {
+            Toast.makeText(getContext(),"eror",Toast.LENGTH_LONG);
+            return;
+        }
+        //get skills para coger kpis
+        //get user.valoracions
+        //boton valorar al valorar para enviar las valroraciones tantas como kpis 0 1
+        //hacer la media
+        //graficos uno por cada frase del user i tres tipos de grafs
+         userService = Api.getApi().create(UsuarisService.class);
+        Call<List<Usuari>> listCall = userService.Getusuaris();
+        listCall.enqueue(new Callback<List<Usuari>>() {
+            @Override
+            public void onResponse(Call<List<Usuari>> call, Response<List<Usuari>> response) {
+                switch (response.code()){
+                    case 200:
+                        usuarisList = response.body();
+
+
+                        for (Usuari userObject:usuarisList) {
+                            if(userObject.getNomUsuari().equals(etUser.getText().toString())){
+                                try
+                                {
+                                    Toast.makeText(getContext(),"e",Toast.LENGTH_LONG).show();
+                                    String test = etPassword.getText().toString();
+                                    if (BCrypt.checkpw(test,userObject.getContrasenya())){
+
+                                        getUsuario(userObject.getId());
+                                    }
+                                }
+                                catch(Exception e)
+                                {
+                                    Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError mensajeError = gson.fromJson(response.errorBody().charStream(),MissatgeError.class);
+                        Toast.makeText(mainActivity.getApplicationContext(),mensajeError.getMessage(),Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(mainActivity.getApplicationContext(),"Registre no trobat",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Usuari>> call, Throwable t) {
+
+            }
+        });
+
+        RadarChart radarchart = ma.findViewById(R.id.RADARCHART);
+        int RandomColors = cogerColoresRandom(1)[0];
+
+        ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
+        List<Valoracio> v = ma.valoracions;
+        for (int i = 0; i < ma.skillSelected.getKpis().size(); i++) {
+            int puntuacio = 0;
+            List<Valoracio> thisuservals = new ArrayList<>();
+            for (Valoracio val : v) {
+                if (val.getKpis() == ma.skillSelected.getKpis().get(i) && val.getUsuari_valorat_id() == ma.usuariLogin.getId()){
+                    thisuservals.add(val);
+                    puntuacio += val.getNota();
+                }
+            }
+            valoracionesAlumnos.add(new RadarEntry(puntuacio / thisuservals.size()));
+        }
+
+
+
+        RadarDataSet radarDataSetAlumnos = new RadarDataSet(valoracionesAlumnos,"Companys de Grup");
+        radarDataSetAlumnos.setColor(RandomColors);
+        radarDataSetAlumnos.setLineWidth(2f);
+        radarDataSetAlumnos.setValueTextColor(Color.BLACK);
+        radarDataSetAlumnos.setValueTextSize(0f);
+
+
+        ArrayList<RadarEntry> valoracionesDocente = new ArrayList<>();
+        valoracionesDocente.add(new RadarEntry(703));
+        valoracionesDocente.add(new RadarEntry(838));
+        valoracionesDocente.add(new RadarEntry(756));
+        valoracionesDocente.add(new RadarEntry(201));
+        valoracionesDocente.add(new RadarEntry(110));
+
+        RadarDataSet radarDataSetDocente = new RadarDataSet(valoracionesDocente,"Equip Docent");
+        radarDataSetDocente.setColor(RandomColors);
+        radarDataSetDocente.setLineWidth(2f);
+        radarDataSetDocente.setValueTextColor(Color.BLACK);
+        radarDataSetDocente.setValueTextSize(0f);
+
+
+
+        RadarData radarData = new RadarData();
+        radarData.addDataSet(radarDataSetAlumnos);
+        radarData.addDataSet(radarDataSetDocente);
+
+        String[] puntos = new String[ma.skillSelected.getKpis().size()];
+        for (int i = 0; i < ma.skillSelected.getKpis().size(); i++) {
+            puntos[i] = ma.skillSelected.getKpis().get(i).getNom();
+        }
+
+
+        XAxis xAxis = radarchart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(puntos));
+
+        radarchart.getDescription().setText(ma.llistaSkillSelected.getNom());
+        radarchart.setData(radarData);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Button btnAtras = getActivity().findViewById(R.id.btnAtras);
-        btnAtras.setVisibility(View.VISIBLE);
         View view = inflater.inflate(R.layout.fragment_ver_valoracion_alumno, container, false);
-        RadarChart radarchart = view.findViewById(R.id.RADARCHART);
-        //System.out.println(tx.getText()+" we did it boiz");
-        ArrayList<RadarEntry> radarEntries = new ArrayList<>();
-
-        radarEntries.add(new RadarEntry(0, 2));
-        radarEntries.add(new RadarEntry(1, 2));
-        radarEntries.add(new RadarEntry(2, 2));
-        radarEntries.add(new RadarEntry(2, 2));
-        radarEntries.add(new RadarEntry(3, 29));
-        radarEntries.add(new RadarEntry(4, 62));
-        RadarDataSet radarDataSet = new RadarDataSet(radarEntries,"labeldataset");
-        radarDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-        //radarDataSet.setValueTextColor(Color.BLACK);
-        radarDataSet.setValueTextSize(18f);
-        RadarData radarData = new RadarData(radarDataSet);
-        radarchart.setData(radarData);
-        RadarChart chart = radarchart;
-// we configure the radar chart
-        //chart.setBackgroundColor(Color.rgb(  60, 65,  82));
-        chart.getDescription().setEnabled(false);
-// useful to export your graph
-        chart.setWebColor(Color.BLACK);
-        chart.setWebLineWidth(1f);
-        chart.setWebColorInner(Color.BLUE);
-        chart.setWebAlpha(100);/*
-        ArrayList<RadarEntry> employee1 = new ArrayList<>();
-        ArrayList<RadarEntry> employee2 = new ArrayList<>();
-        // we generate random values for the qualities of employees measured between 1 and 12
-        for (int i = 0; i < NB_QUALITIES; i++) {
-            float val1 = (int) (Math.random() * MAX) + MIN;
-            employee1.add(new RadarEntry(val1));
-            float val2 = (int) (Math.random() * MAX) + MIN;
-            employee2.add(new RadarEntry(val2));
-        }
-        // we create two radar data sets objects with these data
-        RadarDataSet set1  = new RadarDataSet (employee1,  ((MainActivity)getActivity()).usuariLogin.getNom()+((MainActivity)getActivity()).usuariLogin.getCognoms());
-        set1.setColor(Color.RED);
-        set1.setFillColor(Color.RED);
-        set1.setDrawFilled(true);
-        set1.setFillAlpha(180);
-        set1.setLineWidth(2f);
-        set1.setDrawHighlightIndicators(false);
-        set1.setDrawHighlightCircleEnabled (true);
-        ArrayList<IRadarDataSet> sets = new ArrayList<>();
-        sets.add(set1);
-// we create Radar Data object which will be added to the Radar Chart for rendering
-        RadarData data = new RadarData(sets);
-        data.setValueTextSize(8f);
-        data.setDrawValues(false);
-        data.setValueTextColor(Color.BLACK);
-        radarchart.setData(data);
-        radarchart.invalidate();
-        radarchart.animateXY(1400, 1400, Easing.EaseInOutQuad, Easing.EaseInOutQuad);
-// we define axis
-        XAxis xaxis = radarchart.getXAxis();
-        xaxis.setTextSize(9f);
-        xaxis.setYOffset(0);
-        xaxis.setXOffset(0);
-        xaxis.setValueFormatter(new IndexAxisValueFormatter() {
-
-            private String[] qualities = new String[] {"Communication", "Technical Knowledge", "Problem Solving", "Punctuality", "Team Player"};
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return qualities [(int) value % qualities.length];
-            }
-        });
-        xaxis.setTextColor(Color.BLACK);
-// Y axis
-        YAxis yaxis = radarchart.getYAxis();
-        yaxis.setLabelCount(NB_QUALITIES, true);
-        yaxis.setTextSize(9f);
-        yaxis.setAxisMinimum(MIN);
-        yaxis.setAxisMaximum(MAX); // we define min and max for axis
-        yaxis.setDrawLabels(true);
-// we configure legend for our radar chart
-        Legend l = radarchart.getLegend();
-        l.setTextSize(15f);
-        l.setVerticalAlignment (Legend.LegendVerticalAlignment. TOP);
-        l.setHorizontalAlignment (Legend.LegendHorizontalAlignment.CENTER);
-        l.setOrientation(Legend.LegendOrientation. HORIZONTAL);
-        l.setDrawInside(true);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(5f);
-        l.setTextColor(Color.BLACK);*/
-        radarchart.invalidate();
 
 
         return view;
@@ -133,14 +230,5 @@ public class VerValoracionAlumnoFragment extends Fragment {
 
 
 
-    private ArrayList<RadarEntry> getEntries() {
-        ArrayList<RadarEntry> radarEntries = new ArrayList<>();
-        radarEntries.add(new RadarEntry(0, 0.21f));
-        radarEntries.add(new RadarEntry(1, 0.12f));
-        radarEntries.add(new RadarEntry(2, 0.20f));
-        radarEntries.add(new RadarEntry(2, 0.52f));
-        radarEntries.add(new RadarEntry(3, 0.29f));
-        radarEntries.add(new RadarEntry(4, 0.62f));
-        return radarEntries;
-    }
+
 }

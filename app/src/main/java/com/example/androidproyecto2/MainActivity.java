@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     public View toolbar;
 
     //Variables de seleccio
-    public List<Grup> grups;
     public Skill skillSelected;
     public int idUsuariSelected;
     public LlistaSkills llistaSkillSelected;
@@ -61,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
     //Array de Colores Para Graficos
     public int [] coloresGraficos;
 
-    public List<Valoracio> valoracions = new ArrayList<>();
-    public List<Valoracio> valoracionsUsuari = new ArrayList<>();
+
 
 
 
@@ -78,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //CargarUsuarioLogin();
-        usuariLogin.setNomUsuari("userLogin");
-        usuariLogin.setId(40);
+
 
         Button btnAtras = toolbar.findViewById(R.id.btnAtras);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
@@ -95,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-        Button btnAtras = toolbar.findViewById(R.id.btnAtras);
-        Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
+        //Button btnAtras = toolbar.findViewById(R.id.btnAtras);
+        //Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
 
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();

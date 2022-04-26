@@ -24,9 +24,11 @@ import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.ViewHolder>{
 
@@ -85,20 +87,16 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
                 CardView card = item.findViewById(R.id.cardItem);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    if(card.getAccessibilityPaneTitle() == null){
-                        Toast.makeText(activity, "EXIT", Toast.LENGTH_SHORT).show();
+                    if(!card.getPreventCornerOverlap()){
                         return;
                     }
-                    card.setAccessibilityPaneTitle(null);
+                    card.setPreventCornerOverlap(false);
                 }
                 Toast.makeText(activity, "Quitada la valoracion del KPI", Toast.LENGTH_SHORT).show();
-                System.out.println("AKFJDLÑA EW GET HEREEEEE");
 
                 TextView kpiIdTextView = item.findViewById(R.id.idKpi);
                 //Toast.makeText(parent.getContext(),"hola"+ (CharSequence) card.getCardBackgroundColor(), Toast.LENGTH_SHORT).show();
-                /*if(card.getCardBackgroundColor() == ColorStateList.valueOf(Color.GREEN)){
-x
-                }*/
+
                 card.setBackgroundColor(Color.WHITE);
 
 
@@ -106,8 +104,9 @@ x
 
                 //Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()),activity.usuariValorat.getId(),40, new Timestamp(new Date().getTime()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"null");
 
-
-                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date());
+                Valoracio v = new Valoracio(null,null,null,Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), currentDateandTime, 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
                 System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);
 
@@ -118,20 +117,20 @@ x
 
 
                 CardView card = item.findViewById(R.id.cardItem);
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    if(card.getAccessibilityPaneTitle().equals("a")){
-                        Toast.makeText(activity, "EXIT", Toast.LENGTH_SHORT).show();
+                    if(card.getPreventCornerOverlap()){
                         return;
                     }
-                    card.setAccessibilityPaneTitle("a");
+                    card.setPreventCornerOverlap(true);
                 }
 
                 TextView kpiIdTextView = item.findViewById(R.id.idKpi);
                 setCardColorTran(card);
                 //card.setBackgroundColor(Color.GREEN);
                 Toast.makeText(activity, "KPI Valorada", Toast.LENGTH_SHORT).show();
-                Valoracio v = new Valoracio(Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), new Timestamp(System.currentTimeMillis()), 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date());
+                Valoracio v = new Valoracio(null,null,null,Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), currentDateandTime, 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
                 System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);
 

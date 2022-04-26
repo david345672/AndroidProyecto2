@@ -83,7 +83,7 @@ public class GrupsAdapterViewPager extends PagerAdapter
                 fragmentTransaction.replace(R.id.FrContent,vervaloracionalumno);
                 fragmentTransaction.commit();
 
-                MainActivity activity = (MainActivity) context;
+                //MainActivity activity = (MainActivity) context;
                 activity.idGrupo = grup.getId();
                 //Si es docente ire a un menu diferente
                 if (activity.esDocent)

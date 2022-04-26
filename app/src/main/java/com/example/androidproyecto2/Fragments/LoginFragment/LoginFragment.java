@@ -60,6 +60,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 comprovarDatosConAPI();
+
             }
         });
     }
@@ -76,13 +77,13 @@ public class LoginFragment extends Fragment {
                 switch (response.code()){
                     case 200:
                         usuarisList = response.body();
-                        Button btnLogout = mainActivity.toolbar.findViewById(R.id.btnLogout);
 
 
                         for (Usuari userObject:usuarisList) {
                             if(userObject.getNomUsuari().equals(etUser.getText().toString())){
                                 try
                                 {
+                                    Toast.makeText(getContext(),"e",Toast.LENGTH_LONG).show();
                                     String test = etPassword.getText().toString();
                                     if (BCrypt.checkpw(test,userObject.getContrasenya())){
 
