@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public Usuari usuariLogin;
     public Usuari usuariValorat;
     public Usuari usuariSeleccionat;
-
     public String layout = "Login";
     public Boolean esDocent = false;
     FragmentManager mgr;
