@@ -91,6 +91,21 @@ public class VerValoracionAlumnoFragment extends Fragment {
 
     }
 
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_ver_valoracion_alumno, container, false);
+
+
+        return view;
+    }
+
+
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -153,7 +168,7 @@ public class VerValoracionAlumnoFragment extends Fragment {
             }
         });*/
 
-        RadarChart radarchart = ma.findViewById(R.id.RADARCHART);
+        RadarChart radarchart = view.findViewById(R.id.RADARCHART);
         int RandomColors = cogerColoresRandom(1)[0];
 
         ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
@@ -214,17 +229,6 @@ public class VerValoracionAlumnoFragment extends Fragment {
 
 
 
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ver_valoracion_alumno, container, false);
-
-
-        return view;
-    }
 
 
 
