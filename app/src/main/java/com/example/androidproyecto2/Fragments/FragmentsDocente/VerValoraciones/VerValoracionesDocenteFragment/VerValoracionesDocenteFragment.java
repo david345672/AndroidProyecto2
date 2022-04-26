@@ -22,6 +22,7 @@ import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Grups_has_alumnes;
+import com.example.androidproyecto2.Clases.Grups_has_docents;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
@@ -45,6 +46,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,14 +57,14 @@ public class VerValoracionesDocenteFragment extends Fragment {
     private MainActivity activity;
     private Grup DadesGrup;
     private List<Grups_has_alumnes> grupsHasAlumnes = new ArrayList<>();
-    private List<Usuari> usuaris = new ArrayList<>();
+    private List<Grups_has_docents> grupsHasDocents = new ArrayList<>();
+    private List<Usuari> alumnes = new ArrayList<>();
+    private List<Usuari> docents = new ArrayList<>();
     private RecyclerView LstUsuarisGrup;
     private ViewPager vpMesesAño;
 
     private ArrayList<Mes> meses;
 
-    //public List<Valoracio> valoracions = new ArrayList<>();
-    public List<Valoracio> valoracionsUsuari = new ArrayList<>();
 
 
     private VerValoracionesDocenteFragment verValoracionesDocenteFragment;
@@ -85,8 +87,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
         activity.layout = "VerValoraciones";
         LstUsuarisGrup = view.findViewById(R.id.LstUsuarisGrup);
-        cargarUsuariosListasSills();
-        //CogerTodasLasValoraciones();
+        cargarUsuariosGrupo();
 
 
         Button btnAtras = activity.toolbar.findViewById(R.id.btnAtras);
@@ -95,16 +96,12 @@ public class VerValoracionesDocenteFragment extends Fragment {
         meses = getMeses();
         vpMesesAño = view.findViewById(R.id.vpMesesAño);
 
-        vpMesesAño.setClipToPadding(false);
-
-        CalendarMesesAdapter calendarMesesAdapter = new CalendarMesesAdapter(getContext(),meses, activity, valoracionsUsuari);
-        vpMesesAño.setAdapter(calendarMesesAdapter);
 
     }
 
 
 
-    public void cargarUsuariosListasSills()
+    public void cargarUsuariosGrupo()
     {
         GrupService grupService = Api.getApi().create(GrupService.class);
         Call<Grup> grupCall = grupService.GetgrupsById(activity.idGrupo);
@@ -117,15 +114,22 @@ public class VerValoracionesDocenteFragment extends Fragment {
                     case 200:
                         DadesGrup = response.body();
                         grupsHasAlumnes = DadesGrup.getGrups_has_alumnes();
+                        grupsHasDocents = DadesGrup.getGrups_has_docents();
 
+                        //Coger todos los alumnos
                         for (Grups_has_alumnes gH: grupsHasAlumnes) {
-                            usuaris.add(gH.getUsuaris());
+                            alumnes.add(gH.getUsuaris());
                         }
 
-                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),usuaris,activity,verValoracionesDocenteFragment);
+                        //Coger todos los profesores
+                        for (Grups_has_docents gH: grupsHasDocents) {
+                            docents.add(gH.getUsuaris());
+                        }
+
+                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),alumnes,docents,activity, vpMesesAño,meses);
                         LstUsuarisGrup.setHasFixedSize(true);
                         LstUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
-                                LinearLayoutManager.VERTICAL,
+                                LinearLayoutManager.HORIZONTAL,
                                 false));
 
                         LstUsuarisGrup.setAdapter(usuarisValoracionsAdapter);
@@ -200,8 +204,8 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
             }
             //Despues de llenar el arrayList de dias, Crear un objeto Mes con el año actual, el nombre del mes que en nuestro caso sera
-            //la iteracion del array de meses y el arrayList de dias, Finalmente añadimos el mes en el arrayList de meses
-            Mes mes = new Mes(anio,months[i],dias);
+            //la iteracion del array de meses, el numero del mes, Ej Enero es 1, Abril es 4,... y el arrayList de dias, Finalmente añadimos el mes en el arrayList de meses
+            Mes mes = new Mes(anio,months[i],i + 1,dias);
 
             meses.add(mes);
 
@@ -210,6 +214,53 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
         return meses;
     }
+
+
+
+    public int[] cogerColoresRandom(int cantidad)
+    {
+        // Esta variable se usará para llenar el array en la posición correspondiente
+        int index = 0;
+
+        // array que guarda los números aleatorios
+        int [] coloresRandom = new int[cantidad];
+
+        // Nuestro primer bucle que se ejecutará hasta que hayamos llenado el arrary
+        while(index < cantidad) {
+            // Variable que guarda el número aleatorio del array de colores del main
+            int RandomColor = activity.coloresGraficos[new Random().nextInt(activity.coloresGraficos.length)];
+            // Variable que indica si el RandomColor está repetido
+            // asumimos que aún no está repetido y la establecemos a false
+            boolean repetido = false;
+            //Segundo bucle que se ejecutará siempre que el número no esté repetido
+            while(!repetido) {
+                // Bucle que recorre el array comparando el RandomColor con
+                // cada uno de los items del array
+                for(int i=0; i<index; i++) {
+                    //realizamos la comparación
+                    if(RandomColor == coloresRandom[i]) {
+                        // si el número se repite, establecemos repetido=true
+                        repetido = true;
+                    }
+                }
+                // verificamos el estado del valor repetido. Si es false, significa
+                // que hemos recorrido el array hasta la posición index sin encontrar
+                // coincidencias
+                if(!repetido) {
+                    // almacenamos el valor propuesto ya que no está repetido
+                    // incrementamos el índice
+                    coloresRandom[index] = RandomColor;
+                    index++;
+                }
+            }
+
+        }
+
+
+        return coloresRandom;
+
+    }
+
 
 
 

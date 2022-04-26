@@ -54,11 +54,11 @@ public class BarGraficoFragment extends Fragment {
         RandomColors = cogerColoresRandom(5);
 
         ArrayList<BarEntry> valoracionesFrase = new ArrayList<>();
-        valoracionesFrase.add(new BarEntry(2014,636));
-        valoracionesFrase.add(new BarEntry(2015,512));
-        valoracionesFrase.add(new BarEntry(2016,779));
-        valoracionesFrase.add(new BarEntry(2017,404));
-        valoracionesFrase.add(new BarEntry(2018,900));
+        valoracionesFrase.add(new BarEntry(2014,636,"Flexibilitat"));
+        valoracionesFrase.add(new BarEntry(2015,512,"Responsabilitat"));
+        valoracionesFrase.add(new BarEntry(2016,779,"Autonomia"));
+        valoracionesFrase.add(new BarEntry(2017,804,"Sociabilitat"));
+        valoracionesFrase.add(new BarEntry(2018,900,"Excelencia"));
 
         BarDataSet barDataSet = new BarDataSet(valoracionesFrase,"Frase");
         barDataSet.setColors(RandomColors);

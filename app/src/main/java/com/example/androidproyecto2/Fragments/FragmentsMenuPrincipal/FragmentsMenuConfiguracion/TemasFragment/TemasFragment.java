@@ -55,7 +55,7 @@ public class TemasFragment extends Fragment {
         btnTemaOscuro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateTheme("DARK", "#212121", "#747474");
+                updateTheme("DARK", "#212121", "#37474f");
             }
         });
 
@@ -64,7 +64,7 @@ public class TemasFragment extends Fragment {
 
     public void updateTheme(String key, String c1, String c2)
     {
-        SharedPreferences savePreferences = activity.getSharedPreferences("config_theme", Context.MODE_PRIVATE);
+        SharedPreferences savePreferences = activity.getSharedPreferences("config_theme", activity.MODE_PRIVATE);
         SharedPreferences.Editor ObjEditor = savePreferences.edit();
         ObjEditor.putString("theme",key);
         ObjEditor.commit();
@@ -73,6 +73,9 @@ public class TemasFragment extends Fragment {
         activity.toolbar.setBackgroundColor(Color.parseColor(c2));
 
     }
+
+
+
 
 
 

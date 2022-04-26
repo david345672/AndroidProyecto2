@@ -106,6 +106,8 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
                 String currentDateandTime = sdf.format(new Date());
+
+
                 Valoracio v = new Valoracio(null,null,null,Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), currentDateandTime, 0, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
                 System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);

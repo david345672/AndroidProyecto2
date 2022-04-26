@@ -1,9 +1,12 @@
 package com.example.androidproyecto2.Clases;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
-public class Usuari implements Serializable
+public class Usuari implements Comparable<Usuari>, Serializable
 {
     private List<Grups_has_alumnes> grups_has_alumnes;
     private List<Grups_has_docents> grups_has_docents;
@@ -141,5 +144,47 @@ public class Usuari implements Serializable
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuari{" +
+                "grups_has_alumnes=" + grups_has_alumnes +
+                ", grups_has_docents=" + grups_has_docents +
+                ", valoracions=" + valoracions +
+                ", valoracions1=" + valoracions1 +
+                ", id=" + id +
+                ", nom='" + nom + '\'' +
+                ", rols_id=" + rols_id +
+                ", actiu=" + actiu +
+                ", correo='" + correo + '\'' +
+                ", contrasenya='" + contrasenya + '\'' +
+                ", cognoms='" + cognoms + '\'' +
+                ", nomUsuari='" + nomUsuari + '\'' +
+                ", imagen='" + imagen + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Usuari usuari) {
+        int comparenum = ((Usuari)usuari).getId();
+
+        //  For Ascending order
+        return this.id - comparenum;
+
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuari usuari = (Usuari) o;
+        return id == usuari.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

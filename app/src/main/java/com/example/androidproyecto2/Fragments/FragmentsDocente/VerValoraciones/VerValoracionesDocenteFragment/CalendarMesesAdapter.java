@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.Grup;
 import com.example.androidproyecto2.Clases.Valoracio;
@@ -20,6 +21,8 @@ import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public class CalendarMesesAdapter extends PagerAdapter
@@ -27,13 +30,14 @@ public class CalendarMesesAdapter extends PagerAdapter
     private Context context;
     private ArrayList<Mes> meses;
     private MainActivity activity;
-    private List<Valoracio> valoracionsMes;
+    private List<Valoracio> valoracions;
 
-    public CalendarMesesAdapter(Context context, ArrayList<Mes> meses,MainActivity activity, List<Valoracio> valoracionsMes) {
+
+    public CalendarMesesAdapter(Context context, ArrayList<Mes> meses,MainActivity activity, List<Valoracio> valoracions) {
         this.context = context;
         this.meses = meses;
         this.activity = activity;
-        this.valoracionsMes = valoracionsMes;
+        this.valoracions = valoracions;
     }
 
 
@@ -50,9 +54,16 @@ public class CalendarMesesAdapter extends PagerAdapter
         TextView lblMesAño = view.findViewById(R.id.lblMesAño);
         Mes mes = meses.get(position);
 
+        ArrayList<Valoracio> valoracionsMes = cogerValoracionesDeMes(mes.getNum(), valoracions);
+        HashSet<Dia> diasMesValoraciones = cogerDiasMesDeValoraciones(mes.getDias(),valoracionsMes);
+
+        ArrayList<Dia> diasMes = new ArrayList<>(diasMesValoraciones);
+        Collections.sort(diasMes);
+
+
         lblMesAño.setText(mes.getNombre() + " de " + mes.getAño());
         RecyclerView ListDias = view.findViewById(R.id.ListDias);
-        DiasAdapter diasAdapter = new DiasAdapter(context,mes.getDias());
+        DiasAdapter diasAdapter = new DiasAdapter(context,diasMes,valoracionsMes,activity);
         ListDias.setHasFixedSize(true);
         ListDias.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL,
@@ -76,6 +87,62 @@ public class CalendarMesesAdapter extends PagerAdapter
     public void destroyItem(ViewGroup collection, int position, Object view) {
         collection.removeView((View) view);
     }
+
+
+    public ArrayList<Valoracio> cogerValoracionesDeMes(int posMes, List<Valoracio> valoracions)
+    {
+
+        ArrayList<Valoracio> valoracionesDeMeses = new ArrayList<>();
+
+        for (int i = 0; i < valoracions.size(); i++)
+        {
+            char [] numFecha = valoracions.get(i).getData().toCharArray();
+            String mesStr = new StringBuilder(numFecha[4]).append(numFecha[5]).toString();
+            int mes = Integer.parseInt(mesStr);
+            //Toast.makeText(context, "mes: " + mes, Toast.LENGTH_SHORT).show();
+            if (posMes == mes)
+            {
+                valoracionesDeMeses.add(valoracions.get(i));
+            }
+
+        }
+        return valoracionesDeMeses;
+    }
+
+
+    //Coger todos los dias sin repedidos del mes donde se han hecho valoraciones de ese mes
+    /*
+     - ArrayList<Dia> dias = arrayList de dias de el mes
+     - ArrayList<Valoracio> valoracions = arrayList de valoraciones de ese mes
+     */
+    public HashSet<Dia> cogerDiasMesDeValoraciones(ArrayList<Dia> dias, List<Valoracio> valoracions)
+    {
+        HashSet<Dia> diasValoracion = new HashSet<>();
+
+        for (int i = 0; i < valoracions.size(); i++)
+        {
+            char [] numFecha = valoracions.get(i).getData().toCharArray();
+
+            char[] diasC = new char[2];
+            diasC[0] = numFecha[6];
+            diasC[1] = numFecha[7];
+            String diaStr = String.valueOf(diasC);
+            int dia = Integer.parseInt(diaStr);
+
+            for (int j = 0; j < dias.size(); j++)
+            {
+                if (dia == dias.get(j).getNum())
+                {
+                    diasValoracion.add(dias.get(j));
+                }
+            }
+
+        }
+
+
+        return diasValoracion;
+    }
+
 
 
 }

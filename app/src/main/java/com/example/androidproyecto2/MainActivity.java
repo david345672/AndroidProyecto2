@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -60,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
     //Array de Colores Para Graficos
     public int [] coloresGraficos;
 
-
-
+    public List<Valoracio> valoracions = new ArrayList<>();
 
 
     @Override
@@ -69,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ocultarBarrasDispositivo();
         toolbar = findViewById(R.id.toolbar);
         fondo = findViewById(R.id.fondo);
-
+        loadTheme();
 
         //CargarUsuarioLogin();
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
-        CogerTodasLasValoraciones();
+        //CogerTodasLasValoraciones();
         //MenuPrincipalFragment menuPrincipalFragment = new MenuPrincipalFragment();
 
        // fragmentTransaction.replace(R.id.FrContent, menuPrincipalFragment);
@@ -154,42 +155,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void CogerTodasLasValoraciones()
-    {
-        ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
-        Call<List<Valoracio>> listCall = valoracionsService.Getvaloracions();
-
-        listCall.enqueue(new Callback<List<Valoracio>>() {
-            @Override
-            public void onResponse(Call<List<Valoracio>> call, Response<List<Valoracio>> response) {
-                switch (response.code())
-                {
-                    case 200:
-                        valoracions = response.body();
-
-                        break;
-                    case 400:
-                        Gson gson = new Gson();
-                        MissatgeError mensajeError = gson.fromJson(response.errorBody().charStream(),MissatgeError.class);
-                        Toast.makeText(MainActivity.this, mensajeError.getMessage(), Toast.LENGTH_SHORT).show();
-                        break;
-                    case 404:
-                        Toast.makeText(MainActivity.this,"Registre no trobat",Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Valoracio>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Error: " + t.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-
-    }
-
-
     public void irALogin()
     {
         mgr = getSupportFragmentManager();
@@ -234,6 +199,34 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void loadTheme()
+    {
+        SharedPreferences loadPreferences = getSharedPreferences("config_theme", MODE_PRIVATE);
+        String actualTema = loadPreferences.getString("theme","DEFAULT");
+
+        if(actualTema.equals("DEFAULT"))
+        {
+            updateTheme("DEFAULT", "#212121", "#37474f");
+        }
+        else if(actualTema.equals("DARK"))
+        {
+            updateTheme("DARK", "#FFFFFF", "#4C6BFF");
+        }
+
+    }
+
+
+    public void updateTheme(String key, String c1, String c2)
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("config_theme", MODE_PRIVATE);
+        SharedPreferences.Editor ObjEditor = sharedPreferences.edit();
+        ObjEditor.putString("theme",key);
+        ObjEditor.commit();
+
+        fondo.setBackgroundColor(Color.parseColor(c1));
+        toolbar.setBackgroundColor(Color.parseColor(c2));
+
+    }
 
 
 

@@ -114,7 +114,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
                   {
                      insertValoracio(valoracionsSeleccionadas.get(i));
                   }
-
+                  Toast.makeText(context, "valoracions afegides", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -159,7 +159,7 @@ public class SkillsValoracionAdapterViewPager extends PagerAdapter
                 switch (response.code())
                 {
                     case 201:
-                        Toast.makeText(context, "valoracio afegida", Toast.LENGTH_LONG).show();
+
                         break;
                     case 400:
                         Gson gson = new Gson();
