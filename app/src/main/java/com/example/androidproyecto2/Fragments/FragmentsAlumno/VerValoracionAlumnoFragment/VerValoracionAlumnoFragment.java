@@ -45,6 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VerValoracionAlumnoFragment extends Fragment {
+    private MainActivity ma;
     public int[] cogerColoresRandom(int cantidad)
     {
         // Esta variable se usará para llenar el array en la posición correspondiente
@@ -91,11 +92,12 @@ public class VerValoracionAlumnoFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        MainActivity ma;
+
         ma = (MainActivity) getActivity();
+
         Button btnAtras = ma.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
         if(ma == null ) {
@@ -107,7 +109,7 @@ public class VerValoracionAlumnoFragment extends Fragment {
         //boton valorar al valorar para enviar las valroraciones tantas como kpis 0 1
         //hacer la media
         //graficos uno por cada frase del user i tres tipos de grafs
-         userService = Api.getApi().create(UsuarisService.class);
+         /*userService = Api.getApi().create(UsuarisService.class);
         Call<List<Usuari>> listCall = userService.Getusuaris();
         listCall.enqueue(new Callback<List<Usuari>>() {
             @Override
@@ -149,7 +151,7 @@ public class VerValoracionAlumnoFragment extends Fragment {
             public void onFailure(Call<List<Usuari>> call, Throwable t) {
 
             }
-        });
+        });*/
 
         RadarChart radarchart = ma.findViewById(R.id.RADARCHART);
         int RandomColors = cogerColoresRandom(1)[0];
@@ -210,11 +212,9 @@ public class VerValoracionAlumnoFragment extends Fragment {
 
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
