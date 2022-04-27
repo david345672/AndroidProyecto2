@@ -1,6 +1,7 @@
 package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.NotificacionesFragment;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,11 +25,15 @@ import android.widget.Toast;
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.InputFilterMinMax;
+import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Notificacio;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.CalendarMesesAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
+import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.NotificacionsService;
+import com.google.gson.Gson;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -41,6 +46,10 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NotificacionesFragment extends Fragment {
 
@@ -157,11 +166,15 @@ public class NotificacionesFragment extends Fragment {
                String hora = cogerHora(txtHora.getText().toString());
                String min = cogerMin(txtMin.getText().toString());
 
-               String date = currentanio+ mes + dia + "_" + hora +min + 20;
+               String date = currentanio + mes + dia + "_" + hora + min + 20;
 
 
+               Notificacio notificacio = new Notificacio(activity.usuariLogin,activity.usuariLogin.getId(),mensaje,date);
 
-               //Notificacio notificacio = new Notificacio(activity.usuariLogin,activity.usuariLogin.getId(),mensaje,date);
+
+                insertNotificaion(notificacio);
+
+
 
             }
         });
@@ -252,6 +265,38 @@ public class NotificacionesFragment extends Fragment {
     }
 
 
+
+    public void insertNotificaion(Notificacio notificacio)
+    {
+        NotificacionsService notificacionsService = Api.getApi().create(NotificacionsService.class);
+        Call<Notificacio> notificacioCall = notificacionsService.Postnotificacions(notificacio);
+
+        notificacioCall.enqueue(new Callback<Notificacio>() {
+            @Override
+            public void onResponse(Call<Notificacio> call, Response<Notificacio> response) {
+                switch (response.code())
+                {
+                    case 201:
+                        Toast.makeText(activity, "Notificacion Añadida", Toast.LENGTH_LONG).show();
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(activity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Notificacio> call, Throwable t) {
+                Toast.makeText(activity, t.getCause() + " - " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
 
 
 
