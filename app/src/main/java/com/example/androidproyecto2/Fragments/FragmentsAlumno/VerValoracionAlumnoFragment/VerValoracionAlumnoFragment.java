@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,26 +127,36 @@ public class VerValoracionAlumnoFragment extends Fragment {
 
         Button btnAtras = ma.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
-        if(ma == null ) {
-            Toast.makeText(getContext(),"eror",Toast.LENGTH_LONG);
-            return;
-        }
 
-        //get skills para coger kpis
-
-        //get user.valoracions
 
         GrupService grupS = Api.getApi().create(GrupService.class);
         Call<Grup> grupCall = grupS.GetgrupsById(ma.idGrupo);
 
-
+        //listaskill_valoraciones_item.xml
         grupCall.enqueue(new Callback<Grup>() {
             @Override
             public void onResponse(Call<Grup> call, Response<Grup> response) {
                 switch (response.code()){
                     case 200:
                         grupselect = response.body();
+                        RecyclerView ListListasSkills = view.findViewById(R.id.recycharts);
+                        ArrayList<LlistaSkills> lls = new ArrayList<>();
+                        for (Grups_has_llistes_skills ghls : grupselect.getGrups_has_llistes_skills()) {
+                            if(!lls.contains(ghls.getLlistes_skills())){
+                                lls.add(ghls.getLlistes_skills());
+                            }
 
+                        }
+
+
+                        AdapterVerValoracionCharts avvc = new AdapterVerValoracionCharts(getContext(),lls,ma);
+                        ListListasSkills.setHasFixedSize(true);
+                        ListListasSkills.setLayoutManager(new LinearLayoutManager(getContext(),
+                                LinearLayoutManager.HORIZONTAL,
+                                false));
+
+                        ListListasSkills.setAdapter(avvc);
+                        /*
                         ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
 
 
@@ -187,6 +198,7 @@ public class VerValoracionAlumnoFragment extends Fragment {
                             RadarDataSet radarDataSetAlumnos = new RadarDataSet(valoracionesAlumnos,"Valoracions de tots"+times);
                             radarDataSetAlumnos.setColor(RandomColors);
                             radarDataSetAlumnos.setLineWidth(2f);
+                            radarDataSetAlumnos.setDrawValues(false);
                             radarDataSetAlumnos.setValueTextColor(Color.BLACK);
                             radarDataSetAlumnos.setValueTextSize(0f);
 
@@ -195,13 +207,9 @@ public class VerValoracionAlumnoFragment extends Fragment {
 
 
 
-<<<<<<< Updated upstream
-        RadarChart radarchart = view.findViewById(R.id.RADARCHART);
-        int RandomColors = cogerColoresRandom(1)[0];
-=======
                             RadarData radarData = new RadarData();
                             radarData.addDataSet(radarDataSetAlumnos);
->>>>>>> Stashed changes
+
 
                             radarchart.getDescription().setText(lls.get(i).getNom());
                             radarchart.setData(radarData);
