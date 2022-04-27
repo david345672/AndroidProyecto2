@@ -69,7 +69,7 @@ public class DiasAdapterNotificaciones extends RecyclerView.Adapter<DiasAdapterN
 
             ArrayList<Notificacio> notificacionsDia = cargarNotificacionesPorDia(notificacionsMes, dia);
 
-            NotificacionsAdapter notificacionsAdapter = new NotificacionsAdapter(context,notificacionsDia);
+            NotificacionsAdapter notificacionsAdapter = new NotificacionsAdapter(context,notificacionsDia,activity);
             ListNotificaciones.setHasFixedSize(true);
             ListNotificaciones.setLayoutManager(new LinearLayoutManager(context,
                     LinearLayoutManager.HORIZONTAL,

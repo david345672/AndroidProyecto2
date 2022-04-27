@@ -1,5 +1,6 @@
 package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsMenuConfiguracion.NotificacionesFragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,12 +8,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Dia;
 import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
+import com.example.androidproyecto2.Clases.InputFilterMinMax;
 import com.example.androidproyecto2.Clases.Notificacio;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.CalendarMesesAdapter;
@@ -34,8 +45,10 @@ import java.util.Locale;
 public class NotificacionesFragment extends Fragment {
 
     private MainActivity activity;
+    private Button btnNuevaNotificacio;
     private ViewPager vpMesesAñoNotificaciones;
     private ArrayList<Mes> meses;
+    private Dialog diaogNotificaciones;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +70,7 @@ public class NotificacionesFragment extends Fragment {
         ArrayList<Mes> mesesDeNotificaciones = new ArrayList<>(mesesNotificacion);
         Collections.sort(mesesDeNotificaciones);
 
+        btnNuevaNotificacio = view.findViewById(R.id.btnNuevaNotificacio);
         vpMesesAñoNotificaciones = view.findViewById(R.id.vpMesesAñoNotificaciones);
 
         Collections.sort(meses);
@@ -64,8 +78,180 @@ public class NotificacionesFragment extends Fragment {
         CalendarMesesAdapterNotificaciones calendarMesesAdapter = new CalendarMesesAdapterNotificaciones(getContext(),mesesDeNotificaciones, activity, activity.usuariLogin.getNotificacions());
         vpMesesAñoNotificaciones.setAdapter(calendarMesesAdapter);
 
+        //components de diaogNotificaciones
+        diaogNotificaciones = new Dialog(activity);
+        diaogNotificaciones.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        diaogNotificaciones.setContentView(R.layout.dialog_notificacion);
+
+        EditText txtNouMissatge = diaogNotificaciones.findViewById(R.id.txtNouMissatge);
+        Spinner spnrMeses = diaogNotificaciones.findViewById(R.id.spnrMeses);
+        Spinner spnrDias = diaogNotificaciones.findViewById(R.id.spnrDias);
+
+        EditText txtHora = diaogNotificaciones.findViewById(R.id.txtHora);
+        txtHora.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
+
+        EditText txtMin = diaogNotificaciones.findViewById(R.id.txtMin);
+        txtMin.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
+
+        Button btnGuardar = diaogNotificaciones.findViewById(R.id.btnGuardar);
+
+
+
+
+
+        ArrayList<String> nombreMeses = llenarMeses(meses);
+
+        ArrayAdapter<String> CantiadAdapter = new ArrayAdapter<String>(activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, nombreMeses);
+        spnrMeses.setAdapter(CantiadAdapter);
+
+        Calendar cal = Calendar.getInstance();
+        int anio = cal.get(Calendar.YEAR);
+
+        String currentanio = Integer.toString(anio) ;
+        btnNuevaNotificacio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                diaogNotificaciones.show();
+
+            }
+        });
+
+
+
+        spnrMeses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                int Cantdias = meses.get(i).getDias().size();
+                Integer [] diasMes = new Integer[Cantdias];
+
+                int j = 0;
+                for (Dia dia: meses.get(i).getDias()) {
+                    diasMes[j] = dia.getNum();
+                    j++;
+                }
+
+
+                ArrayAdapter<Integer> CantiadAdapter = new ArrayAdapter<Integer>(activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, diasMes);
+                spnrDias.setAdapter(CantiadAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
+
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               String mensaje = txtNouMissatge.getText().toString();
+
+               String mes = cogerMes(spnrMeses);
+               String dia = cogerDia(spnrDias);
+
+               String hora = cogerHora(txtHora.getText().toString());
+               String min = cogerMin(txtMin.getText().toString());
+
+               String date = currentanio+ mes + dia + "_" + hora +min + 20;
+
+
+
+               //Notificacio notificacio = new Notificacio(activity.usuariLogin,activity.usuariLogin.getId(),mensaje,date);
+
+            }
+        });
+
+
+
+
 
     }
+
+
+    public String cogerMes(Spinner spnrMeses)
+    {
+        int mesPos = spnrMeses.getSelectedItemPosition();
+
+        int mes = mesPos + 1;
+        String numMes;
+
+        if (mes > 0 && mes < 10)
+        {
+            numMes = "0"+mes;
+        }
+        else
+        {
+            numMes = Integer.toString(mes);
+        }
+
+        return numMes;
+    }
+
+    public String cogerDia(Spinner spnrDias)
+    {
+        int mesPos = spnrDias.getSelectedItemPosition();
+
+        int mes = mesPos + 1;
+        String numDia;
+
+        if (mes > 0 && mes < 10)
+        {
+            numDia = "0"+mes;
+        }
+        else
+        {
+            numDia = Integer.toString(mes);
+        }
+
+        return numDia;
+    }
+
+
+    public String cogerHora(String hora)
+    {
+
+        int horaStr = Integer.parseInt(hora);
+
+        String numHora;
+
+        if (horaStr > 0 && horaStr < 10)
+        {
+            numHora = "0"+horaStr;
+        }
+        else
+        {
+            numHora = Integer.toString(horaStr);
+        }
+
+        return numHora;
+    }
+
+
+    public String cogerMin(String min)
+    {
+
+        int minStr = Integer.parseInt(min);
+
+        String numint;
+
+        if (minStr > 0 && minStr < 10)
+        {
+            numint = "0"+minStr;
+        }
+        else
+        {
+            numint = Integer.toString(minStr);
+        }
+
+        return numint;
+    }
+
+
 
 
 
@@ -149,6 +335,20 @@ public class NotificacionesFragment extends Fragment {
 
 
         return mesesNotificacion;
+    }
+
+
+
+    public ArrayList<String> llenarMeses(ArrayList<Mes> meses)
+    {
+        ArrayList<String> NomMeses = new ArrayList<>();
+
+        for (Mes mes: meses) {
+            NomMeses.add(mes.getNombre());
+        }
+
+
+        return NomMeses;
     }
 
 
