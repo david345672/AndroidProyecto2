@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidproyecto2.BCrypt;
+import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Clases.Grups_has_llistes_skills;
+import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
+import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.ListSkillValoracioAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
+import com.example.androidproyecto2.api.apiServices.GrupService;
+import com.example.androidproyecto2.api.apiServices.LlistesSkillsService;
 import com.example.androidproyecto2.api.apiServices.UsuarisService;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.RadarChart;
@@ -37,17 +44,21 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Path;
 
 public class VerValoracionAlumnoFragment extends Fragment {
     private MainActivity ma;
-    public int[] cogerColoresRandom(int cantidad)
+    private Grup grupselect;
+    public int[] cogerColoresRandom(int cantidad, MainActivity ma)
     {
+        MainActivity activity = ma;
         // Esta variable se usará para llenar el array en la posición correspondiente
         int index = 0;
 
@@ -57,7 +68,7 @@ public class VerValoracionAlumnoFragment extends Fragment {
         // Nuestro primer bucle que se ejecutará hasta que hayamos llenado el arrary
         while(index < cantidad) {
             // Variable que guarda el número aleatorio del array de colores del main
-            MainActivity activity = (MainActivity) getActivity();
+
             int RandomColor = activity.coloresGraficos[new Random().nextInt(activity.coloresGraficos.length)];
             // Variable que indica si el RandomColor está repetido
             // asumimos que aún no está repetido y la establecemos a false
@@ -119,111 +130,153 @@ public class VerValoracionAlumnoFragment extends Fragment {
             Toast.makeText(getContext(),"eror",Toast.LENGTH_LONG);
             return;
         }
+
         //get skills para coger kpis
+
         //get user.valoracions
-        //boton valorar al valorar para enviar las valroraciones tantas como kpis 0 1
-        //hacer la media
-        //graficos uno por cada frase del user i tres tipos de grafs
-         /*userService = Api.getApi().create(UsuarisService.class);
-        Call<List<Usuari>> listCall = userService.Getusuaris();
-        listCall.enqueue(new Callback<List<Usuari>>() {
+
+        GrupService grupS = Api.getApi().create(GrupService.class);
+        Call<Grup> grupCall = grupS.GetgrupsById(ma.idGrupo);
+
+
+        grupCall.enqueue(new Callback<Grup>() {
             @Override
-            public void onResponse(Call<List<Usuari>> call, Response<List<Usuari>> response) {
+            public void onResponse(Call<Grup> call, Response<Grup> response) {
                 switch (response.code()){
                     case 200:
-                        usuarisList = response.body();
+                        grupselect = response.body();
+
+                        ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
 
 
-                        for (Usuari userObject:usuarisList) {
-                            if(userObject.getNomUsuari().equals(etUser.getText().toString())){
-                                try
-                                {
-                                    Toast.makeText(getContext(),"e",Toast.LENGTH_LONG).show();
-                                    String test = etPassword.getText().toString();
-                                    if (BCrypt.checkpw(test,userObject.getContrasenya())){
+                        List<Valoracio> v = ma.usuariLogin.getValoracions();
+                        RadarChart radarchart = ma.findViewById(R.id.RADARCHART);
+                        int RandomColors = cogerColoresRandom(1,ma)[0];
 
-                                        getUsuario(userObject.getId());
+
+                        List<Valoracio> valsDeDocentes;
+
+                        List<LlistaSkills> lls = new ArrayList<>();
+                        for (Grups_has_llistes_skills ghls : grupselect.getGrups_has_llistes_skills()) {
+                            if(!lls.contains(ghls.getLlistes_skills())){
+                                lls.add(ghls.getLlistes_skills());
+                            }
+
+                        }
+
+
+                        int times = 0;
+                        for (int i = 0; i < lls.size(); i++) {
+                            //por cada lista
+                            for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
+                                //por cada skill
+                                int puntuacio = 0;
+                                for (Valoracio val : v) {
+                                    //por cada valoracion
+                                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == ma.usuariLogin.getId()) {
+                                        puntuacio++;
                                     }
                                 }
-                                catch(Exception e)
-                                {
-                                    Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
-                                }
+                                valoracionesAlumnos.add(new RadarEntry(j,puntuacio));
+                                times += 2;
                             }
-                        }
-                        break;
-                    case 400:
-                        Gson gson = new Gson();
-                        MissatgeError mensajeError = gson.fromJson(response.errorBody().charStream(),MissatgeError.class);
-                        Toast.makeText(mainActivity.getApplicationContext(),mensajeError.getMessage(),Toast.LENGTH_LONG).show();
-                        break;
-                    case 404:
-                        Toast.makeText(mainActivity.getApplicationContext(),"Registre no trobat",Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Usuari>> call, Throwable t) {
+                            String[] puntos = new String[lls.get(i).getSkills().size()];
+                            for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
+                                puntos[r] = lls.get(i).getSkills().get(r).getNom();
+                            }
+                            RadarDataSet radarDataSetAlumnos = new RadarDataSet(valoracionesAlumnos,"Valoracions de tots"+times);
+                            radarDataSetAlumnos.setColor(RandomColors);
+                            radarDataSetAlumnos.setLineWidth(2f);
+                            radarDataSetAlumnos.setValueTextColor(Color.BLACK);
+                            radarDataSetAlumnos.setValueTextSize(0f);
 
-            }
-        });*/
+                            XAxis xAxis = radarchart.getXAxis();
+                            xAxis.setValueFormatter(new IndexAxisValueFormatter(puntos));
 
+
+
+<<<<<<< Updated upstream
         RadarChart radarchart = view.findViewById(R.id.RADARCHART);
         int RandomColors = cogerColoresRandom(1)[0];
+=======
+                            RadarData radarData = new RadarData();
+                            radarData.addDataSet(radarDataSetAlumnos);
+>>>>>>> Stashed changes
 
-        ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
-        List<Valoracio> v = ma.valoracions;
-        for (int i = 0; i < ma.skillSelected.getKpis().size(); i++) {
-            int puntuacio = 0;
-            List<Valoracio> thisuservals = new ArrayList<>();
-            for (Valoracio val : v) {
+                            radarchart.getDescription().setText(lls.get(i).getNom());
+                            radarchart.setData(radarData);
+                            break;
+
+                        }
+
+            /*
                 if (val.getKpis() == ma.skillSelected.getKpis().get(i) && val.getUsuari_valorat_id() == ma.usuariLogin.getId()){
                     thisuservals.add(val);
                     puntuacio += val.getNota();
                 }
             }
             valoracionesAlumnos.add(new RadarEntry(puntuacio / thisuservals.size()));
-        }
+            */
 
 
 
-        RadarDataSet radarDataSetAlumnos = new RadarDataSet(valoracionesAlumnos,"Companys de Grup");
-        radarDataSetAlumnos.setColor(RandomColors);
-        radarDataSetAlumnos.setLineWidth(2f);
-        radarDataSetAlumnos.setValueTextColor(Color.BLACK);
-        radarDataSetAlumnos.setValueTextSize(0f);
-
-
-        ArrayList<RadarEntry> valoracionesDocente = new ArrayList<>();
-        valoracionesDocente.add(new RadarEntry(703));
-        valoracionesDocente.add(new RadarEntry(838));
-        valoracionesDocente.add(new RadarEntry(756));
-        valoracionesDocente.add(new RadarEntry(201));
-        valoracionesDocente.add(new RadarEntry(110));
-
-        RadarDataSet radarDataSetDocente = new RadarDataSet(valoracionesDocente,"Equip Docent");
-        radarDataSetDocente.setColor(RandomColors);
-        radarDataSetDocente.setLineWidth(2f);
-        radarDataSetDocente.setValueTextColor(Color.BLACK);
-        radarDataSetDocente.setValueTextSize(0f);
 
 
 
-        RadarData radarData = new RadarData();
-        radarData.addDataSet(radarDataSetAlumnos);
-        radarData.addDataSet(radarDataSetDocente);
 
-        String[] puntos = new String[ma.skillSelected.getKpis().size()];
-        for (int i = 0; i < ma.skillSelected.getKpis().size(); i++) {
-            puntos[i] = ma.skillSelected.getKpis().get(i).getNom();
-        }
+                        /*
+                        ArrayList<RadarEntry> valoracionesDocente = new ArrayList<>();
+                        valoracionesDocente.add(new RadarEntry(703));
+                        valoracionesDocente.add(new RadarEntry(838));
+                        valoracionesDocente.add(new RadarEntry(756));
+                        valoracionesDocente.add(new RadarEntry(201));
+                        valoracionesDocente.add(new RadarEntry(110));
+
+                        RadarDataSet radarDataSetDocente = new RadarDataSet(valoracionesDocente,"Equip Docent");
+                        radarDataSetDocente.setColor(RandomColors);
+                        radarDataSetDocente.setLineWidth(2f);
+                        radarDataSetDocente.setValueTextColor(Color.BLACK);
+                        radarDataSetDocente.setValueTextSize(0f);
+*/
 
 
-        XAxis xAxis = radarchart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(puntos));
 
-        radarchart.getDescription().setText(ma.llistaSkillSelected.getNom());
-        radarchart.setData(radarData);
+                        /*
+                        radarData.addDataSet(radarDataSetDocente);
+                        */
+
+
+
+
+                        break;
+
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(ma, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+
+                        break;
+                    case 404:
+                        Toast.makeText(ma,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Grup> call, Throwable t) {
+                Toast.makeText(ma, "ERRRROR grupselect", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        //sumar
+        //graficos uno por cada frase del user i tres tipos de grafs
+
+
+
+
+
 
     }
 
