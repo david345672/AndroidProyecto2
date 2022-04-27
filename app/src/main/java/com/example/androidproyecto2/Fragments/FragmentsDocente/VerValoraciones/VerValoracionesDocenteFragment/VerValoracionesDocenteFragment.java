@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidproyecto2.Clases.CustomCalendar.Año;
@@ -65,6 +66,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
     private ArrayList<Mes> meses;
 
+    private TextView lblTipoValoraciones;
 
 
     private VerValoracionesDocenteFragment verValoracionesDocenteFragment;
@@ -95,7 +97,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
 
         meses = getMeses();
         vpMesesAño = view.findViewById(R.id.vpMesesAño);
-
+        lblTipoValoraciones = view.findViewById(R.id.lblTipoValoraciones);
 
     }
 
@@ -126,7 +128,7 @@ public class VerValoracionesDocenteFragment extends Fragment {
                             docents.add(gH.getUsuaris());
                         }
 
-                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),alumnes,docents,activity, vpMesesAño,meses);
+                        UsuarisValoracionsAdapter usuarisValoracionsAdapter = new UsuarisValoracionsAdapter(getContext(),alumnes,docents,activity, vpMesesAño,meses,lblTipoValoraciones);
                         LstUsuarisGrup.setHasFixedSize(true);
                         LstUsuarisGrup.setLayoutManager(new LinearLayoutManager(getActivity(),
                                 LinearLayoutManager.HORIZONTAL,

@@ -12,6 +12,7 @@ public class Usuari implements Comparable<Usuari>, Serializable
     private List<Grups_has_docents> grups_has_docents;
     private List<Valoracio> valoracions;
     private List<Valoracio> valoracions1;
+    private List<Notificacio> notificacions;
     private int id;
     private String nom;
     private int rols_id;
@@ -25,11 +26,12 @@ public class Usuari implements Comparable<Usuari>, Serializable
     public Usuari() {
     }
 
-    public Usuari(List<Grups_has_alumnes> grups_has_alumnes, List<Grups_has_docents> grups_has_docents, List<Valoracio> valoracions, List<Valoracio> valoracions1, int id, String nom, int rols_id, Boolean actiu, String correo, String contrasenya, String cognoms, String nomUsuari, String imagen) {
+    public Usuari(List<Grups_has_alumnes> grups_has_alumnes, List<Grups_has_docents> grups_has_docents, List<Valoracio> valoracions, List<Valoracio> valoracions1, List<Notificacio> notificacions, int id, String nom, int rols_id, Boolean actiu, String correo, String contrasenya, String cognoms, String nomUsuari, String imagen) {
         this.grups_has_alumnes = grups_has_alumnes;
         this.grups_has_docents = grups_has_docents;
         this.valoracions = valoracions;
         this.valoracions1 = valoracions1;
+        this.notificacions = notificacions;
         this.id = id;
         this.nom = nom;
         this.rols_id = rols_id;
@@ -72,6 +74,14 @@ public class Usuari implements Comparable<Usuari>, Serializable
 
     public void setValoracions1(List<Valoracio> valoracions1) {
         this.valoracions1 = valoracions1;
+    }
+
+    public List<Notificacio> getNotificacions() {
+        return notificacions;
+    }
+
+    public void setNotificacions(List<Notificacio> notificacions) {
+        this.notificacions = notificacions;
     }
 
     public int getId() {
