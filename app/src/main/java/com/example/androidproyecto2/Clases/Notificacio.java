@@ -18,8 +18,7 @@ public class Notificacio implements Serializable
         this.data = data;
     }
 
-    public Notificacio(Usuari usuaris, int usuaris_id, String missatge, String data) {
-        this.usuaris = usuaris;
+    public Notificacio(int usuaris_id, String missatge, String data) {
         this.usuaris_id = usuaris_id;
         this.missatge = missatge;
         this.data = data;

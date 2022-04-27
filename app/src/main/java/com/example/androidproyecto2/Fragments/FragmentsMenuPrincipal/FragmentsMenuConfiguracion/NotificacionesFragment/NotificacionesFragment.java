@@ -27,12 +27,14 @@ import com.example.androidproyecto2.Clases.CustomCalendar.Mes;
 import com.example.androidproyecto2.Clases.InputFilterMinMax;
 import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Notificacio;
+import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.Fragments.FragmentsDocente.VerValoraciones.VerValoracionesDocenteFragment.CalendarMesesAdapter;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.NotificacionsService;
+import com.example.androidproyecto2.api.apiServices.UsuarisService;
 import com.google.gson.Gson;
 
 import java.text.DateFormatSymbols;
@@ -75,17 +77,11 @@ public class NotificacionesFragment extends Fragment {
         activity = (MainActivity) getActivity();
 
         meses = getMeses();
-        HashSet<Mes> mesesNotificacion = cogerMesesDeNotificaciones(meses,activity.usuariLogin.getNotificacions());
-        ArrayList<Mes> mesesDeNotificaciones = new ArrayList<>(mesesNotificacion);
-        Collections.sort(mesesDeNotificaciones);
 
         btnNuevaNotificacio = view.findViewById(R.id.btnNuevaNotificacio);
         vpMesesAñoNotificaciones = view.findViewById(R.id.vpMesesAñoNotificaciones);
 
-        Collections.sort(meses);
-        vpMesesAñoNotificaciones.setClipToPadding(false);
-        CalendarMesesAdapterNotificaciones calendarMesesAdapter = new CalendarMesesAdapterNotificaciones(getContext(),mesesDeNotificaciones, activity, activity.usuariLogin.getNotificacions());
-        vpMesesAñoNotificaciones.setAdapter(calendarMesesAdapter);
+        cargarViewPagerNotificaciones(activity.usuariLogin.getNotificacions());
 
         //components de diaogNotificaciones
         diaogNotificaciones = new Dialog(activity);
@@ -169,10 +165,10 @@ public class NotificacionesFragment extends Fragment {
                String date = currentanio + mes + dia + "_" + hora + min + 20;
 
 
-               Notificacio notificacio = new Notificacio(activity.usuariLogin,activity.usuariLogin.getId(),mensaje,date);
+               Notificacio notificacio = new Notificacio(activity.usuariLogin.getId(),mensaje,date);
 
 
-                insertNotificaion(notificacio);
+               insertNotificaion(notificacio);
 
 
 
@@ -184,6 +180,60 @@ public class NotificacionesFragment extends Fragment {
 
 
     }
+
+
+    public void cargarViewPagerNotificaciones(List<Notificacio> notificacions)
+    {
+
+
+        HashSet<Mes> mesesNotificacion = cogerMesesDeNotificaciones(meses,notificacions);
+        ArrayList<Mes> mesesDeNotificaciones = new ArrayList<>(mesesNotificacion);
+        Collections.sort(mesesDeNotificaciones);
+
+        vpMesesAñoNotificaciones.setClipToPadding(false);
+        CalendarMesesAdapterNotificaciones calendarMesesAdapter = new CalendarMesesAdapterNotificaciones(getContext(),mesesDeNotificaciones, activity, notificacions);
+        vpMesesAñoNotificaciones.setAdapter(calendarMesesAdapter);
+
+    }
+
+
+    public void recargarNotificacionesUsuario(int id)
+    {
+        UsuarisService userService = Api.getApi().create(UsuarisService.class);
+        Call<Usuari> userCall = userService.Getusuaris(id);
+
+        userCall.enqueue(new Callback<Usuari>() {
+            @Override
+            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
+                switch (response.code())
+                {
+                    case 200:
+
+                        Usuari user = response.body();
+
+                        cargarViewPagerNotificaciones(user.getNotificacions());
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(activity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(activity,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuari> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 
 
     public String cogerMes(Spinner spnrMeses)
@@ -278,7 +328,8 @@ public class NotificacionesFragment extends Fragment {
                 {
                     case 201:
                         Toast.makeText(activity, "Notificacion Añadida", Toast.LENGTH_LONG).show();
-
+                        recargarNotificacionesUsuario(activity.usuariLogin.getId());
+                        diaogNotificaciones.dismiss();
                         break;
                     case 400:
                         Gson gson = new Gson();

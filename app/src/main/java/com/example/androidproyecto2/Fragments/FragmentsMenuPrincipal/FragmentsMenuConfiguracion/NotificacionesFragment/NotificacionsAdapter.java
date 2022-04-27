@@ -60,7 +60,7 @@ public class NotificacionsAdapter extends RecyclerView.Adapter<NotificacionsAdap
             String [] date_time = notificacio.getData().split("_");
             char [] numeros = date_time[1].toCharArray();
 
-            lblHora.setText(date_time[1]);
+            lblHora.setText(Character.toString(numeros[0]) + Character.toString(numeros[1]) + ":" + Character.toString(numeros[2]) + Character.toString(numeros[3]));
             lblMissatge.setText(notificacio.getMissatge());
 
 
