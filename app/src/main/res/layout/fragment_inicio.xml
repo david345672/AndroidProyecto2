@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:backgroundTint="#FFC04C"
             android:gravity="center"
-            android:text="Hacer Observacion propia"
+            android:text="+@string/pru"
             android:textStyle="bold" />
 
         <Button
