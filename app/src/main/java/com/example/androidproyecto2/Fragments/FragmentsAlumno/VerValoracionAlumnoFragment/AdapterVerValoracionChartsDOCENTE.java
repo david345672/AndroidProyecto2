@@ -5,23 +5,17 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidproyecto2.Clases.Grups_has_docents;
 import com.example.androidproyecto2.Clases.LlistaSkills;
-import com.example.androidproyecto2.Clases.MissatgeError;
 import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.SkillMedia;
 import com.example.androidproyecto2.Clases.Usuari;
 import com.example.androidproyecto2.Clases.Valoracio;
 import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
-import com.example.androidproyecto2.api.Api;
-import com.example.androidproyecto2.api.apiServices.GrupsHasDocentService;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.RadarChart;
@@ -36,33 +30,24 @@ import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerValoracionCharts.ViewHolder>
+public class AdapterVerValoracionChartsDOCENTE extends RecyclerView.Adapter<AdapterVerValoracionChartsDOCENTE.ViewHolder>
 {
 
     private Context context;
-    private List<LlistaSkills> llistesSkills;
+    private List<Valoracio> valoracionsDocents;
     List<Valoracio> totesValoracions;
     private MainActivity activity;
-    private List<Usuari> totsdocents;
 
 
 
-    public AdapterVerValoracionCharts(Context context, ArrayList<LlistaSkills> lls, MainActivity ma) {
+    public AdapterVerValoracionChartsDOCENTE(Context context, ArrayList<Valoracio> valoracionsDocents, MainActivity ma) {
         this.context = context;
-        this.llistesSkills = lls;
+        this.valoracionsDocents = valoracionsDocents;
         this.activity = ma;
         this.totesValoracions = activity.valoracions;
 
@@ -95,16 +80,7 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
             ArrayList<SkillMedia> mediasValoracionesSkill = getMediasSkills(llistaSkills.getSkills(),valoracionsLlistesSkillsDia);
             int [] coloresRandom = cogerColoresRandom(mediasValoracionesSkill.size());
             //cogerDocentes();
-            System.out.println("profes");
-            for (int i = 0; i < llistaSkills.getGrups_has_llistes_skills().size(); i++) {
-                for (int j = 0; j < llistaSkills.getGrups_has_llistes_skills().get(i).getGrups().getGrups_has_docents().size(); j++) {
-                    totsdocents.add(llistaSkills.getGrups_has_llistes_skills().get(i).getGrups().getGrups_has_docents().get(j).getUsuaris());
-                    System.out.println(llistaSkills.getGrups_has_llistes_skills().get(i).getGrups().getGrups_has_docents().get(j).getUsuaris().toString());
-                }
 
-            }
-            //System.out.println(totsdocents.get(0));
-            //totsdocents = llistaSkills.getGrups_has_llistes_skills().get(1).getGrups().getGrups_has_docents().get(1).getUsuaris();
             cargarBarChartValoraciones(barChart,llistaSkills.getNom(),mediasValoracionesSkill,coloresRandom);
             cargarPieChartValoraciones(pieChart,llistaSkills.getNom(),mediasValoracionesSkill,coloresRandom);
             cargarRadarChartValoraciones(radarChart,llistaSkills.getNom(),mediasValoracionesSkill,coloresRandom);
@@ -116,15 +92,15 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
 
 
     @Override
-    public AdapterVerValoracionCharts.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterVerValoracionChartsDOCENTE.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.listaskill_valoraciones_item_alumno,parent,false);
 
-        return new AdapterVerValoracionCharts.ViewHolder(item);
+        return new AdapterVerValoracionChartsDOCENTE.ViewHolder(item);
     }
 
 
-    public void onBindViewHolder(AdapterVerValoracionCharts.ViewHolder holder, int position)
+    public void onBindViewHolder(AdapterVerValoracionChartsDOCENTE.ViewHolder holder, int position)
     {
         holder.bindLlistaSkills(llistesSkills.get(position));
 

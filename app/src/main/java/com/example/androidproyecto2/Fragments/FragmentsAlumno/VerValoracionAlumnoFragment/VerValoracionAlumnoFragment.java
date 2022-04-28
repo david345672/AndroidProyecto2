@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.androidproyecto2.BCrypt;
 import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Clases.Grups_has_docents;
 import com.example.androidproyecto2.Clases.Grups_has_llistes_skills;
 import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.MissatgeError;
@@ -28,6 +29,7 @@ import com.example.androidproyecto2.MainActivity;
 import com.example.androidproyecto2.R;
 import com.example.androidproyecto2.api.Api;
 import com.example.androidproyecto2.api.apiServices.GrupService;
+import com.example.androidproyecto2.api.apiServices.GrupsHasDocentService;
 import com.example.androidproyecto2.api.apiServices.LlistesSkillsService;
 import com.example.androidproyecto2.api.apiServices.UsuarisService;
 import com.github.mikephil.charting.animation.Easing;
@@ -115,6 +117,17 @@ public class VerValoracionAlumnoFragment extends Fragment {
         return view;
     }
 
+    public HashSet<Usuari> getDocents(List<Grups_has_docents> grups_has_docents)
+    {
+        ArrayList<Usuari> docentsRep = new ArrayList<>();
+
+        for (Grups_has_docents GD: grups_has_docents) {
+            docentsRep.add(GD.getUsuaris());
+        }
+        HashSet<Usuari> docents = new HashSet<>(docentsRep);
+
+        return docents;
+    }
 
 
 
@@ -124,6 +137,7 @@ public class VerValoracionAlumnoFragment extends Fragment {
 
 
         ma = (MainActivity) getActivity();
+        ma.layout = "VerValoraciones";
 
         Button btnAtras = ma.findViewById(R.id.btnAtras);
         btnAtras.setVisibility(View.VISIBLE);
@@ -276,6 +290,55 @@ public class VerValoracionAlumnoFragment extends Fragment {
                 Toast.makeText(ma, "ERRRROR grupselect", Toast.LENGTH_LONG).show();
             }
         });
+
+        GrupsHasDocentService grupsHasDocentService = Api.getApi().create(GrupsHasDocentService.class);
+        Call<List<Grups_has_docents>> listCall = grupsHasDocentService.Getgrups_has_docents();
+
+        listCall.enqueue(new Callback<List<Grups_has_docents>>() {
+            @Override
+            public void onResponse(Call<List<Grups_has_docents>> call, Response<List<Grups_has_docents>> response) {
+                switch (response.code())
+                {
+                    case 200:
+
+                        List<Grups_has_docents> grupsHasDocents = response.body();
+
+
+                        HashSet<Usuari> HashDocents = getDocents(grupsHasDocents);
+                        List<Usuari> docents = new ArrayList<>(HashDocents);
+
+
+                        List<Valoracio> ValoracionesDocentes =  AdapterVerValoracionChartsDOCENTE(getContext(),docents.get(1).getValoracions(), docents);
+                        // if(ValoracionesDocentes.size() != 0)
+                        //{
+                        //cargarVPagerMesesValoraciones(ValoracionesDocentes);
+                        //}
+                        //else
+                        //{
+                        Toast.makeText(ma, "No hay registros de valoraciones", Toast.LENGTH_SHORT).show();
+                        //}
+                        //this.
+
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(ma, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(ma,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Grups_has_docents>> call, Throwable t) {
+
+            }
+        });
+
+
 
 
         //sumar
