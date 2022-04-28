@@ -115,6 +115,8 @@ public class LoginFragment extends Fragment {
                 switch (response.code()) {
                     case 200:
                         usuarisList = response.body();
+                        Button btnLogout = mainActivity.toolbar.findViewById(R.id.btnLogout);
+
 
                         for (Usuari userObject : usuarisList) {
                             if (userObject.getNomUsuari().equals(etUser.getText().toString())) {
@@ -148,7 +150,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Usuari>> call, Throwable t) {
-
+                Toast.makeText(mainActivity, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -163,6 +165,7 @@ public class LoginFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+
     private void setLocale(String lang, String loc) {
         Locale locale = new Locale(lang, loc);
         Locale.setDefault(locale);
@@ -170,4 +173,56 @@ public class LoginFragment extends Fragment {
         config.locale = locale;
         mainActivity.getBaseContext().getResources().updateConfiguration(config, mainActivity.getBaseContext().getResources().getDisplayMetrics());
     }
+
+
+
+    public void getUsuario(int id)
+    {
+        UsuarisService userService = Api.getApi().create(UsuarisService.class);
+        Call<Usuari> userCall = userService.Getusuaris(id);
+
+        userCall.enqueue(new Callback<Usuari>() {
+            @Override
+            public void onResponse(Call<Usuari> call, Response<Usuari> response) {
+                switch (response.code())
+                {
+                    case 200:
+
+                        mainActivity.usuariLogin = response.body();
+
+                        if (mainActivity.usuariLogin.getGrups_has_alumnes().size() != 0)
+                        {
+                            mainActivity.esDocent = false;
+                        }
+                        else
+                        {
+                            mainActivity.esDocent = true;
+                        }
+
+
+                        pasarFragment();
+                        mainActivity.toolbar.findViewById(R.id.btnLogout).setVisibility(View.VISIBLE);
+
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(mainActivity, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+                        Toast.makeText(mainActivity,"Registre no trobat", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuari> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
+
 }

@@ -3,15 +3,20 @@ package com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocent
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +38,7 @@ import com.google.gson.Gson;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,14 +91,12 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
             rdb1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Date currentTime = Calendar.getInstance().getTime();
-
-                    //Timestamp param = new Timestamp(currentTime.getTime());
-                    Timestamp param = new Timestamp(new Date().getTime());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
 
                     valoracio.setNota(Integer.parseInt((String) rdb1.getText()));
-                    valoracio.setData(param);
-                    valoracio.setObservacions(txtObservacion.getText().toString());
+                    valoracio.setData(currentDateandTime);
+
 
                 }
             });
@@ -100,38 +104,59 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
             rdb2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Date currentTime = Calendar.getInstance().getTime();
-                    Timestamp param = new Timestamp(new Date().getTime());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
 
                     valoracio.setNota(Integer.parseInt((String) rdb2.getText()));
-                    valoracio.setData(param);
-                    valoracio.setObservacions(txtObservacion.getText().toString());
+                    valoracio.setData(currentDateandTime);
+
                 }
             });
 
             rdb3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Date currentTime = Calendar.getInstance().getTime();
-                    Timestamp param = new Timestamp(new Date().getTime());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
 
                     valoracio.setNota(Integer.parseInt((String) rdb3.getText()));
-                    valoracio.setData(param);
-                    valoracio.setObservacions(txtObservacion.getText().toString());
+                    valoracio.setData(currentDateandTime);
+
                 }
             });
 
             rdb4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Date currentTime = Calendar.getInstance().getTime();
-                    Timestamp param = new Timestamp(new Date().getTime());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
 
                     valoracio.setNota(Integer.parseInt((String) rdb4.getText()));
-                    valoracio.setData(param);
+                    valoracio.setData(currentDateandTime);
+
+                }
+            });
+
+
+            txtObservacion.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
                     valoracio.setObservacions(txtObservacion.getText().toString());
                 }
             });
+
+
+
 
         }
 
@@ -162,8 +187,38 @@ public class KpiAdapterValoracion extends RecyclerView.Adapter<KpiAdapterValorac
     }
 
 
+    public void insertValoracio(Valoracio valoracio){
+        ValoracionsService valoracionsService = Api.getApi().create(ValoracionsService.class);
+        Call<Valoracio> valoracioCall = valoracionsService.insertValoracio(valoracio);
+
+        valoracioCall.enqueue(new Callback<Valoracio>() {
+            @Override
+            public void onResponse(Call<Valoracio> call, Response<Valoracio> response) {
+                switch (response.code())
+                {
+                    case 201:
+                        Toast.makeText(context, "valoracio afegida", Toast.LENGTH_LONG).show();
+                        break;
+                    case 400:
+                        Gson gson = new Gson();
+
+                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                        Toast.makeText(context, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                        System.out.println(missatgeError.getMessage() +"    ERROR ");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Valoracio> call, Throwable t) {
+                Toast.makeText(context, t.getCause() + " - " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
 
 
 
 
+    }
 }

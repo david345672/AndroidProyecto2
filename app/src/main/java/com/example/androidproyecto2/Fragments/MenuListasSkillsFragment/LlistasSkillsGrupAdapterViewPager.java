@@ -72,7 +72,7 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
                     }
                     else
                     {
-                        irAValoracionTipoAlumno();
+                        //irAValoracionTipoAlumno();
                     }
                 }
                 else
@@ -121,8 +121,8 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
         MainActivity activity = (MainActivity) context;
         mg = activity.getSupportFragmentManager();
         fragmentTransaction = mg.beginTransaction();
-        ValoracionAlumnoFragment valoracionDocenteFragment = new ValoracionAlumnoFragment();
-        fragmentTransaction.replace(R.id.FrContent,valoracionDocenteFragment);
+        //ValoracionAlumnoFragment valoracionDocenteFragment = new ValoracionAlumnoFragment();
+        //fragmentTransaction.replace(R.id.FrContent,valoracionDocenteFragment);
         fragmentTransaction.commit();
     }
 

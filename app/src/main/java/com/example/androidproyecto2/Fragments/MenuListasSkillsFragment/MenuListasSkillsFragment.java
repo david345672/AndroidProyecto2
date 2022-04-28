@@ -97,7 +97,8 @@ public class MenuListasSkillsFragment extends Fragment{
     public void cargarUsuariosListasSills()
     {
         GrupService grupService = Api.getApi().create(GrupService.class);
-        Call<Grup> grupCall = grupService.GetgrupsById(2);
+        Call<Grup> grupCall = grupService.GetgrupsById(activity.idGrupo);
+
 
         grupCall.enqueue(new Callback<Grup>() {
             @Override

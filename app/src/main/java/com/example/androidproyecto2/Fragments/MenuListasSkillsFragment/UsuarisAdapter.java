@@ -73,7 +73,7 @@ public class UsuarisAdapter extends RecyclerView.Adapter<UsuarisAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.rdbUsuari.setText(usuaris.get(position).getNomUsuari());
+        holder.rdbUsuari.setText(usuaris.get(position).getNom() + " " + usuaris.get(position).getCognoms());
 
         holder.rdbUsuari.setChecked(position == SelectedPosition);
 

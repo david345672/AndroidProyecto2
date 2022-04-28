@@ -75,12 +75,12 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
                         irAValoracionTipoAlumno();
                     }
                 }
-                else
-                {
-                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
-                }
+                //else
+                //{
+                    //Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
+                //}
 
-                
+
             }
         });
 
