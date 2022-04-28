@@ -121,7 +121,8 @@ public class NotificacionsAdapter extends RecyclerView.Adapter<NotificacionsAdap
                     case 200:
 
                         Toast.makeText(activity, "Notificacion borrada", Toast.LENGTH_SHORT).show();
-
+                        NotificacionesFragment notificacionesFragment = new NotificacionesFragment();
+                        notificacionesFragment.recargarNotificacionesUsuario(activity.usuariLogin.getId());
                         break;
                     case 400:
                         Gson gson = new Gson();
