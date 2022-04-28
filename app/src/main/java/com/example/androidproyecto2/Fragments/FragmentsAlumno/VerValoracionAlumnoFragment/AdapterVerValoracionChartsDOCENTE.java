@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidproyecto2.Clases.Grup;
+import com.example.androidproyecto2.Clases.Grups_has_llistes_skills;
 import com.example.androidproyecto2.Clases.LlistaSkills;
 import com.example.androidproyecto2.Clases.Skill;
 import com.example.androidproyecto2.Clases.SkillMedia;
@@ -39,17 +41,28 @@ public class AdapterVerValoracionChartsDOCENTE extends RecyclerView.Adapter<Adap
 {
 
     private Context context;
-    private List<Valoracio> valoracionsDocents;
-    List<Valoracio> totesValoracions;
+    List<Usuari> totsdocents;
+    private List<LlistaSkills> llistesSkills;
+    private Grup lls ;
     private MainActivity activity;
+    List<Valoracio> totesValoracions;
 
 
-
-    public AdapterVerValoracionChartsDOCENTE(Context context, ArrayList<Valoracio> valoracionsDocents, MainActivity ma) {
+    public AdapterVerValoracionChartsDOCENTE(Context context, Grup lls, List<Usuari> docents, MainActivity ma) {
         this.context = context;
-        this.valoracionsDocents = valoracionsDocents;
+        this.lls = lls;
+        this.totsdocents = docents;
+        this.totesValoracions = ma.valoracions;
         this.activity = ma;
-        this.totesValoracions = activity.valoracions;
+        ArrayList<LlistaSkills> llss = new ArrayList<>();
+        for (Grups_has_llistes_skills ghls : lls.getGrups_has_llistes_skills()) {
+            if(!llss.contains(ghls.getLlistes_skills())){
+                llss.add(ghls.getLlistes_skills());
+            }
+
+        }
+        this.llistesSkills = llss;
+
 
 
     }
@@ -235,7 +248,7 @@ public class AdapterVerValoracionChartsDOCENTE extends RecyclerView.Adapter<Adap
                             break;
                         }
                     }
-                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId() && !valdedocent) {
+                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId() && valdedocent) {
                         puntuacio++;
                     }
                 }

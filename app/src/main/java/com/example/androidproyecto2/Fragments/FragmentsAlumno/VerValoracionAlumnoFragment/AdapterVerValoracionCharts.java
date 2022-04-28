@@ -51,20 +51,66 @@ import retrofit2.Response;
 
 public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerValoracionCharts.ViewHolder>
 {
-
+    private List<Usuari> docents;
     private Context context;
+    private boolean isDocentVersion = false;
     private List<LlistaSkills> llistesSkills;
-    List<Valoracio> totesValoracions;
+private List<Valoracio> v;
     private MainActivity activity;
-    private List<Usuari> totsdocents;
 
-
-
-    public AdapterVerValoracionCharts(Context context, ArrayList<LlistaSkills> lls, MainActivity ma) {
+    public AdapterVerValoracionCharts(Context context, ArrayList<LlistaSkills> lls, List<Usuari> docents, MainActivity ma){
+        this.isDocentVersion = true;
+        this.docents = docents;
         this.context = context;
         this.llistesSkills = lls;
         this.activity = ma;
-        this.totesValoracions = activity.valoracions;
+        v = new ArrayList<>();
+
+        for (Valoracio va :activity.usuariLogin.getValoracions()     ) {
+            v.add(va);
+
+        }
+        for (Valoracio va :activity.usuariLogin.getValoracions1()     ) {
+            v.add(va);
+
+        }
+
+
+        List<Valoracio> valoracionsDeProfessors = new ArrayList<>();
+        for (Valoracio val: v  ) {
+            for (Usuari doc: docents           ) {
+                if(val.getUsuari_pp_id() == doc.getId()){
+                    valoracionsDeProfessors.add(val);
+                }
+            }
+        }
+        v.clear();
+        for (Valoracio vd : valoracionsDeProfessors){
+            v.add(vd);
+        }
+
+
+    }
+
+    public AdapterVerValoracionCharts(Context context, ArrayList<LlistaSkills> lls, MainActivity ma) {
+
+
+
+        this.context = context;
+        this.llistesSkills = lls;
+        this.activity = ma;
+        v = new ArrayList<>();
+
+        for (Valoracio va :activity.usuariLogin.getValoracions()     ) {
+            v.add(va);
+
+        }
+
+        for (Valoracio va :activity.usuariLogin.getValoracions1()     ) {
+            v.add(va);
+
+        }
+
 
 
     }
@@ -89,25 +135,14 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
         void bindLlistaSkills(LlistaSkills llistaSkills)
         {
             lblnombreListaSkillVal.setText(llistaSkills.getNom());
+            //ArrayList<Valoracio> valoracionsLlistesSkillsDia = getValoracionesDeListaSkill(llistaSkills.getId());
 
-            ArrayList<Valoracio> valoracionsLlistesSkillsDia = getValoracionesDeListaSkill(llistaSkills.getId());
+            //ArrayList<SkillMedia> mediasValoracionesSkill = getMediasSkills(llistaSkills.getSkills(),valoracionsLlistesSkillsDia);
+            int [] coloresRandom = cogerColoresRandom(15);
 
-            ArrayList<SkillMedia> mediasValoracionesSkill = getMediasSkills(llistaSkills.getSkills(),valoracionsLlistesSkillsDia);
-            int [] coloresRandom = cogerColoresRandom(mediasValoracionesSkill.size());
-            //cogerDocentes();
-            System.out.println("profes");
-            for (int i = 0; i < llistaSkills.getGrups_has_llistes_skills().size(); i++) {
-                for (int j = 0; j < llistaSkills.getGrups_has_llistes_skills().get(i).getGrups().getGrups_has_docents().size(); j++) {
-                    totsdocents.add(llistaSkills.getGrups_has_llistes_skills().get(i).getGrups().getGrups_has_docents().get(j).getUsuaris());
-                    System.out.println(llistaSkills.getGrups_has_llistes_skills().get(i).getGrups().getGrups_has_docents().get(j).getUsuaris().toString());
-                }
-
-            }
-            //System.out.println(totsdocents.get(0));
-            //totsdocents = llistaSkills.getGrups_has_llistes_skills().get(1).getGrups().getGrups_has_docents().get(1).getUsuaris();
-            cargarBarChartValoraciones(barChart,llistaSkills.getNom(),mediasValoracionesSkill,coloresRandom);
-            cargarPieChartValoraciones(pieChart,llistaSkills.getNom(),mediasValoracionesSkill,coloresRandom);
-            cargarRadarChartValoraciones(radarChart,llistaSkills.getNom(),mediasValoracionesSkill,coloresRandom);
+            cargarBarChartValoraciones(barChart,llistaSkills.getNom(),coloresRandom);
+            cargarPieChartValoraciones(pieChart,llistaSkills.getNom(),coloresRandom);
+            cargarRadarChartValoraciones(radarChart,llistaSkills.getNom(),coloresRandom);
 
 
         }
@@ -208,6 +243,7 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
 
 
     //coger las valoraciones de la lista de skill
+    /*
     public ArrayList<Valoracio> getValoracionesDeListaSkill(int idLlista)
     {
         ArrayList<Valoracio> valoracionsLLista = new ArrayList<>();
@@ -222,7 +258,7 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
 
         return valoracionsLLista;
     }
-
+*/
     //Hacer la media de las valoraciones de la lista de skill filtrando por skills y devolver un arrayList con el nombre de la Skill y su media
 
 
@@ -230,7 +266,7 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
 
 
 
-    public void cargarBarChartValoraciones(BarChart barChart, String nomLlista ,ArrayList<SkillMedia> mediasValoracionesSkill ,int [] coloresRandom)
+    public void cargarBarChartValoraciones(BarChart barChart, String nomLlista, int[] coloresRandom)
     {
         ArrayList<BarEntry> valoracionesFrase = new ArrayList<>();
         List<LlistaSkills> lls = llistesSkills;
@@ -242,35 +278,62 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
             selected++;
         }
 
-        List<Valoracio> v = activity.usuariLogin.getValoracions();
-        v.addAll(activity.usuariLogin.getValoracions1());
-        int x = 2014;
-        for (int i = selected; i < lls.size(); i++) {
-            //por cada lista
-            for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
-                //por cada skill
-                int puntuacio = 0;
-                for (Valoracio val : v) {
-                    //por cada valoracion
-                    boolean valdedocent = false;
-                    for ( Usuari docent: totsdocents ) {
-                        if(val.getUsuari_pp_id() == docent.getId()){
-                            valdedocent = true;
-                            break;
+        //List<Valoracio> v = activity.usuariLogin.getValoracions();
+        //v.addAll(activity.usuariLogin.getValoracions1());
+        if(isDocentVersion){
+            int x = 2014;
+            int cantitatvals = 0;
+            for (int i = selected; i < lls.size(); i++) {
+                //por cada lista
+                for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
+                    //por cada skill
+                    int puntuacio = 0;
+                    for (Valoracio val : v) {
+                        //por cada valoracion
+
+                        if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
+                            puntuacio += val.getNota();
+                            cantitatvals++;
                         }
                     }
-                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId() && !valdedocent) {
-                        puntuacio++;
+                    if (cantitatvals == 0){
+                        valoracionesFrase.add(new BarEntry(x++,cantitatvals));
+                    }else {
+                        valoracionesFrase.add(new BarEntry(x++, puntuacio / cantitatvals));
                     }
-                }
-                valoracionesFrase.add(new BarEntry(x++,puntuacio));
+                    System.out.println(puntuacio+".,.,."+lls.get(i).getSkills().size()+"jlkjl"+v.size());
 
+                }
+                String[] puntos = new String[lls.get(i).getSkills().size()];
+                for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
+                    puntos[r] = lls.get(i).getSkills().get(r).getNom();
+                }
+                break; // mala practica pero fucniona, sé como arreglarlo pero no hay tiempo :/
             }
-            String[] puntos = new String[lls.get(i).getSkills().size()];
-            for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
-                puntos[r] = lls.get(i).getSkills().get(r).getNom();
+        }else{
+            int x = 2014;
+            for (int i = selected; i < lls.size(); i++) {
+                //por cada lista
+                for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
+                    //por cada skill
+                    int puntuacio = 0;
+                    for (Valoracio val : v) {
+                        //por cada valoracion
+
+                        if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
+                            puntuacio++;
+                        }
+                    }
+                    valoracionesFrase.add(new BarEntry(x++,puntuacio));
+                    System.out.println(puntuacio+".,.,."+lls.get(i).getSkills().size()+"jlkjl"+v.size());
+
+                }
+                String[] puntos = new String[lls.get(i).getSkills().size()];
+                for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
+                    puntos[r] = lls.get(i).getSkills().get(r).getNom();
+                }
+                break; // mala practica pero fucniona, sé como arreglarlo pero no hay tiempo :/
             }
-            break; // mala practica pero fucniona, sé como arreglarlo pero no hay tiempo :/
         }
 
 
@@ -292,7 +355,7 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
 
 
 
-    public void cargarPieChartValoraciones(PieChart pieChart, String nomLlista ,ArrayList<SkillMedia> mediasValoracionesSkill ,int [] coloresRandom)
+    public void cargarPieChartValoraciones(PieChart pieChart, String nomLlista, int[] coloresRandom)
     {
         ArrayList<PieEntry> valoracionesFrase = new ArrayList<>();
         List<LlistaSkills> lls = llistesSkills;
@@ -304,8 +367,35 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
             selected++;
         }
 
-        List<Valoracio> v = activity.usuariLogin.getValoracions();
-        v.addAll(activity.usuariLogin.getValoracions1());
+        if(isDocentVersion){
+            int cantitatvals = 0;
+            for (int i = selected; i < lls.size(); i++) {
+                //por cada lista
+                for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
+                    //por cada skill
+                    int puntuacio = 0;
+                    for (Valoracio val : v) {
+                        //por cada valoracion
+
+                        if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
+                            puntuacio += val.getNota();
+                            cantitatvals++;
+                        }
+                    }
+                    if(cantitatvals == 0){
+                        valoracionesFrase.add(new PieEntry(cantitatvals,lls.get(i).getSkills().get(j).getNom()));
+                    }else {
+                        valoracionesFrase.add(new PieEntry(puntuacio / cantitatvals, lls.get(i).getSkills().get(j).getNom()));
+                    }
+
+                }
+                String[] puntos = new String[lls.get(i).getSkills().size()];
+                for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
+                    puntos[r] = lls.get(i).getSkills().get(r).getNom();
+                }
+                break;
+            }
+        }else{
         for (int i = selected; i < lls.size(); i++) {
             //por cada lista
             for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
@@ -313,24 +403,20 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
                 int puntuacio = 0;
                 for (Valoracio val : v) {
                     //por cada valoracion
-                    boolean valdedocent = false;
-                    for ( Usuari docent: totsdocents ) {
-                        if(val.getUsuari_pp_id() == docent.getId()){
-                            valdedocent = true;
-                            break;
-                        }
-                    }
-                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId() && !valdedocent) {
+
+                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
                         puntuacio++;
                     }
                 }
                 valoracionesFrase.add(new PieEntry(puntuacio,lls.get(i).getSkills().get(j).getNom()));
+                System.out.println(puntuacio+" piechart");
             }
             String[] puntos = new String[lls.get(i).getSkills().size()];
             for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
                 puntos[r] = lls.get(i).getSkills().get(r).getNom();
             }
             break;
+        }
         }
 
 
@@ -350,7 +436,7 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
 
 
 
-    public void cargarRadarChartValoraciones(RadarChart radarChart, String nomLlista ,ArrayList<SkillMedia> mediasValoracionesSkill ,int [] coloresRandom)
+    public void cargarRadarChartValoraciones(RadarChart radarChart, String nomLlista, int[] coloresRandom)
     {
 
         ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
@@ -363,7 +449,48 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
             selected++;
         }
 
-        List<Valoracio> v = activity.usuariLogin.getValoracions();
+        if (isDocentVersion){
+            for (int i = selected; i < lls.size(); i++) {
+                //por cada lista
+                for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
+                    //por cada skill
+                    int puntuacio = 0;
+                    //int times = 0;
+                    for (Valoracio val : v) {
+                        //por cada valoracion
+
+                        if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
+                            puntuacio++;
+                        }
+                        //if(val.getUsuari_valorat_id() == activity.usuariLogin.getId())times++;
+                    }
+                    valoracionesAlumnos.add(new RadarEntry((float)puntuacio));
+                    //System.out.println("skill num "+j+ "de la frase "+nomLlista+" punt"+puntuacio+" valoracions d'aquest usuari"+times);
+                    //times = lls.get(i).getSkills().size();
+                }String[] puntos = new String[lls.get(i).getSkills().size()];
+                for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
+                    puntos[r] = lls.get(i).getSkills().get(r).getNom();
+                }
+                RadarDataSet radarDataSetAlumnos = new RadarDataSet(valoracionesAlumnos," Valoracions globals dels alumnes");
+                radarDataSetAlumnos.setColor(cogerColoresRandom(1)[0]);
+                radarDataSetAlumnos.setLineWidth(2f);
+                radarDataSetAlumnos.setDrawValues(false);
+                radarDataSetAlumnos.setValueTextColor(Color.BLACK);
+                radarDataSetAlumnos.setValueTextSize(0f);
+
+                XAxis xAxis = radarChart.getXAxis();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(puntos));
+
+
+
+                RadarData radarData = new RadarData();
+                radarData.addDataSet(radarDataSetAlumnos);
+
+
+                radarChart.getDescription().setText(lls.get(i).getNom());
+                radarChart.setData(radarData);
+                break;
+        }}else{
         for (int i = selected; i < lls.size(); i++) {
             //por cada lista
             for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
@@ -372,14 +499,8 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
                 //int times = 0;
                 for (Valoracio val : v) {
                     //por cada valoracion
-                    boolean valdedocent = false;
-                    for ( Usuari docent: totsdocents ) {
-                        if(val.getUsuari_pp_id() == docent.getId()){
-                            valdedocent = true;
-                            break;
-                        }
-                    }
-                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId() && !valdedocent) {
+
+                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
                         puntuacio++;
                     }
                     //if(val.getUsuari_valorat_id() == activity.usuariLogin.getId())times++;
@@ -412,38 +533,9 @@ public class AdapterVerValoracionCharts extends RecyclerView.Adapter<AdapterVerV
             radarChart.setData(radarData);
             break;
         }
-        /*
-        ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
 
-        for(SkillMedia skillsM: mediasValoracionesSkill)
-        {
-            valoracionesAlumnos.add(new RadarEntry((float) skillsM.getMedia()));
         }
 
-        RadarDataSet radarDataSetAlumnos = new RadarDataSet(valoracionesAlumnos,nomLlista);
-        radarDataSetAlumnos.setColor(coloresRandom[0]);
-        radarDataSetAlumnos.setLineWidth(2f);
-        radarDataSetAlumnos.setValueTextColor(Color.BLACK);
-        radarDataSetAlumnos.setValueTextSize(0f);
-
-        RadarData radarData = new RadarData();
-        radarData.addDataSet(radarDataSetAlumnos);
-
-        ArrayList<String> puntos = new ArrayList<>();
-
-        for(SkillMedia skillsM: mediasValoracionesSkill)
-        {
-            puntos.add(skillsM.getNomSkill());
-        }
-
-
-        XAxis xAxis = radarChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(puntos));
-
-        radarChart.getDescription().setText(nomLlista);
-        radarChart.setData(radarData);
-
-             */
     }
 
 

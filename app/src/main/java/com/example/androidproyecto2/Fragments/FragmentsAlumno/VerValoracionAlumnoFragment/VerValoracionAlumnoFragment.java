@@ -143,172 +143,91 @@ public class VerValoracionAlumnoFragment extends Fragment {
         btnAtras.setVisibility(View.VISIBLE);
 
 
-        GrupService grupS = Api.getApi().create(GrupService.class);
-        Call<Grup> grupCall = grupS.GetgrupsById(ma.idGrupo);
 
-        //listaskill_valoraciones_item.xml
-        grupCall.enqueue(new Callback<Grup>() {
+        Button valAlumnesSwitch = view.findViewById(R.id.valAlumnesSwitch);
+        valAlumnesSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<Grup> call, Response<Grup> response) {
-                switch (response.code()){
-                    case 200:
-                        grupselect = response.body();
-                        RecyclerView ListListasSkills = view.findViewById(R.id.recycharts);
-                        ArrayList<LlistaSkills> lls = new ArrayList<>();
-                        for (Grups_has_llistes_skills ghls : grupselect.getGrups_has_llistes_skills()) {
-                            if(!lls.contains(ghls.getLlistes_skills())){
-                                lls.add(ghls.getLlistes_skills());
-                            }
+            public void onClick(View v) {
+                GrupService grupS = Api.getApi().create(GrupService.class);
+                Call<Grup> grupCall = grupS.GetgrupsById(ma.idGrupo);
 
+                //listaskill_valoraciones_item.xml
+                grupCall.enqueue(new Callback<Grup>() {
+                    @Override
+                    public void onResponse(Call<Grup> call, Response<Grup> response) {
+                        switch (response.code()){
+                            case 200:
+                                grupselect = null;
+                                grupselect = response.body();
+                                RecyclerView ListListasSkills = view.findViewById(R.id.recycharts);
+                                ArrayList<LlistaSkills> lls = new ArrayList<>();
+                                for (Grups_has_llistes_skills ghls : grupselect.getGrups_has_llistes_skills()) {
+                                    if(!lls.contains(ghls.getLlistes_skills())){
+                                        lls.add(ghls.getLlistes_skills());
+                                    }
+
+                                }
+
+
+                                AdapterVerValoracionCharts avvc = new AdapterVerValoracionCharts(getContext(),lls,ma);
+                                ListListasSkills.setHasFixedSize(true);
+                                ListListasSkills.setLayoutManager(new LinearLayoutManager(getContext(),
+                                        LinearLayoutManager.HORIZONTAL,
+                                        false));
+
+                                ListListasSkills.setAdapter(avvc);
+
+                                break;
+
+                            case 400:
+                                Gson gson = new Gson();
+                                MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                                Toast.makeText(ma, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+
+                                break;
+                            case 404:
+                                Toast.makeText(ma,"Registre no trobat", Toast.LENGTH_LONG).show();
+                                break;
                         }
 
+                    }
 
-                        AdapterVerValoracionCharts avvc = new AdapterVerValoracionCharts(getContext(),lls,ma);
-                        ListListasSkills.setHasFixedSize(true);
-                        ListListasSkills.setLayoutManager(new LinearLayoutManager(getContext(),
+                    @Override
+                    public void onFailure(Call<Grup> call, Throwable t) {
+                        Toast.makeText(ma, "ERRRROR grupselect", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+        Button valDocentSwitch = view.findViewById(R.id.valDocentSwitch);
+        valDocentSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GrupsHasDocentService grupsHasDocentService = Api.getApi().create(GrupsHasDocentService.class);
+                Call<List<Grups_has_docents>> listCall = grupsHasDocentService.Getgrups_has_docents();
+
+                listCall.enqueue(new Callback<List<Grups_has_docents>>() {
+                    @Override
+                    public void onResponse(Call<List<Grups_has_docents>> call, Response<List<Grups_has_docents>> response) {
+                        switch (response.code())
+                        {
+                            case 200:
+                                List<Grups_has_docents> grupsDocents = response.body();
+                                HashSet<Usuari> HashDocents = getDocents(grupsDocents);
+                                List<Usuari> docents = new ArrayList<>(HashDocents);
+                        /*
+                        List<Grups_has_docents> grupsHasDocents = response.body();
+                        RecyclerView PROFE = view.findViewById(R.id.recychartsPROFE);
+
+
+
+                        AdapterVerValoracionChartsDOCENTE avvc = new AdapterVerValoracionChartsDOCENTE(getContext(),grupselect, docents,ma);
+                        PROFE.setHasFixedSize(true);
+                        PROFE.setLayoutManager(new LinearLayoutManager(getContext(),
                                 LinearLayoutManager.HORIZONTAL,
                                 false));
 
-                        ListListasSkills.setAdapter(avvc);
-                        /*
-                        ArrayList<RadarEntry> valoracionesAlumnos = new ArrayList<>();
-
-
-                        List<Valoracio> v = ma.usuariLogin.getValoracions();
-                        RadarChart radarchart = ma.findViewById(R.id.RADARCHART);
-                        int RandomColors = cogerColoresRandom(1,ma)[0];
-
-
-                        List<Valoracio> valsDeDocentes;
-
-                        List<LlistaSkills> lls = new ArrayList<>();
-                        for (Grups_has_llistes_skills ghls : grupselect.getGrups_has_llistes_skills()) {
-                            if(!lls.contains(ghls.getLlistes_skills())){
-                                lls.add(ghls.getLlistes_skills());
-                            }
-
-                        }
-
-
-                        int times = 0;
-                        for (int i = 0; i < lls.size(); i++) {
-                            //por cada lista
-                            for (int j = 0; j < lls.get(i).getSkills().size(); j++) {
-                                //por cada skill
-                                int puntuacio = 0;
-                                for (Valoracio val : v) {
-                                    //por cada valoracion
-                                    if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == ma.usuariLogin.getId()) {
-                                        puntuacio++;
-                                    }
-                                }
-                                valoracionesAlumnos.add(new RadarEntry(j,puntuacio));
-                                times += 2;
-                            }
-                            String[] puntos = new String[lls.get(i).getSkills().size()];
-                            for (int r = 0; r < lls.get(i).getSkills().size(); r++) {
-                                puntos[r] = lls.get(i).getSkills().get(r).getNom();
-                            }
-                            RadarDataSet radarDataSetAlumnos = new RadarDataSet(valoracionesAlumnos,"Valoracions de tots"+times);
-                            radarDataSetAlumnos.setColor(RandomColors);
-                            radarDataSetAlumnos.setLineWidth(2f);
-                            radarDataSetAlumnos.setDrawValues(false);
-                            radarDataSetAlumnos.setValueTextColor(Color.BLACK);
-                            radarDataSetAlumnos.setValueTextSize(0f);
-
-                            XAxis xAxis = radarchart.getXAxis();
-                            xAxis.setValueFormatter(new IndexAxisValueFormatter(puntos));
-
-
-
-                            RadarData radarData = new RadarData();
-                            radarData.addDataSet(radarDataSetAlumnos);
-
-
-                            radarchart.getDescription().setText(lls.get(i).getNom());
-                            radarchart.setData(radarData);
-                            break;
-
-                        }
-
-            /*
-                if (val.getKpis() == ma.skillSelected.getKpis().get(i) && val.getUsuari_valorat_id() == ma.usuariLogin.getId()){
-                    thisuservals.add(val);
-                    puntuacio += val.getNota();
-                }
-            }
-            valoracionesAlumnos.add(new RadarEntry(puntuacio / thisuservals.size()));
-            */
-
-
-
-
-
-
-
-                        /*
-                        ArrayList<RadarEntry> valoracionesDocente = new ArrayList<>();
-                        valoracionesDocente.add(new RadarEntry(703));
-                        valoracionesDocente.add(new RadarEntry(838));
-                        valoracionesDocente.add(new RadarEntry(756));
-                        valoracionesDocente.add(new RadarEntry(201));
-                        valoracionesDocente.add(new RadarEntry(110));
-
-                        RadarDataSet radarDataSetDocente = new RadarDataSet(valoracionesDocente,"Equip Docent");
-                        radarDataSetDocente.setColor(RandomColors);
-                        radarDataSetDocente.setLineWidth(2f);
-                        radarDataSetDocente.setValueTextColor(Color.BLACK);
-                        radarDataSetDocente.setValueTextSize(0f);
-*/
-
-
-
-                        /*
-                        radarData.addDataSet(radarDataSetDocente);
-                        */
-
-
-
-
-                        break;
-
-                    case 400:
-                        Gson gson = new Gson();
-                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
-                        Toast.makeText(ma, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-
-                        break;
-                    case 404:
-                        Toast.makeText(ma,"Registre no trobat", Toast.LENGTH_LONG).show();
-                        break;
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Grup> call, Throwable t) {
-                Toast.makeText(ma, "ERRRROR grupselect", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        GrupsHasDocentService grupsHasDocentService = Api.getApi().create(GrupsHasDocentService.class);
-        Call<List<Grups_has_docents>> listCall = grupsHasDocentService.Getgrups_has_docents();
-
-        listCall.enqueue(new Callback<List<Grups_has_docents>>() {
-            @Override
-            public void onResponse(Call<List<Grups_has_docents>> call, Response<List<Grups_has_docents>> response) {
-                switch (response.code())
-                {
-                    case 200:
-
-                        List<Grups_has_docents> grupsHasDocents = response.body();
-
-
-                        HashSet<Usuari> HashDocents = getDocents(grupsHasDocents);
-                        List<Usuari> docents = new ArrayList<>(HashDocents);
-
-
-                        List<Valoracio> ValoracionesDocentes =  AdapterVerValoracionChartsDOCENTE(getContext(),docents.get(1).getValoracions(), docents);
+                        PROFE.setAdapter(avvc);
                         // if(ValoracionesDocentes.size() != 0)
                         //{
                         //cargarVPagerMesesValoraciones(ValoracionesDocentes);
@@ -317,32 +236,78 @@ public class VerValoracionAlumnoFragment extends Fragment {
                         //{
                         Toast.makeText(ma, "No hay registros de valoraciones", Toast.LENGTH_SHORT).show();
                         //}
-                        //this.
+                        //this.*/
+                                GrupService grupS = Api.getApi().create(GrupService.class);
+                                Call<Grup> grupCall = grupS.GetgrupsById(ma.idGrupo);
+
+                                //listaskill_valoraciones_item.xml
+                                grupCall.enqueue(new Callback<Grup>() {
+                                    @Override
+                                    public void onResponse(Call<Grup> call, Response<Grup> response) {
+                                        switch (response.code()){
+                                            case 200:
+                                                grupselect = response.body();
+                                                RecyclerView ListListasSkills = view.findViewById(R.id.recycharts);
+                                                ArrayList<LlistaSkills> lls = new ArrayList<>();
+                                                for (Grups_has_llistes_skills ghls : grupselect.getGrups_has_llistes_skills()) {
+                                                    if(!lls.contains(ghls.getLlistes_skills())){
+                                                        lls.add(ghls.getLlistes_skills());
+                                                    }
+
+                                                }
 
 
-                        break;
-                    case 400:
-                        Gson gson = new Gson();
-                        MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
-                        Toast.makeText(ma, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
-                        break;
-                    case 404:
-                        Toast.makeText(ma,"Registre no trobat", Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
+                                                AdapterVerValoracionCharts avvc = new AdapterVerValoracionCharts(getContext(),lls,docents,ma);
+                                                ListListasSkills.setHasFixedSize(true);
+                                                ListListasSkills.setLayoutManager(new LinearLayoutManager(getContext(),
+                                                        LinearLayoutManager.HORIZONTAL,
+                                                        false));
 
-            @Override
-            public void onFailure(Call<List<Grups_has_docents>> call, Throwable t) {
+                                                ListListasSkills.setAdapter(avvc);
+
+                                                break;
+
+                                            case 400:
+                                                Gson gson = new Gson();
+                                                MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                                                Toast.makeText(ma, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+
+                                                break;
+                                            case 404:
+                                                Toast.makeText(ma,"Registre no trobat", Toast.LENGTH_LONG).show();
+                                                break;
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Grup> call, Throwable t) {
+                                        Toast.makeText(ma, "ERRRROR grupselect", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                                break;
+                            case 400:
+                                Gson gson = new Gson();
+                                MissatgeError missatgeError = gson.fromJson(response.errorBody().charStream(), MissatgeError.class);
+                                Toast.makeText(ma, missatgeError.getMessage(), Toast.LENGTH_LONG).show();
+                                break;
+                            case 404:
+                                Toast.makeText(ma,"Registre no trobat", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Grups_has_docents>> call, Throwable t) {
+
+                    }
+                });
 
             }
         });
 
 
-
-
-        //sumar
-        //graficos uno por cada frase del user i tres tipos de grafs
 
 
 
