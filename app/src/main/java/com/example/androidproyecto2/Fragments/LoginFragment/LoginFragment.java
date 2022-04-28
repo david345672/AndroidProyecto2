@@ -68,6 +68,14 @@ public class LoginFragment extends Fragment {
 
 
         prueba();
+        btnIniciarSesion = view.findViewById(R.id.btnIniciarSesion);
+        btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                comprovarDatosConAPI();
+
+            }
+        });
     }
 
 
@@ -85,20 +93,15 @@ public class LoginFragment extends Fragment {
                 //Amb LocalHelper podem canviar l'idioma de l'aplicació indicant l'activity actual i el idioma que volem
                 LocaleHelper.setLocale(getContext(), "ca");
                 //Necesari per veure els canviis
+
+
+
                 mainActivity.recreate();
-                getFragmentManager().beginTransaction().detach(LoginFragment.this).attach(LoginFragment.this).commit();
 
 
             }
         });
-        btnIniciarSesion = getActivity().findViewById(R.id.btnIniciarSesion);
-        btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                comprovarDatosConAPI();
 
-            }
-        });
     }
 
     public void comprovarDatosConAPI() {
