@@ -280,13 +280,18 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     }
 
 
-
+    /*
+    Coger valoraciones de docentes de Grupo o Todos los docentes
+     */
     public List<Valoracio> cogerValoracionesDocentesGrupo(List<Valoracio> valsUsuari, List<Usuari> docentsG)
     {
+        //Creo una Lista de valoraciones para coger las valoraciones que los docentes le han hecho
         List<Valoracio> valsDocent = new ArrayList<>();
 
+        //Recorro todas las valoraciones del usuario seleccionado
         for (Valoracio vals: valsUsuari) {
 
+            //Dentro de cada valoracion recorro la lista de docentes y cogo los docentes que le han valorado
             for (Usuari user: docentsG)
             {
                 if (vals.getUsuari_pp_id() == user.getId())
@@ -302,6 +307,9 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     }
 
 
+    /*
+    Coger todas los docentes y sus valoraciones
+     */
     public void cogerTodosLosDocentes(Usuari usuariSelected)
     {
         GrupsHasDocentService grupsHasDocentService = Api.getApi().create(GrupsHasDocentService.class);
@@ -313,13 +321,16 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
                 switch (response.code())
                 {
                     case 200:
-
+                        //cogo todos los grups_has_docents que hay en la api
                         List<Grups_has_docents> grupsHasDocents = response.body();
 
+                        //De estos cogo todos los usuarios de grups_has_Docents sin repetidos para obtener todos.
                         HashSet<Usuari> HashDocents = getDocents(grupsHasDocents);
+                        //Convierto el HashDocents a ArrayList Normal y lo ordeno
                         List<Usuari> docents = new ArrayList<>(HashDocents);
                         Collections.sort(docents);
 
+                        //Ahora cogo todas las valoraciones del usuario que le han hecho solo los docentes
                         List<Valoracio> ValoracionesDocentes =  cogerValoracionesDocentesGrupo(userSelected.getValoracions(), docents);
                         if(ValoracionesDocentes.size() != 0)
                         {
@@ -354,18 +365,24 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
     //Coger todos los docentes de la Api sin repetidos
     public HashSet<Usuari> getDocents(List<Grups_has_docents> grups_has_docents)
     {
+        //Creo arrayList de docentesRepetidos ya que en este van a haber usuarios repetidos
         ArrayList<Usuari> docentsRep = new ArrayList<>();
 
+        //Recorro todos los grups_has_docents y dentro de cada item añado un usuario a un arrayListUsuari
         for (Grups_has_docents GD: grups_has_docents) {
             docentsRep.add(GD.getUsuaris());
         }
+
+        //Una vez obtenidos todos docentes, eliminar los repetidos convirtiendolos a un HashSet
         HashSet<Usuari> docents = new HashSet<>(docentsRep);
 
         return docents;
     }
 
 
-
+    /*
+    Metodo para coger las valoraciones que el usuario docente ha hecho al usuario que selecciona
+     */
     public void cogerMisValoracionesDocentAlUsuarioSelect(Usuari usuariSelected)
     {
         UsuarisService usuarisService = Api.getApi().create(UsuarisService.class);
@@ -380,7 +397,7 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
 
                         Usuari YoDocent = response.body();
 
-                        //mis valoraciones
+                        //cogo mis valoraciones
                         List<Valoracio> misValoracions = cogerMisValoracionesDeUsuario(YoDocent.getValoracions1(), usuariSelected);
                         if(misValoracions.size() != 0)
                         {
@@ -413,11 +430,14 @@ public class UsuarisValoracionsAdapter extends RecyclerView.Adapter<UsuarisValor
         });
     }
 
-
+    /*
+    Metodo para coger las valoraciones que he hecho como profesor
+     */
     public List<Valoracio> cogerMisValoracionesDeUsuario(List<Valoracio> misVals, Usuari userSel)
     {
         List<Valoracio> misValsUser = new ArrayList<>();
 
+        //Recorro mis valoraciones y cogo todas las valoraciones que le he hecho al usuario seleccionado
         for (Valoracio vals: misVals) {
             if(vals.getUsuari_valorat_id() == userSel.getId())
             {
