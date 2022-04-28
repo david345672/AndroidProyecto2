@@ -81,7 +81,7 @@ public class NotificacionesFragment extends Fragment {
         btnNuevaNotificacio = view.findViewById(R.id.btnNuevaNotificacio);
         vpMesesAñoNotificaciones = view.findViewById(R.id.vpMesesAñoNotificaciones);
 
-        cargarViewPagerNotificaciones(activity.usuariLogin.getNotificacions());
+        recargarNotificacionesUsuario(activity.usuariLogin.getId());
 
         //components de diaogNotificaciones
         diaogNotificaciones = new Dialog(activity);
