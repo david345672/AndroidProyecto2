@@ -34,13 +34,18 @@
 
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ListListasSkills"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
 
 
 
