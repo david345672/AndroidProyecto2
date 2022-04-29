@@ -4,37 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.FragmentsAlumno.VerValoracionAlumnoFragment.VerValoracionAlumnoFragment">
+   <LinearLayout
+       android:layout_gravity="center_horizontal"
+       android:layout_width="wrap_content"
+       android:layout_marginTop="10dp"
+       android:layout_height="wrap_content">
+   <Button
+       android:layout_margin="10dp"
+       android:id="@+id/valDocentSwitch"
+       android:layout_weight="1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Valoracions de docents"
 
-    <!-- TODO: Update blank fragment layout -->
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-    <RadioButton
-        android:id="@+id/radioButtonHexa"
-        android:text="Gráfico araña"
-        android:checked="true"
+       ></Button>
+   <Button
+       android:layout_margin="10dp"
+       android:layout_weight="1"
+       android:id="@+id/valAlumnesSwitch"
+       android:layout_width="wrap_content"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-        <RadioButton
-            android:id="@+id/radioButtonPie"
-            android:text="Gráfico circular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            /><RadioButton
-        android:text="Gráfico de barras"
-        android:id="@+id/radioButtonBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    </RadioGroup>
+       android:layout_height="wrap_content"
+       android:text="Valoracions de compayns"
+       ></Button>
+   </LinearLayout>
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recycharts"
+       android:layout_marginTop="100dp"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
-    <com.github.mikephil.charting.charts.RadarChart
-        android:id="@+id/RADARCHART"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </FrameLayout>

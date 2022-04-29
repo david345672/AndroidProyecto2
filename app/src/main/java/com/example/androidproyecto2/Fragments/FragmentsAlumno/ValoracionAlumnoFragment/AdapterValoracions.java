@@ -87,20 +87,16 @@ public class AdapterValoracions extends RecyclerView.Adapter<AdapterValoracions.
                 CardView card = item.findViewById(R.id.cardItem);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    if(card.getAccessibilityPaneTitle() == null){
-                        Toast.makeText(activity, "EXIT", Toast.LENGTH_SHORT).show();
+                    if(!card.getPreventCornerOverlap()){
                         return;
                     }
-                    card.setAccessibilityPaneTitle(null);
+                    card.setPreventCornerOverlap(false);
                 }
                 Toast.makeText(activity, "Quitada la valoracion del KPI", Toast.LENGTH_SHORT).show();
-                System.out.println("AKFJDLÑA EW GET HEREEEEE");
 
                 TextView kpiIdTextView = item.findViewById(R.id.idKpi);
                 //Toast.makeText(parent.getContext(),"hola"+ (CharSequence) card.getCardBackgroundColor(), Toast.LENGTH_SHORT).show();
-                /*if(card.getCardBackgroundColor() == ColorStateList.valueOf(Color.GREEN)){
-x
-                }*/
+
                 card.setBackgroundColor(Color.WHITE);
 
 
@@ -123,23 +119,19 @@ x
 
 
                 CardView card = item.findViewById(R.id.cardItem);
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    if(card.getAccessibilityPaneTitle().equals("a")){
-                        Toast.makeText(activity, "EXIT", Toast.LENGTH_SHORT).show();
+                    if(card.getPreventCornerOverlap()){
                         return;
                     }
-                    card.setAccessibilityPaneTitle("a");
+                    card.setPreventCornerOverlap(true);
                 }
 
                 TextView kpiIdTextView = item.findViewById(R.id.idKpi);
                 setCardColorTran(card);
                 //card.setBackgroundColor(Color.GREEN);
                 Toast.makeText(activity, "KPI Valorada", Toast.LENGTH_SHORT).show();
-
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
                 String currentDateandTime = sdf.format(new Date());
-
                 Valoracio v = new Valoracio(null,null,null,Integer.parseInt((String) kpiIdTextView.getText()), activity.usuariValorat.getId(), activity.usuariLogin.getId(), currentDateandTime, 1, activity.llistaSkillSelected.getId(), activity.skillSelected.getId(),"Observacion de alumno");
                 System.out.println(v.toString());
                 adapterKPI.insertValoracio(v);

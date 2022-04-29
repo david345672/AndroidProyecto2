@@ -37,9 +37,9 @@ public class ValoracionDocenteFragment extends Fragment {
     }
 
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    ;@Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
 
         activity = (MainActivity) getActivity();
         activity.layout = "HacerValoracion";

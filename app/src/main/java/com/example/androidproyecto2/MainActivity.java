@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public View toolbar;
 
     //Variables de seleccio
-    public List<Grup> grups;
     public Skill skillSelected;
     public int idUsuariSelected;
     public LlistaSkills llistaSkillSelected;
@@ -77,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         //loadTheme();
 
         //CargarUsuarioLogin();
-    
+
+
         Button btnAtras = toolbar.findViewById(R.id.btnAtras);
         Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
         mgr = getSupportFragmentManager();
@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
+        //Button btnAtras = toolbar.findViewById(R.id.btnAtras);
+        //Button btnCerrarSession = toolbar.findViewById(R.id.btnLogout);
 
         mgr = getSupportFragmentManager();
         fragmentTransaction = mgr.beginTransaction();
