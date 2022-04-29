@@ -58,7 +58,7 @@ public class MenuPrincipalFragment extends Fragment {
             }
         });
 
-        
+
         btnPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
