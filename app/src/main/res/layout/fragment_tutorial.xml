@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00D8D0"
     tools:context=".Fragments.FragmentsMenuPrincipal.TutorialFragment.TutorialFragment">
 
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="374dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="36dp"
+        android:text="Esta aplicacion consiste en hacer diferentes valoraciones tanto alumnos o profesores a diferentes personas dentro de un grupo,
+        estas valoraciones consisten en ver un seguimiento del alumno de sus Habilidades"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

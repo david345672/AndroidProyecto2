@@ -46,7 +46,7 @@ public class MenuPrincipalFragment extends Fragment {
         irAInicio();
 
         RadioButton btnInicio = view.findViewById(R.id.btnInicio);
-        RadioButton btnTutorial = view.findViewById(R.id.btnTutorial);
+
         RadioButton btnPerfil = view.findViewById(R.id.btnPerfil);
         RadioButton btnConfiguracion = view.findViewById(R.id.btnConfiguracion);
 
@@ -58,13 +58,7 @@ public class MenuPrincipalFragment extends Fragment {
             }
         });
 
-        btnTutorial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                irATutorial();
-            }
-        });
-
+        
         btnPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

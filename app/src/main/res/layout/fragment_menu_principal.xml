@@ -38,17 +38,7 @@
                 android:checked="true"
                 />
 
-            <RadioButton
-                android:id="@+id/btnTutorial"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/tutorial"
-                android:textStyle="bold"
-                android:button="@null"
-                android:gravity="center"
-                android:background="@drawable/bg_radiobutton_menu"
-                />
+
 
             <RadioButton
                 android:id="@+id/btnPerfil"
