@@ -1,26 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">AndroidProyecto2</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
     <string name="usuario">Usuario</string>
-    <string name="contra">Contraseña </string>
+    <string name="contra">Password</string>
     <string name="btnInicarSesion">Iniciar Sesión</string>
     <string name="ingles">Ingles</string>
     <string name="castellano">Castellano</string>
     <string name="catala">Catalán</string>
     <string name="observacionPropia">Hacer observación propia</string>
     <string name="valoracionPropia">Ver valoraciones propias</string>
-
     <string name="notificaciones">Notificaciones</string>
     <string name="temas">Temas</string>
     <string name="graficos">Gráficos</string>
     <string name="idioma">Idiomas</string>
-
     <string name="inicio">Inicio</string>
     <string name="tutorial">Tutorial</string>
     <string name="perfil">Perfil</string>
     <string name="configuracion">Configuración</string>
-
     <string name="grupo">Grupo</string>
     <string name="hacerValoracion">Hacer Valoracion</string>
     <string name="verValoraciones">Ver Valoraciones</string>
@@ -30,11 +26,6 @@
     <string name="bajoEspectativas">Por debajo de las espectativas 1 punto</string>
     <string name="medioEspectativas">Espectativas superadas 2 puntos</string>
     <string name="altasEspectativas">Por encima de las espectativas \n\n 3 puntos</string>
-
-
-nts
-
-
 
 
 </resources>

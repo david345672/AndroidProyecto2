@@ -15,7 +15,7 @@
         android:textSize="30dp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="Grupo"/>
+        android:text="@string/grupo"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_weight="20"
             android:textSize="20sp"
             android:background="@drawable/bg_button_hacer_valoracion"
-            android:text="Hacer Observaciones"/>
+            android:text="@string/hacerValoracion"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnVerValoraciones"
@@ -41,7 +41,7 @@
             android:layout_weight="20"
             android:textSize="20sp"
             android:background="@drawable/bg_button_ver_valoracion"
-            android:text="Ver Valoraciones"/>
+            android:text="@string/verValoraciones"/>
 
     </LinearLayout>
 
