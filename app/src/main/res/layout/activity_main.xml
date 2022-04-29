@@ -4,7 +4,8 @@
     android:id="@+id/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/fondoapp">
 
 
     <include
@@ -18,8 +19,7 @@
         android:id="@+id/FrContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="11"
-        android:background="?attr/colorOnPrimary"/>
+        android:layout_weight="11"/>
 
 
 </LinearLayout>
