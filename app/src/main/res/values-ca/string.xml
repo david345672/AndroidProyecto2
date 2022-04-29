@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="pepe">eeeee</string>
-    <string name="pru">aaaaaaaaaaaaaaa</string>
+    <string name="usuario">Usuari</string>
+    <string name="contra">Contrasenya </string>
+    <string name="btnInicarSesion">Inicia Sesió</string>
+    <string name="ingles">Anglès</string>
+    <string name="castellano">Castella</string>
+    <string name="catala">Catalá</string>
+    <string name="observacionPropia">Fer observació pròpia</string>
+    <string name="valoracionPropia">Veure valoracions pròpies</string>
+    <string name="notificaciones">Notificacions</string>
+    <string name="temas">Temes</string>
+    <string name="graficos">Gráfics</string>
+    <string name="idioma">Idiomes</string>
+    <string name="inicio">Inici</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="perfil">Perfil</string>
+    <string name="configuracion">Configuració</string>
+
+    <string name="grupo">Grup</string>
+    <string name="hacerValoracion">Fer Valoració</string>
+    <string name="verValoraciones">Veure Valoració</string>
+    <string name="ejemplo">Exemples</string>
+    <string name="observaciones">Observacions</string>
+    <string name="espectativas">No s\'acosta a les espectatives 0 punts</string>
+    <string name="bajoEspectativas">Per sota de les expectatives 1 punts</string>
+    <string name="medioEspectativas">Expectatives Asolides n2 punts</string>
+    <string name="altasEspectativas">Supera les espectatives 3 punts</string>
 </resources>

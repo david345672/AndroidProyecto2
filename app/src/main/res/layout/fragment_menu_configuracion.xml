@@ -4,9 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -23,7 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Notificaciones"
+                android:text="@string/notificaciones"
                 android:button="@null"
                 android:gravity="center"
                 android:background="@drawable/bg_radiobutton_menu_configuracion"
@@ -33,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Temas"
+                android:text="@string/temas"
                 android:button="@null"
                 android:gravity="center"
                 android:background="@drawable/bg_radiobutton_menu_configuracion"/>
@@ -42,7 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Graficos"
+                android:text="@string/graficos"
                 android:button="@null"
                 android:gravity="center"
                 android:background="@drawable/bg_radiobutton_menu_configuracion"/>
@@ -51,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Idioma"
+                android:text="@string/idioma"
                 android:button="@null"
                 android:gravity="center"
                 android:background="@drawable/bg_radiobutton_menu_configuracion"/>

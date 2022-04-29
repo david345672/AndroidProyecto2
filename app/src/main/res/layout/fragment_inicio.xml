@@ -33,8 +33,10 @@
             android:layout_weight="1"
             android:backgroundTint="#FFC04C"
             android:gravity="center"
-            android:text="@string/pru"
+            android:text="@string/observacionPropia"
             android:textStyle="bold" />
+
+
 
         <Button
             android:id="@+id/btnVerValoracionesPropias"
@@ -43,7 +45,7 @@
             android:layout_margin="25dp"
             android:layout_weight="1"
             android:backgroundTint="#00D802"
-            android:text="Ver Valoraciones Propias"
+            android:text="@string/valoracionPropia"
             android:textStyle="bold" />
 
 

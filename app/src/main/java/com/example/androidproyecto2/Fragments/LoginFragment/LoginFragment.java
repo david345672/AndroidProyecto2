@@ -41,14 +41,15 @@ public class LoginFragment extends Fragment {
     Button btnIniciarSesion;
     FragmentManager fragmentManager;
     MainActivity mainActivity;
-    Button btnIdioma;
+
     FragmentTransaction fragmentTransaction;
     Context context;
     LayoutInflater inflater;
     ViewGroup container;
     Bundle savedInstanceState;
-
-
+    Button btnIdiomaCas;
+    Button btnIdiomaCat;
+    Button btnIdiomaIng;
     public List<Usuari> usuarisList = new ArrayList<>();
 
     @Override
@@ -65,44 +66,50 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mainActivity = (MainActivity) getActivity();
+        Button btnIdiomaCas= view.findViewById(R.id.btnCastellano);
+        Button btnIdiomaCat= view.findViewById(R.id.btnCatala);
+        Button btnIdiomaIng = view.findViewById(R.id.btnCatala);
 
-
-        prueba();
         btnIniciarSesion = view.findViewById(R.id.btnIniciarSesion);
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 comprovarDatosConAPI();
-
             }
         });
-    }
 
-
-    public  void prueba() {
-        Fragment fr = mainActivity.getSupportFragmentManager().findFragmentById(R.id.FrContent);
-        FragmentTransaction tr = mainActivity.getSupportFragmentManager().beginTransaction();
-        tr.attach(fr);
-        tr.commit();
-
-
-        btnIdioma = getActivity().findViewById(R.id.btnIdioma);
-        btnIdioma.setOnClickListener(new View.OnClickListener() {
+        btnIdiomaCas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Amb LocalHelper podem canviar l'idioma de l'aplicació indicant l'activity actual i el idioma que volem
                 LocaleHelper.setLocale(getContext(), "ca");
                 //Necesari per veure els canviis
-
-
-
                 mainActivity.recreate();
+            }
+        });
 
+        btnIdiomaIng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocaleHelper.setLocale(getContext(), "en");
+                //Necesari per veure els canviis
+                mainActivity.recreate();
+            }
+        });
 
+        btnIdiomaCat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocaleHelper.setLocale(getContext(), "ca");
+                //Necesari per veure els canviis
+                mainActivity.recreate();
             }
         });
 
     }
+
+
+
 
     public void comprovarDatosConAPI() {
         etUser = getActivity().findViewById(R.id.etUser);
@@ -121,17 +128,12 @@ public class LoginFragment extends Fragment {
                                 try {
                                     String test = etPassword.getText().toString();
                                     if (BCrypt.checkpw(test, userObject.getContrasenya())) {
-                                        Toast.makeText(getContext(), "aaaa", Toast.LENGTH_SHORT).show();
                                         mainActivity.usuariLogin = (Usuari) userObject;
                                         pasarFragment();
-                                    } else {
-                                        Toast.makeText(getContext(), "socorro", Toast.LENGTH_LONG).show();
                                     }
                                 } catch (Exception e) {
                                     Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
                                 }
-                            } else {
-                                Toast.makeText(getContext(), "socorro", Toast.LENGTH_LONG).show();
                             }
                         }
                         break;

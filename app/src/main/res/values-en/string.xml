@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="usuario">User</string>
+    <string name="contra">Contraseña</string>
+    <string name="btnInicarSesion">Login</string>
+    <string name="ingles">English</string>
+    <string name="castellano">Spanish</string>
+    <string name="catala">Catalan</string>
+    <string name="observacionPropia">Do your own observation</string>
+    <string name="valoracionPropia">See own evaluations</string>
+    <string name="notificaciones">Notifications</string>
+    <string name="temas">Themes</string>
+    <string name="graficos">Graphics</string>
+    <string name="idioma">Languages</string>
+    <string name="inicio">Start</string>
+    <string name="perfil">Profile</string>
+    <string name="configuracion">Settings</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="grupo">Group</string>
+    <string name="hacerValoracion">Make observations</string>
+    <string name="verValoraciones">See Assessments</string>
+    <string name="ejemplo">Examples</string>
+    <string name="observaciones">Observations</string>
+    <string name="espectativas">Not close to expectations 0 points</string>
+    <string name="bajoEspectativas">Slightly below expectations 1 point</string>
+    <string name="medioEspectativas">Expectations achieved 2 points</string>
+    <string name="altasEspectativas">Above standard expectations 3 points</string>
+</resources>
