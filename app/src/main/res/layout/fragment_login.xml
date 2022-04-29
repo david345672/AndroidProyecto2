@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="307dp"
         android:layout_height="361dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +77,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="iniciar sesion"
                 android:backgroundTint="#0438FF"
                 android:text="@string/btnInicarSesion"
                 app:layout_constraintBottom_toBottomOf="parent"
