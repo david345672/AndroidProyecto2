@@ -27,32 +27,13 @@
                 android:textStyle="bold"
                 android:background="@drawable/bg_radiobutton_menu_configuracion"
                 android:checked="true"/>
-            <RadioButton
-                android:id="@+id/RdbTemas"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Temas"
-                android:button="@null"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/bg_radiobutton_menu_configuracion"/>
+
             <RadioButton
                 android:id="@+id/RdbGraficos"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Graficos"
-                android:button="@null"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/bg_radiobutton_menu_configuracion"/>
-            <RadioButton
-                android:id="@+id/RdbIdioma"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Idioma"
                 android:button="@null"
                 android:gravity="center"
                 android:textStyle="bold"

@@ -49,9 +49,7 @@ public class MenuConfiguracionFragment extends Fragment {
 
         irAnotificaciones();
         RadioButton RdbNotificacion = view.findViewById(R.id.RdbNotificacion);
-        RadioButton RdbTemas = view.findViewById(R.id.RdbTemas);
         RadioButton RdbGraficos = view.findViewById(R.id.RdbGraficos);
-        RadioButton RdbIdioma = view.findViewById(R.id.RdbIdioma);
 
         RdbNotificacion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,12 +57,7 @@ public class MenuConfiguracionFragment extends Fragment {
                 irAnotificaciones();
             }
         });
-        RdbTemas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                irAtemas();
-            }
-        });
+
 
         RdbGraficos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,12 +66,7 @@ public class MenuConfiguracionFragment extends Fragment {
             }
         });
 
-        RdbIdioma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                irAidioma();
-            }
-        });
+
 
 
 

@@ -2,10 +2,12 @@ package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.FragmentsM
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -60,6 +62,7 @@ public class NotificacionesFragment extends Fragment {
     private ViewPager vpMesesAñoNotificaciones;
     private ArrayList<Mes> meses;
     private Dialog diaogNotificaciones;
+    private CardView myCardView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +83,12 @@ public class NotificacionesFragment extends Fragment {
 
         btnNuevaNotificacio = view.findViewById(R.id.btnNuevaNotificacio);
         vpMesesAñoNotificaciones = view.findViewById(R.id.vpMesesAñoNotificaciones);
+
+        myCardView = view.findViewById(R.id.myCardView);
+
+        myCardView.setCardBackgroundColor(Color.TRANSPARENT);
+        myCardView.setCardElevation(0);
+
 
         recargarNotificacionesUsuario(activity.usuariLogin.getId());
 

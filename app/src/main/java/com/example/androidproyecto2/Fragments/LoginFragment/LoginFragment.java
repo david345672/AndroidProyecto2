@@ -83,7 +83,7 @@ public class LoginFragment extends Fragment {
                             if(userObject.getNomUsuari().equals(etUser.getText().toString())){
                                 try
                                 {
-                                    Toast.makeText(getContext(),"e",Toast.LENGTH_LONG).show();
+
                                     String test = etPassword.getText().toString();
                                     if (BCrypt.checkpw(test,userObject.getContrasenya())){
 

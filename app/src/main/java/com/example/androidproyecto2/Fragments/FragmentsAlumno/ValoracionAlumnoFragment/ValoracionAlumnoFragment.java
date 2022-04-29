@@ -69,7 +69,6 @@ public class ValoracionAlumnoFragment extends Fragment {
 
         activity = (MainActivity) getActivity();
         this.kpis = activity.skillSelected.getKpis();
-        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         TextView nombreAvaluado = activity.findViewById(R.id.avaluatedName);
         nombreAvaluado.setText("Valorant a : "+activity.usuariValorat.getNom()+" "+activity.usuariValorat.getCognoms());
         activity.layout = "HacerValoracion";

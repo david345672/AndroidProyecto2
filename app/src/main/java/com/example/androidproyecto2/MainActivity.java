@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(layout.equals("HacerValoracion"))
                 {
-
                     VolverAMenuListasSkills();
                 }
                 else if(layout.equals("HacerValoracionDocente"))
