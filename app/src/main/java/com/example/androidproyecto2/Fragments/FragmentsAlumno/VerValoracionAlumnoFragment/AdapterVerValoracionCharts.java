@@ -292,7 +292,7 @@ private List<Valoracio> v;
                         //por cada valoracion
 
                         if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
-                            puntuacio += val.getNota();
+                           puntuacio += val.getNota();
                             cantitatvals++;
                         }
                     }
@@ -321,7 +321,7 @@ private List<Valoracio> v;
                         //por cada valoracion
 
                         if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
-                            puntuacio++;
+                            if(val.getNota() == 1)puntuacio++;
                         }
                     }
                     valoracionesFrase.add(new BarEntry(x++,puntuacio));
@@ -405,7 +405,7 @@ private List<Valoracio> v;
                     //por cada valoracion
 
                     if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
-                        puntuacio++;
+                        if(val.getNota() == 1)puntuacio++;
                     }
                 }
                 valoracionesFrase.add(new PieEntry(puntuacio,lls.get(i).getSkills().get(j).getNom()));
@@ -501,7 +501,7 @@ private List<Valoracio> v;
                     //por cada valoracion
 
                     if (val.getSkills_id() == lls.get(i).getSkills().get(j).getId() && val.getUsuari_valorat_id() == activity.usuariLogin.getId()) {
-                        puntuacio++;
+                        if(val.getNota() == 1)puntuacio++;
                     }
                     //if(val.getUsuari_valorat_id() == activity.usuariLogin.getId())times++;
                 }
