@@ -148,6 +148,9 @@ public class VerValoracionAlumnoFragment extends Fragment {
         valAlumnesSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Button valDocentSwitch = view.findViewById(R.id.valDocentSwitch);
+                valAlumnesSwitch.setBackgroundColor(Color.GREEN);
+                valDocentSwitch.setBackgroundColor(R.id.btnColor);
                 GrupService grupS = Api.getApi().create(GrupService.class);
                 Call<Grup> grupCall = grupS.GetgrupsById(ma.idGrupo);
 
@@ -203,6 +206,8 @@ public class VerValoracionAlumnoFragment extends Fragment {
         valDocentSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                valDocentSwitch.setBackgroundColor(Color.GREEN);
+                valAlumnesSwitch.setBackgroundColor(R.id.btnColor);
                 GrupsHasDocentService grupsHasDocentService = Api.getApi().create(GrupsHasDocentService.class);
                 Call<List<Grups_has_docents>> listCall = grupsHasDocentService.Getgrups_has_docents();
 
