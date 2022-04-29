@@ -164,11 +164,16 @@ public class NotificacionesFragment extends Fragment {
 
                String date = currentanio + mes + dia + "_" + hora + min + 20;
 
+                if(txtNouMissatge.getText().toString().equals(""))
+                {
+                    Toast.makeText(activity, "Introduce un mensaje", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Notificacio notificacio = new Notificacio(activity.usuariLogin.getId(),mensaje,date);
+                    insertNotificaion(notificacio);
+                }
 
-               Notificacio notificacio = new Notificacio(activity.usuariLogin.getId(),mensaje,date);
-
-
-               insertNotificaion(notificacio);
 
 
 

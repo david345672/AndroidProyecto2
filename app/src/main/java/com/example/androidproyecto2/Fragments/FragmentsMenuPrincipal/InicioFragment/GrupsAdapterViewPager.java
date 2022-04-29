@@ -2,8 +2,11 @@ package com.example.androidproyecto2.Fragments.FragmentsMenuPrincipal.InicioFrag
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,7 +30,7 @@ public class GrupsAdapterViewPager extends PagerAdapter
     //ArrayList<Grup> grups;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
-
+    Animation buttonUp, buttonDown;
 
     public GrupsAdapterViewPager(Context context, List grups)
     {
@@ -55,6 +58,9 @@ public class GrupsAdapterViewPager extends PagerAdapter
         Button btnHacerObservaciones = view.findViewById(R.id.btnHacerObservaciones);
         Button btnVerValoraciones = view.findViewById(R.id.btnVerValoraciones);
 
+        buttonUp = AnimationUtils.loadAnimation(context,R.anim.button_up);
+        buttonDown = AnimationUtils.loadAnimation(context,R.anim.button_down);
+
         Grup grup = grups.get(position);
         String nombre = grup.getNom();
 
@@ -68,6 +74,23 @@ public class GrupsAdapterViewPager extends PagerAdapter
                 activity.idGrupo = grup.getId();
             }
         });
+
+
+        btnHacerObservaciones.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_UP:
+                        btnHacerObservaciones.startAnimation(buttonUp);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        btnHacerObservaciones.startAnimation(buttonDown);
+                        break;
+                }
+                return false;
+            }
+        });
+
 
 
         btnVerValoraciones.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +108,22 @@ public class GrupsAdapterViewPager extends PagerAdapter
                     irAMenuVerValoracionesAlumno();
                 }
 
+            }
+        });
+
+
+        btnVerValoraciones.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_UP:
+                        btnVerValoraciones.startAnimation(buttonUp);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        btnVerValoraciones.startAnimation(buttonDown);
+                        break;
+                }
+                return false;
             }
         });
 

@@ -23,22 +23,24 @@
         android:layout_weight="2"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnHacerObservaciones"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="30dp"
             android:layout_weight="20"
-            android:backgroundTint="#FFC04C"
+            android:textSize="20sp"
+            android:background="@drawable/bg_button_hacer_valoracion"
             android:text="Hacer Observaciones"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnVerValoraciones"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="30dp"
             android:layout_weight="20"
-            android:backgroundTint="#00D802"
+            android:textSize="20sp"
+            android:background="@drawable/bg_button_ver_valoracion"
             android:text="Ver Valoraciones"/>
 
     </LinearLayout>
