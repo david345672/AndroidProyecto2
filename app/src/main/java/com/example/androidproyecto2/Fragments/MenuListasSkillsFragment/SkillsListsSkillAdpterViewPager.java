@@ -2,8 +2,11 @@ package com.example.androidproyecto2.Fragments.MenuListasSkillsFragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     int idUsuariSelected;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
+    Animation buttonUp, buttonDown;
 
     public SkillsListsSkillAdpterViewPager(Context context, List<Skill> skills, Boolean esDocent,MainActivity activity, int idListaSelcted, int idUsuariSelected) {
         this.activity = activity;
@@ -46,6 +50,9 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
     public Object instantiateItem(ViewGroup container, int position)
     {
         View view = LayoutInflater.from(context).inflate(R.layout.skill_vpager_item,container,false);
+
+        buttonUp = AnimationUtils.loadAnimation(context,R.anim.button_up);
+        buttonDown = AnimationUtils.loadAnimation(context,R.anim.button_down);
 
         Button btnSkill = view.findViewById(R.id.btnSkill);
         Skill S = skills.get(position);
@@ -75,15 +82,30 @@ public class SkillsListsSkillAdpterViewPager extends PagerAdapter
                         irAValoracionTipoAlumno();
                     }
                 }
-                //else
-                //{
-                    //Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
-                //}
+                else
+                {
+                    Toast.makeText(context, "Selecciona un usuario a valorar", Toast.LENGTH_LONG).show();
+                }
 
 
             }
         });
 
+
+        btnSkill.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_UP:
+                        btnSkill.startAnimation(buttonUp);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        btnSkill.startAnimation(buttonDown);
+                        break;
+                }
+                return false;
+            }
+        });
 
 
         container.addView(view);

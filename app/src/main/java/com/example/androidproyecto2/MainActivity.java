@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -75,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
         fondo = findViewById(R.id.fondo);
         //loadTheme();
 
-        //CargarUsuarioLogin();
+        if (!isTablet(getApplicationContext())) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
 
         Button btnAtras = toolbar.findViewById(R.id.btnAtras);
@@ -115,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(layout.equals("HacerValoracion"))
                 {
+
+                    VolverAMenuListasSkills();
+                }
+                else if(layout.equals("HacerValoracionDocente"))
+                {
+                    if (!isTablet(getApplicationContext())) {
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    }
                     VolverAMenuListasSkills();
                 }
                 else if(layout.equals("VerValoraciones"))
@@ -138,6 +149,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public boolean isTablet(Context context) {
+        boolean xlarge = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == 4);
+        boolean large = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
+        return (xlarge || large);
     }
 
 

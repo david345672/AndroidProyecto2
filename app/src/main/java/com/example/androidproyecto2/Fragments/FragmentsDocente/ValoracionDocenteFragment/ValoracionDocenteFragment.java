@@ -1,5 +1,6 @@
 package com.example.androidproyecto2.Fragments.FragmentsDocente.ValoracionDocenteFragment;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,10 +42,11 @@ public class ValoracionDocenteFragment extends Fragment {
         public void onViewCreated(View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
 
+
         activity = (MainActivity) getActivity();
-        activity.layout = "HacerValoracion";
+        activity.layout = "HacerValoracionDocente";
 
-
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 //        Toast.makeText(activity, "LListaSkill: " + activity.llistaSkillSelected.getNom() + ", UsuariValorat: " + activity.usuariValorat.getNom()   , Toast.LENGTH_SHORT).show();
 

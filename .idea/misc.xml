@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/drawable/bg_button_hacer_valoracion.xml" value="0.257" />
+        <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/drawable/bg_button_skill.xml" value="0.257" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/drawable/bg_button_ver_valoracion.xml" value="0.257" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/drawable/bg_radiobutton_grafico.xml" value="0.234" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/drawable/bg_radiobutton_menu.xml" value="0.234" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/layout-land/fragment_menu_configuracion.xml" value="0.21516754850088182" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/layout-land/fragment_perfil.xml" value="0.21516754850088182" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/layout-land/grupo_item.xml" value="0.21516754850088182" />
+        <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/layout-land/skill_vpager_item.xml" value="0.21516754850088182" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/layout-land/toolbar.xml" value="0.21516754850088182" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/layout-large-land/fragment_menu_configuracion.xml" value="0.16331994645247658" />
         <entry key="..\:/Users/Asus/Desktop/AndroidProyecto2/app/src/main/res/layout-large-port/fragment_menu_configuracion.xml" value="0.17486338797814208" />

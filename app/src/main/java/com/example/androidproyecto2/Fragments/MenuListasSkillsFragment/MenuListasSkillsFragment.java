@@ -176,9 +176,9 @@ public class MenuListasSkillsFragment extends Fragment{
     public void CargarSkills(int pos)
     {
         vpSkills = view.findViewById(R.id.VpSkills);
-        vpSkills.setClipToPadding(false);
-        vpSkills.setPadding(300, 0, 300, 0);
-        vpSkills.setPageMargin(300);
+//        vpSkills.setClipToPadding(false);
+//        vpSkills.setPadding(300, 0, 300, 0);
+//        vpSkills.setPageMargin(300);
 
         SkillsListsSkillAdpterViewPager skillsListsSkillAdpterViewPager = new SkillsListsSkillAdpterViewPager(getContext(),llistaSkills.get(pos).getSkills(),activity.esDocent,activity,idListaSelcted,activity.idUsuariSelected);
         vpSkills.setAdapter(skillsListsSkillAdpterViewPager);

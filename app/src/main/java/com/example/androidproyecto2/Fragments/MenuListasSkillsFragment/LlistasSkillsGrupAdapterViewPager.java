@@ -2,8 +2,11 @@ package com.example.androidproyecto2.Fragments.MenuListasSkillsFragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
     Usuari usuariValorat;
     FragmentManager mg;
     FragmentTransaction fragmentTransaction;
+    Animation buttonUp, buttonDown;
 
     public LlistasSkillsGrupAdapterViewPager(Context context, List<LlistaSkills> llistaSkills, Boolean esDocent, MainActivity activity) {
         this.context = context;
@@ -52,6 +56,8 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
     {
         View view = LayoutInflater.from(context).inflate(R.layout.llistaskill_vpager_item,container,false);
 
+        buttonUp = AnimationUtils.loadAnimation(context,R.anim.button_up);
+        buttonDown = AnimationUtils.loadAnimation(context,R.anim.button_down);
         Button btnLlistaSkill = view.findViewById(R.id.btnLlistaSkill);
         LlistaSkills LS = llistaSkills.get(position);
         btnLlistaSkill.setText(LS.getNom());
@@ -70,10 +76,6 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
                     {
                         irAValoracionTipoProfesor();
                     }
-                    else
-                    {
-                        irAValoracionTipoAlumno();
-                    }
                 }
                 else
                 {
@@ -84,6 +86,21 @@ public class LlistasSkillsGrupAdapterViewPager extends PagerAdapter
             }
         });
 
+
+        btnLlistaSkill.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_UP:
+                        btnLlistaSkill.startAnimation(buttonUp);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        btnLlistaSkill.startAnimation(buttonDown);
+                        break;
+                }
+                return false;
+            }
+        });
 
 
         container.addView(view);

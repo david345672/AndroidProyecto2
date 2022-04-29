@@ -2,6 +2,7 @@ package com.example.androidproyecto2.Fragments.FragmentsAlumno.ValoracionAlumnoF
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,7 @@ public class ValoracionAlumnoFragment extends Fragment {
 
         activity = (MainActivity) getActivity();
         this.kpis = activity.skillSelected.getKpis();
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         TextView nombreAvaluado = activity.findViewById(R.id.avaluatedName);
         nombreAvaluado.setText("Valorant a : "+activity.usuariValorat.getNom()+" "+activity.usuariValorat.getCognoms());
         activity.layout = "HacerValoracion";
